@@ -1,4 +1,4 @@
-Attribute VB_Name = "commonFunctions"
+Attribute VB_Name = "common"
 '■基本情報
 '実行シート
 Public topSheet As Worksheet
@@ -23,8 +23,8 @@ Public lastUpdateDateFrom As Date
 Public lastUpdateDateTo As Date
 'フォルダ構成再現フラグ
 Public dirLevelCopyFlag As Boolean
-'正規表現利用フラグ
-Public regExpUseFlag As Boolean
+'対象ファイル条件に拡張子も対象とするフラグ
+Public extensionUseFlag As Boolean
 '対象ファイル条件
 Public targetFilterArray As Variant
 '■その他
@@ -50,7 +50,12 @@ Function initialize()
     '実行シート
     Set topSheet = ThisWorkbook.Sheets(1)
     'ログシート
-    Set logSheet = ThisWorkbook.Sheets(2)
+    If isExistCheckToSheet(ActiveWorkbook, "log") Then
+        Set logSheet = ThisWorkbook.Sheets(2)
+    Else
+        Set logSheet = Sheets.Add(After:=Sheets(1))
+        logSheet.Name = "log"
+    End If
     
     'ファイル操作オブジェクト
     Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -61,42 +66,42 @@ Function initialize()
         Set baseSectionInputStartRange = getBottomEndRange(.Cells(1, 3), 1)
         
         'コピー元フォルダ
-        srcDirPath = baseSectionInputStartRange.Offset(0, 1).Value
+        srcDirPath = baseSectionInputStartRange.Offset(0, 1).value
         
         'コピー先フォルダ
-        distDirPath = baseSectionInputStartRange.Offset(1, 1).Value
+        distDirPath = baseSectionInputStartRange.Offset(1, 1).value
 
         '■共通オプション
         Dim commonOptionSectionInputStartRange As Range
         Set commonOptionSectionInputStartRange = getBottomEndRange(baseSectionInputStartRange, 2)
         
         '再帰処理フラグ
-        recursiveFlag = commonOptionSectionInputStartRange.Offset(0, 1).Value = "する"
+        recursiveFlag = commonOptionSectionInputStartRange.Offset(0, 1).value = "する"
         
         'ログ出力設定
-        logFlag = commonOptionSectionInputStartRange.Offset(1, 1).Value = "する"
+        logFlag = commonOptionSectionInputStartRange.Offset(1, 1).value = "する"
         
         '対象ファイル形式
-        targetFileExtArray = Split(commonOptionSectionInputStartRange.Offset(2, 1).Value, ",")
+        targetFileExtArray = Split(commonOptionSectionInputStartRange.Offset(2, 1).value, ",")
         
         '更新日時（FROM）
-        lastUpdateDateFrom = commonOptionSectionInputStartRange.Offset(3, 1).Value
+        lastUpdateDateFrom = commonOptionSectionInputStartRange.Offset(3, 1).value
         
         '更新日時（TO）
-        lastUpdateDateTo = commonOptionSectionInputStartRange.Offset(4, 1).Value
+        lastUpdateDateTo = commonOptionSectionInputStartRange.Offset(4, 1).value
         
         'フォルダ構成再現フラグ
-        dirLevelCopyFlag = commonOptionSectionInputStartRange.Offset(5, 1).Value = "する"
+        dirLevelCopyFlag = commonOptionSectionInputStartRange.Offset(5, 1).value = "する"
         
-        '正規表現利用フラグ
-        regExpUseFlag = commonOptionSectionInputStartRange.Offset(6, 1).Value = "する"
+        '拡張子利用フラグ
+        extensionUseFlag = commonOptionSectionInputStartRange.Offset(6, 1).value = "する"
         
         '条件（1:値、2,4,5,:不使用、3:条件種別、6:AND/OR）
         Dim targetFilterStartRange As Range
         Set targetFilterStartRange = commonOptionSectionInputStartRange.Offset(7, 1)
         Dim targetFilterEndRange As Range
         Set targetFilterEndRange = regionEndRange(targetFilterStartRange, rightTimes:=2)
-        targetFilterArray = IIf(targetFilterStartRange.Value = "", targetFilterStartRange, .Range(targetFilterStartRange, targetFilterEndRange))
+        targetFilterArray = IIf(targetFilterStartRange.value = "", targetFilterStartRange, .Range(targetFilterStartRange, targetFilterEndRange))
 
         '■機能セクションの最初のラベルセルを返す
         Set initialize = getBottomEndRange(commonOptionSectionInputStartRange, 2)
@@ -169,7 +174,11 @@ Function isPassFile(argDirPath As String, argFileName As String)
     '拡張子の取得
     Dim fileExt As String: fileExt = objFSO.GetExtensionName(filePath)
     '拡張子を省いたファイル名
-    Dim checkFileName As String: checkFileName = Replace(argFileName, "." & fileExt, "")
+    Dim checkFileName As String: checkFileName = argFileName
+    If Not extensionUseFlag Then
+        checkFileName = Replace(argFileName, "." & fileExt, "")
+    Else
+    End If
     '対象ファイル条件に該当するか
     If isExistArray(targetFileExtArray, fileExt) _
         And isPassConditionCheck(checkFileName) _
@@ -250,6 +259,9 @@ Function isPassConditionCheck(argFileName As String)
             
         ElseIf conditionType = "左記でファイル名が終わる" Then
             currentResult = isEndText(argFileName, checkValue)
+            
+        ElseIf conditionType = "左記の正規表現に一致する" Then
+            currentResult = isRegexpHit(argFileName, checkValue)
             
         End If
         
@@ -465,7 +477,7 @@ Function regionEndRange(startRange As Range, Optional headerFlag As Boolean = Fa
         
         Set rightEndRange = getRightEndRange(tempRange, rightTimes)
         Dim bottomEndRange As Range
-        If getBottomEndRange(startRange, 1).Value <> "" Then
+        If getBottomEndRange(startRange, 1).value <> "" Then
             Set bottomEndRange = getBottomEndRange(startRange, 1)
         Else
             Set bottomEndRange = startRange
