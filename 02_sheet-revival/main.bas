@@ -57,7 +57,7 @@ End Sub
 Function writeFromExcelToText()
 
     Dim filePath As String: filePath = ActiveWorkbook.Path & "\setup.bas"
-    Const CHAR_SET = "UTF-8" 'UTF-8 / SHIFT-JIS
+    Const CHAR_SET = "SHIFT-JIS" 'UTF-8 / SHIFT-JIS
     
     Dim ws As Worksheet
     Set ws = ActiveSheet
@@ -235,7 +235,7 @@ Function writeFromExcelToText()
 
             ElseIf shp.Type = msoFormControl Then
                 .WriteText "    Set onShape = ActiveSheet.Buttons.Add(" & shp.Left & "," & shp.Top & "," & shp.Width & "," & shp.Height & ")", 1
-                .WriteText "    onShape.OnAction = """ & shp.OnAction & """", 1
+                '.WriteText "    onShape.OnAction = """ & shp.OnAction & """", 1 ' éQè∆ÉGÉâÅ[Ç…Ç»ÇÈÇ©ÇÁê›íËÇµÇ»Ç¢
                 .WriteText "    onShape.Name = """ & shp.Name & """", 1
                 .WriteText "    onShape.Visible = " & shp.Visible, 1
                 .WriteText "    onShape.Text = """ & shp.Text & """", 1

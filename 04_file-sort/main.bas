@@ -75,6 +75,10 @@ Function scanLoopWithFile(argDirPath As String)
             Call scanLoopWithFile(directory.path)
         Next
     End If
+    
+    '列幅調整
+    logSheet.Columns("A:G").AutoFit
+    
 End Function
 '移動元フォルダは再帰処理の場合、グローバル変数の値と異なる可能性があるため
 '適宜引数から取得する
