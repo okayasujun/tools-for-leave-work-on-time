@@ -1,3 +1,4 @@
+Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
     Cells(1, 1) = "04_テキストファイル置換コピー"
@@ -3601,12 +3602,11 @@ Function revival22()
     Columns(16).ColumnWidth = 8.25
     Dim onShape As Object
     Set onShape = ActiveSheet.Buttons.Add(692.25,292.5,53.25,21.75)
+    onShape.OnAction = "exe"
     onShape.Name = "Button 8"
     onShape.Visible = -1
     onShape.Placement = 1
-    Set onShape = ActiveSheet.Buttons.Add(585.75,177,53.25,21)
-    onShape.Name = "Drop Down 9"
-    onShape.Visible = 0
+    onShape.Characters.Text = ""
 End Function
 sub revival()
     CALL revival0()

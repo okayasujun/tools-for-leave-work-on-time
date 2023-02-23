@@ -1,3 +1,4 @@
+Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
     Cells(1, 1) = "01_ExcelèÓïÒèWñÒ"
@@ -3107,21 +3108,29 @@ Function revival29()
     Columns(19).ColumnWidth = 8.38
     Dim onShape As Object
     Set onShape = ActiveSheet.Buttons.Add(780,657,53.25,22.5)
+    onShape.OnAction = "exe"
     onShape.Name = "Button 2"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(780.75,818.25,53.25,22.5)
+    onShape.OnAction = "AggregatePerColumn"
     onShape.Name = "Button 3"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(780,912,53.25,22.5)
+    onShape.OnAction = "AggregatePerRow"
     onShape.Name = "Button 4"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(778.5,1004.25,53.25,22.5)
+    onShape.OnAction = "AggregatePerRange"
     onShape.Name = "Button 5"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Shapes.AddShape(1,54.00008,795.7501,810,277.8088)
     onShape.Name = "Rectangle 1"
     onShape.Visible = -1

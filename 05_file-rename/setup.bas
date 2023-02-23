@@ -1,3 +1,4 @@
+Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
     Cells(1, 1) = "03_ファイルリネーム"
@@ -2886,90 +2887,6 @@ Function revival33()
     Cells(64, 14).Font.Name = "メイリオ"
     Cells(64, 15).Font.Name = "メイリオ"
     Cells(64, 16).Font.Name = "メイリオ"
-    Cells(65, 1).Font.Name = "メイリオ"
-    Cells(65, 2).Font.Name = "メイリオ"
-    Cells(65, 3).Font.Name = "メイリオ"
-    Cells(65, 4).Font.Name = "メイリオ"
-    Cells(65, 5).Font.Name = "メイリオ"
-    Cells(65, 6).Font.Name = "メイリオ"
-    Cells(65, 7).Font.Name = "メイリオ"
-    Cells(65, 8).Font.Name = "メイリオ"
-    Cells(65, 9).Font.Name = "メイリオ"
-    Cells(65, 10).Font.Name = "メイリオ"
-    Cells(65, 11).Font.Name = "メイリオ"
-    Cells(65, 12).Font.Name = "メイリオ"
-    Cells(65, 13).Font.Name = "メイリオ"
-    Cells(65, 14).Font.Name = "メイリオ"
-    Cells(65, 15).Font.Name = "メイリオ"
-    Cells(65, 16).Font.Name = "メイリオ"
-    Cells(66, 1).Font.Name = "メイリオ"
-    Cells(66, 2).Font.Name = "メイリオ"
-    Cells(66, 3).Font.Name = "メイリオ"
-    Cells(66, 4).Font.Name = "メイリオ"
-    Cells(66, 5).Font.Name = "メイリオ"
-    Cells(66, 6).Font.Name = "メイリオ"
-    Cells(66, 7).Font.Name = "メイリオ"
-    Cells(66, 8).Font.Name = "メイリオ"
-    Cells(66, 9).Font.Name = "メイリオ"
-    Cells(66, 10).Font.Name = "メイリオ"
-    Cells(66, 11).Font.Name = "メイリオ"
-end Function
-Function revival34()
-    Cells(66, 12).Font.Name = "メイリオ"
-    Cells(66, 13).Font.Name = "メイリオ"
-    Cells(66, 14).Font.Name = "メイリオ"
-    Cells(66, 15).Font.Name = "メイリオ"
-    Cells(66, 16).Font.Name = "メイリオ"
-    Cells(67, 1).Font.Name = "メイリオ"
-    Cells(67, 2).Font.Name = "メイリオ"
-    Cells(67, 3).Font.Name = "メイリオ"
-    Cells(67, 4).Font.Name = "メイリオ"
-    Cells(67, 5).Font.Name = "メイリオ"
-    Cells(67, 6).Font.Name = "メイリオ"
-    Cells(67, 7).Font.Name = "メイリオ"
-    Cells(67, 8).Font.Name = "メイリオ"
-    Cells(67, 9).Font.Name = "メイリオ"
-    Cells(67, 10).Font.Name = "メイリオ"
-    Cells(67, 11).Font.Name = "メイリオ"
-    Cells(67, 12).Font.Name = "メイリオ"
-    Cells(67, 13).Font.Name = "メイリオ"
-    Cells(67, 14).Font.Name = "メイリオ"
-    Cells(67, 15).Font.Name = "メイリオ"
-    Cells(67, 16).Font.Name = "メイリオ"
-    Cells(68, 1).Font.Name = "メイリオ"
-    Cells(68, 2).Font.Name = "メイリオ"
-    Cells(68, 3).Font.Name = "メイリオ"
-    Cells(68, 4).Font.Name = "メイリオ"
-    Cells(68, 5).Font.Name = "メイリオ"
-    Cells(68, 6).Font.Name = "メイリオ"
-    Cells(68, 7).Font.Name = "メイリオ"
-    Cells(68, 8).Font.Name = "メイリオ"
-    Cells(68, 9).Font.Name = "メイリオ"
-end Function
-Function revival35()
-    Cells(68, 10).Font.Name = "メイリオ"
-    Cells(68, 11).Font.Name = "メイリオ"
-    Cells(68, 12).Font.Name = "メイリオ"
-    Cells(68, 13).Font.Name = "メイリオ"
-    Cells(68, 14).Font.Name = "メイリオ"
-    Cells(68, 15).Font.Name = "メイリオ"
-    Cells(68, 16).Font.Name = "メイリオ"
-    Cells(69, 1).Font.Name = "メイリオ"
-    Cells(69, 2).Font.Name = "メイリオ"
-    Cells(69, 3).Font.Name = "メイリオ"
-    Cells(69, 4).Font.Name = "メイリオ"
-    Cells(69, 5).Font.Name = "メイリオ"
-    Cells(69, 6).Font.Name = "メイリオ"
-    Cells(69, 7).Font.Name = "メイリオ"
-    Cells(69, 8).Font.Name = "メイリオ"
-    Cells(69, 9).Font.Name = "メイリオ"
-    Cells(69, 10).Font.Name = "メイリオ"
-    Cells(69, 11).Font.Name = "メイリオ"
-    Cells(69, 12).Font.Name = "メイリオ"
-    Cells(69, 13).Font.Name = "メイリオ"
-    Cells(69, 14).Font.Name = "メイリオ"
-    Cells(69, 15).Font.Name = "メイリオ"
-    Cells(69, 16).Font.Name = "メイリオ"
     Rows(1).RowHeight = 30
     Rows(2).RowHeight = 23.25
     Rows(3).RowHeight = 23.25
@@ -3034,11 +2951,6 @@ Function revival35()
     Rows(62).RowHeight = 23.25
     Rows(63).RowHeight = 23.25
     Rows(64).RowHeight = 23.25
-    Rows(65).RowHeight = 23.25
-    Rows(66).RowHeight = 23.25
-    Rows(67).RowHeight = 23.25
-    Rows(68).RowHeight = 23.25
-    Rows(69).RowHeight = 23.25
     Columns(1).ColumnWidth = 8.38
     Columns(2).ColumnWidth = 8.38
     Columns(3).ColumnWidth = 8.38
@@ -3057,21 +2969,29 @@ Function revival35()
     Columns(16).ColumnWidth = 8.38
     Dim onShape As Object
     Set onShape = ActiveSheet.Buttons.Add(162.75,948,52.5,22.5)
+    onShape.OnAction = "exe"
     onShape.Name = "get"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(702,788.25,53.25,22.5)
+    onShape.OnAction = "exe"
     onShape.Name = "replace"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(378,948,78.75,22.5)
+    onShape.OnAction = "exe"
     onShape.Name = "serialNo"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(702,1020,53.25,22.5)
+    onShape.OnAction = "exe"
     onShape.Name = "rename"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
 End Function
 sub revival()
     CALL revival0()
@@ -3108,6 +3028,4 @@ sub revival()
     CALL revival31()
     CALL revival32()
     CALL revival33()
-    CALL revival34()
-    CALL revival35()
 end sub

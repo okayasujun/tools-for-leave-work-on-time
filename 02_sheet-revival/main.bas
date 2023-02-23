@@ -73,6 +73,7 @@ Function writeFromExcelToText()
         .LineSeparator = 10
         .Open
         'ファイル書き出し
+        .WriteText "Attribute VB_Name = ""setup""", 1
         .WriteText "Function revival0()", 1
         .WriteText "    ActiveWindow.DisplayGridlines = " & ActiveWindow.DisplayGridlines, 1
 
@@ -235,26 +236,29 @@ Function writeFromExcelToText()
 
             ElseIf shp.Type = msoFormControl Then
                 .WriteText "    Set onShape = ActiveSheet.Buttons.Add(" & shp.Left & "," & shp.Top & "," & shp.Width & "," & shp.Height & ")", 1
-                '.WriteText "    onShape.OnAction = """ & shp.OnAction & """", 1 ' 参照エラーになるから設定しない
+                .WriteText "    onShape.OnAction = """ & Mid(shp.OnAction, InStr(shp.OnAction, "!") + 1) & """", 1
                 .WriteText "    onShape.Name = """ & shp.Name & """", 1
                 .WriteText "    onShape.Visible = " & shp.Visible, 1
-                .WriteText "    onShape.Text = """ & shp.Text & """", 1
-                .WriteText "    onShape.Characters.Text = """ & shp.Characters.Text & """", 1
-                .WriteText "    onShape.TextFrame2.Characters.Text = """ & shp.TextFrame2.Characters.Text & """", 1
-                .WriteText "    onShape.TextFrame2.TextRange.Font.Size = " & shp.TextFrame2.TextRange.Font.Size, 1
-                .WriteText "    onShape.TextFrame2.WordWrap = " & shp.TextFrame2.WordWrap, 1
-                .WriteText "    onShape.TextFrame2.VerticalAnchor = " & shp.TextFrame2.VerticalAnchor, 1
-                .WriteText "    onShape.TextFrame2.TextRange.ParagraphFormat.Alignment = " & shp.TextFrame2.TextRange.ParagraphFormat.Alignment, 1
                 .WriteText "    onShape.Placement = " & shp.Placement, 1
-                .WriteText "    onShape.TextFrame2.AutoSize = " & shp.TextFrame2.AutoSize, 1
-                .WriteText "    onShape.TextFrame2.MarginLeft = " & shp.TextFrame2.MarginLeft, 1
-                .WriteText "    onShape.TextFrame2.MarginRight = " & shp.TextFrame2.MarginRight, 1
-                .WriteText "    onShape.TextFrame2.MarginTop = " & shp.TextFrame2.MarginTop, 1
-                .WriteText "    onShape.TextFrame2.MarginBottom = " & shp.TextFrame2.MarginBottom, 1
-                .WriteText "    onShape.TextFrame2.WordWrap = " & shp.TextFrame2.WordWrap, 1
-                .WriteText "    onShape.TextFrame2.VerticalAnchor = " & shp.TextFrame2.VerticalAnchor, 1
-                .WriteText "    onShape.TextFrame2.HorizontalAnchor = " & shp.TextFrame2.HorizontalAnchor, 1
-                .WriteText "    onShape.TextFrame2.Orientation = " & shp.TextFrame2.Orientation, 1
+                .WriteText "    onShape.Characters.Text = """, 1
+                'コメントアウト分はなぜか出力されない
+                .WriteText "    onShape.Characters.Text = """ & shp.Characters.Text & """", 1
+'                .WriteText "    onShape.Text = """ & shp.Text & """", 1
+'                .WriteText "    onShape.Caption = """ & shp.Caption & """", 1
+'                .WriteText "    onShape.TextFrame2.Characters.Text = """ & shp.TextFrame2.Characters.Text & """", 1
+'                .WriteText "    onShape.TextFrame2.TextRange.Font.Size = " & shp.TextFrame2.TextRange.Font.Size, 1
+'                .WriteText "    onShape.TextFrame2.WordWrap = " & shp.TextFrame2.WordWrap, 1
+'                .WriteText "    onShape.TextFrame2.VerticalAnchor = " & shp.TextFrame2.VerticalAnchor, 1
+'                .WriteText "    onShape.TextFrame2.TextRange.ParagraphFormat.Alignment = " & shp.TextFrame2.TextRange.ParagraphFormat.Alignment, 1
+'                .WriteText "    onShape.TextFrame2.AutoSize = " & shp.TextFrame2.AutoSize, 1
+'                .WriteText "    onShape.TextFrame2.MarginLeft = " & shp.TextFrame2.MarginLeft, 1
+'                .WriteText "    onShape.TextFrame2.MarginRight = " & shp.TextFrame2.MarginRight, 1
+'                .WriteText "    onShape.TextFrame2.MarginTop = " & shp.TextFrame2.MarginTop, 1
+'                .WriteText "    onShape.TextFrame2.MarginBottom = " & shp.TextFrame2.MarginBottom, 1
+'                .WriteText "    onShape.TextFrame2.WordWrap = " & shp.TextFrame2.WordWrap, 1
+'                .WriteText "    onShape.TextFrame2.VerticalAnchor = " & shp.TextFrame2.VerticalAnchor, 1
+'                .WriteText "    onShape.TextFrame2.HorizontalAnchor = " & shp.TextFrame2.HorizontalAnchor, 1
+'                .WriteText "    onShape.TextFrame2.Orientation = " & shp.TextFrame2.Orientation, 1
             
             End If
         Next
