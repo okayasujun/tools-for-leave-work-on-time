@@ -1,3 +1,4 @@
+Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
     Cells(1, 1) = "02_ファイル仕分け"
@@ -1915,9 +1916,11 @@ Function revival19()
     Columns(16).ColumnWidth = 8.38
     Dim onShape As Object
     Set onShape = ActiveSheet.Buttons.Add(646.5,682.5,53.25,22.5)
+    onShape.OnAction = "exe"
     onShape.Name = "Button 7"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
 End Function
 sub revival()
     CALL revival0()

@@ -1,3 +1,4 @@
+Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
     Cells(1, 1) = "05_åüçıÅEíuä∑"
@@ -4674,25 +4675,35 @@ Function revival38()
     Columns(16).ColumnWidth = 8.25
     Dim onShape As Object
     Set onShape = ActiveSheet.Buttons.Add(616.5,717.75,53.25,21.75)
+    onShape.OnAction = "exe"
     onShape.Name = "search1"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(158.25,876.75,92.25,23.25)
+    onShape.OnAction = "exe"
     onShape.Name = "get"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(616.5,771,53.25,21.75)
+    onShape.OnAction = "exe"
     onShape.Name = "replace1"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(616.5,876,53.25,21.75)
+    onShape.OnAction = "exe"
     onShape.Name = "search2"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
     Set onShape = ActiveSheet.Buttons.Add(699,876,53.25,21.75)
+    onShape.OnAction = "exe"
     onShape.Name = "replace2"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
 End Function
 sub revival()
     CALL revival0()
