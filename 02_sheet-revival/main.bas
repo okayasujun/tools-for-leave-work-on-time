@@ -240,7 +240,7 @@ Function writeFromExcelToText()
                 .WriteText "    onShape.Name = """ & shp.Name & """", 1
                 .WriteText "    onShape.Visible = " & shp.Visible, 1
                 .WriteText "    onShape.Placement = " & shp.Placement, 1
-                .WriteText "    onShape.Characters.Text = """, 1
+                .WriteText "    onShape.Characters.Text = """"", 1
                 'コメントアウト分はなぜか出力されない
                 .WriteText "    onShape.Characters.Text = """ & shp.Characters.Text & """", 1
 '                .WriteText "    onShape.Text = """ & shp.Text & """", 1
