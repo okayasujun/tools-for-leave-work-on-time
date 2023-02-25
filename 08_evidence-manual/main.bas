@@ -3,7 +3,7 @@ Attribute VB_Name = "main"
 '機能名：エビデンス・マニュアル作成支援ツール v2.0
 'Author：okayasu jun
 '作成日：2022/10/19
-'更新日：2023/02/23
+'更新日：2023/02/25
 'COMMENT：
 '###############################
 'ポインタAPI。マウスカーソル位置からセル位置を取得するために使用する
@@ -12,6 +12,8 @@ Private Type POINTAPI
     y As Long
 End Type
 Declare PtrSafe Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
+'■画像タイトルに補記をする場合の行数（タイトルと画像の間の空行数）
+Const REMARK_LINE = 0
 '#選択セル範囲の大きさの赤枠をマウス位置に出現させる
 Sub A_赤枠を出現させる()
 Attribute A_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
@@ -41,7 +43,7 @@ Attribute A_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
     'onShape.Fill.ForeColor.RGB = RGB(255, 255, 255)
     
     '画像の上にカーソルがある状態では後続処理ができないため、一時非表示にする
-    'この段階でどの画像上にカーソルがあるか不明なので全シェイプを対象とする
+    'この段階でどのシェイプ上にカーソルがあるか不明なので全シェイプを対象とする
     For Each shp In ActiveSheet.Shapes
         shp.Visible = False
     Next
@@ -159,18 +161,14 @@ Sub D_貼付順に整列させる()
 Attribute D_貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
-    '■画像タイトルに補記をする場合の行数（タイトルと画像の間の空行数）
-    Const REMARK_LINE = 0
     
-    '移動位置を取得するためのダミーシェイプ
-    Dim dummyShape As shape
     
     '貼付座標を格納する（topは都度書き換え、leftは初期値を使いまわす）
     Dim top As Integer: top = Selection.top + 5
-    Dim left As Integer: left = Selection.left
     
     'キャプションを記載する用のセル
     Dim captionRange As Range
+    Dim moveShape As shape
     
     'エラーチェック
     If Selection.Row - REMARK_LINE - 1 < 1 Then
@@ -180,8 +178,8 @@ Attribute D_貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
     
     'キャプションタイトル
     Dim captionText As String
-    '■ダイアログが面倒な場合はInputBoxを廃し、ここに直接値を入れればOK
-    captionText = InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▼ここに画像の説明を書く")
+    '■ダイアログを使う場合は以下のコメントアウト分を使用する
+    captionText = "▼" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▼ここに画像の説明を書く")
     
     If StrPtr(answer) = 0 Then
         'キャンセル時
@@ -196,22 +194,9 @@ Attribute D_貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
             And (moveShape.Type = msoAutoShape And Not moveShape.Fill.Visible) Then
             GoTo CONTINUE:
         End If
-        '==========================================================
-        '共通化する場合・・・引数：moveshape,sheet,left,top戻り値：top キャプション設定も中でやってしまう？
-        '==========================================================
         
-        '左上隅のセルを取得するためのダミーシェイプ
-        Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, left, top, 1, 1)
-        
-        'シェイプを移動する
-        moveShape.top = dummyShape.TopLeftCell.Offset(0, 0).top
-        moveShape.left = left
-        
-        'キャプション入力用セルを取得する（-1はタイトル分）
-        Set captionRange = dummyShape.TopLeftCell.Offset(-1 - REMARK_LINE, 0)
-        
-        '用済みだから削除する
-        dummyShape.Delete
+        'シェイプを移動させて、
+        Set captionRange = move(moveShape, top)
         
         '■キャプション入力の設定（不要ならコメントアウトして）
         Call setCaption(captionRange, captionText)
@@ -222,11 +207,30 @@ CONTINUE:
     Next
     
     'END処理
-    Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, left, top, 1, 1)
+    Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, top, 1, 1)
     Call setCaption(dummyShape.TopLeftCell, "END")
     dummyShape.Delete
     
 End Sub
+'
+Function move(moveShape As shape, top As Integer)
+    '移動位置を取得するためのダミーシェイプ
+    Dim dummyShape As shape
+    Dim left As Integer: left = Selection.left
+    
+    '左上隅のセルを取得するためのダミーシェイプ
+    Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, top, 1, 1)
+        
+    'シェイプを移動する
+    moveShape.top = dummyShape.TopLeftCell.Offset(0, 0).top
+    moveShape.left = Selection.left
+        
+    'キャプション入力用セルを取得する（-1はタイトル分）
+    Set move = dummyShape.TopLeftCell.Offset(-1 - REMARK_LINE, 0)
+        
+    '用済みだから削除する
+    dummyShape.Delete
+End Function
 'キャプション用セルの設定
 Function setCaption(captionRange As Range, captionText As String)
     '画像間移動をCtrl+矢印で高速に行うため
@@ -258,7 +262,7 @@ Sub F_シェイプを選択順にコネクタで繋ぐ()
         Set startShape = Selection.ShapeRange.Item(i)
         '選択中シェイプの保持（接続先）
         Set endShape = Selection.ShapeRange.Item(i + 1)
-        Set shp = Selection.ShapeRange.Item(i)
+
         '接続シェイプの誕生
         '■Type引数は右記を参照：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoconnectortype
         Set connectShape = ActiveSheet.Shapes.AddConnector(Type:=msoConnectorElbow, BeginX:=0, BeginY:=0, EndX:=0, EndY:=0)
@@ -492,7 +496,7 @@ Sub P_シート生成とリンク付与()
             'シート順の並び変え
             If existsSheet(topSheet.Cells(i - 1, 2)) Then
                 'ここ、シート名の指定に「.value」が必要
-                Sheets(sheetName).Move after:=Sheets(topSheet.Cells(i - 1, 2).Value)
+                Sheets(sheetName).move after:=Sheets(topSheet.Cells(i - 1, 2).Value)
             End If
         End If
     Next
@@ -512,4 +516,72 @@ Function existsSheet(ByVal sheetName As String)
     '存在しない
     existsSheet = False
 End Function
+'シェイプのうち選択中セルのleftプロパティに一致しないものを選択セル位置から並べる
+Sub Q_シェイプ追加整列()
+Attribute Q_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = "m\n14"
+    '■画像間の間隔
+    Const MARGIN_BOTTOM = 70
+    
+    
+    '貼付座標を格納する（topは都度書き換え、leftは初期値を使いまわす）
+    Dim top As Integer: top = Selection.top + 5
+    
+    'キャプションを記載する用のセル
+    Dim captionRange As Range
+    Dim moveShape As shape 'キャプションタイトル
+    Dim captionText As String: captionText = "▼"
+    For Each moveShape In ActiveSheet.Shapes
+        '次に該当しないものは対象外：画像、グループ、塗りつぶしのないオートシェイプ、
+        'もしくは選択中セルleftプロパティと対象シェイプleftプロパティが一致しないもの
+        If (moveShape.Type <> msoPicture _
+            And moveShape.Type <> msoGroup _
+            And (moveShape.Type = msoAutoShape And Not moveShape.Fill.Visible)) _
+            Or moveShape.left = Selection.left Then
+            GoTo CONTINUE:
+        End If
+        
+        'シェイプを移動させて、
+        Set captionRange = move(moveShape, top)
+        
+        '■キャプション入力の設定（不要ならコメントアウトして）
+        Call setCaption(captionRange, captionText)
+        
+        '今対象にしたシェイプの上部座標 + 今対象にしたシェイプの高さ + 画像間の間隔 + キャプションセル行の高さ = 次のシェイプの移動先上部座標
+        top = top + moveShape.height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).height
+CONTINUE:
+    Next
+End Sub
+Sub R_2か3カラムの並び()
+    'また今度実装する
+End Sub
+Sub S_シェイプ間にマニュアル向けの矢印を置く()
+    Dim startShape As shape
+    Dim endShape As shape
+    Dim connectShape As shape
+    
+    If TypeName(Selection) = "Range" Then
+        MsgBox "シェイプが選択されていません。2つ以上選択してください。"
+        Exit Sub
+    End If
+    For Each shp In Selection.ShapeRange
+        If shp.Type = msoGroup Or shp.Connector Then
+            MsgBox "選択シェイプにグループかコネクタが含まれています。解除してください。"
+            Exit Sub
+        End If
+    Next
+    
+    For i = 1 To Selection.ShapeRange.count - 1
+        '選択中シェイプの保持（接続元）
+        Set startShape = Selection.ShapeRange.Item(i)
+        '選択中シェイプの保持（接続先）
+        Set endShape = Selection.ShapeRange.Item(i + 1)
+        '//TODO:ここで2つのシェイプの位置関係を把握し、間にシェイプを置く
+    Next
 
+End Sub
+Function getConnect()
+    getConnect = shap
+End Function
+Sub T_連続貼付と整列()
+    '無理っぽい
+End Sub
