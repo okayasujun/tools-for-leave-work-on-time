@@ -20,23 +20,23 @@ Attribute E_高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
     Dim shapeDic As Dictionary
     Set shapeDic = CreateObject("Scripting.Dictionary")
     
-    Dim count As Integer: count = 0
+    Dim Count As Integer: Count = 0
     Dim shapeYArray() As Double
     
     'マップに情報を設定、座標ソート用に座標情報の配列格納
     For Each moveShape In ActiveSheet.Shapes
         If moveShape.Type = msoPicture Or moveShape.Type = msoGroup Then
         
-            If count = 0 Then
-                ReDim shapeYArray(count)
-                shapeYArray(count) = moveShape.top
+            If Count = 0 Then
+                ReDim shapeYArray(Count)
+                shapeYArray(Count) = moveShape.top
             Else
-                ReDim Preserve shapeYArray(count)
-                shapeYArray(count) = moveShape.top
+                ReDim Preserve shapeYArray(Count)
+                shapeYArray(Count) = moveShape.top
             End If
             
             shapeDic.Add moveShape.Name, moveShape.top
-            count = count + 1
+            Count = Count + 1
         End If
     Next
     
@@ -174,5 +174,81 @@ Function isExistArray(targetArray As Variant, checkValue As String)
             Exit For
         End If
     Next
+End Function
+'============================================================================================================================
+'謝意：https://www.ka-net.org/blog/?p=4944 参考
+'できたけど動作不安定（クリップボードの表示エリア中可視範囲のものしか対象にできない）
+Sub T_連続貼付_試行編()
+    'TODO:実行前後でbeforeセル選ばせる処理入れてもいいかも。今、最後の貼付シェイプを選んだ状態になる
+    'Officeクリップボードにあるアイテム列挙
+    Dim aryListItems As UIAutomationClient.IUIAutomationElementArray
+    Dim i As Long
+    Dim ptnAcc As UIAutomationClient.IUIAutomationLegacyIAccessiblePattern
+   
+    Set aryListItems = GetOfficeClipboardListItems
+    For i = 0 To aryListItems.Length - 1
+        Debug.Print i + 1, aryListItems.GetElement(i).CurrentName
+    
+        '=============
+        Set ptnAcc = aryListItems.GetElement(i).GetCurrentPattern(UIA_LegacyIAccessiblePatternId)
+        ptnAcc.DoDefaultAction
+    Next
+    'ここでクリップボードの表示をfalseに戻してはだめ
+End Sub
+'
+Sub U_クリップボードすべてクリア()
+    DoActionOfficeClipboard "すべてクリア"
+End Sub
+'ボタン操作を実行する（「すべてクリア」でのみ使用する）
+Private Sub DoActionOfficeClipboard(ByVal ButtonName As String)
+'Officeクリップボードコマンド実行
+  Dim uiAuto As UIAutomationClient.CUIAutomation
+  Dim accClipboard As Office.IAccessible
+  Dim elmClipboard As UIAutomationClient.IUIAutomationElement
+  Dim elmButton As UIAutomationClient.IUIAutomationElement
+  Dim cndButtons As UIAutomationClient.IUIAutomationCondition
+  Dim aryButtons As UIAutomationClient.IUIAutomationElementArray
+  Dim ptnAcc As UIAutomationClient.IUIAutomationLegacyIAccessiblePattern
+  Dim i As Long
+   
+  Set elmButton = Nothing '初期化
+  Set uiAuto = New UIAutomationClient.CUIAutomation
+  With Application
+    .CommandBars("Office Clipboard").Visible = True
+    DoEvents
+    Set accClipboard = .CommandBars("Office Clipboard")
+  End With
+  Set elmClipboard = uiAuto.ElementFromIAccessible(accClipboard, 0)
+  Set cndButtons = uiAuto.CreatePropertyCondition(UIA_ControlTypePropertyId, UIA_ButtonControlTypeId)
+  Set aryButtons = elmClipboard.FindAll(TreeScope_Subtree, cndButtons)
+  For i = 0 To aryButtons.Length - 1
+    If aryButtons.GetElement(i).CurrentName = ButtonName Then
+      Set elmButton = aryButtons.GetElement(i)
+      Exit For
+    End If
+  Next
+  If elmButton Is Nothing Then Exit Sub
+  If elmButton.CurrentIsEnabled <> False Then
+    Set ptnAcc = elmButton.GetCurrentPattern(UIA_LegacyIAccessiblePatternId)
+    ptnAcc.DoDefaultAction
+  End If
+End Sub
+ 
+Private Function GetOfficeClipboardListItems() As UIAutomationClient.IUIAutomationElementArray
+'Officeクリップボードリスト取得
+  Dim uiAuto As UIAutomationClient.CUIAutomation
+  Dim accClipboard As Office.IAccessible
+  Dim elmClipboard As UIAutomationClient.IUIAutomationElement
+  Dim cndListItems As UIAutomationClient.IUIAutomationCondition
+   
+  Set uiAuto = New UIAutomationClient.CUIAutomation
+  With Application
+    .CommandBars("Office Clipboard").Visible = True 'Falseにしてはだめ。
+    DoEvents
+    Set accClipboard = .CommandBars("Office Clipboard")
+  End With
+  Set elmClipboard = uiAuto.ElementFromIAccessible(accClipboard, 0)
+  Set cndListItems = uiAuto.CreatePropertyCondition(UIA_ControlTypePropertyId, UIA_ListItemControlTypeId)
+  Set GetOfficeClipboardListItems = elmClipboard.FindAll(TreeScope_Subtree, cndListItems)
 End Function
 '============================================================================================================================

@@ -242,6 +242,7 @@ Function setCaption(captionRange As Range, captionText As String)
 End Function
 '選択中のシェイプを選択順にコネクタで繋ぐ
 Sub F_シェイプを選択順にコネクタで繋ぐ()
+Attribute F_シェイプを選択順にコネクタで繋ぐ.VB_ProcData.VB_Invoke_Func = "l\n14"
     Dim startShape As shape
     Dim endShape As shape
     Dim connectShape As shape
@@ -257,7 +258,7 @@ Sub F_シェイプを選択順にコネクタで繋ぐ()
         End If
     Next
     
-    For i = 1 To Selection.ShapeRange.count - 1
+    For i = 1 To Selection.ShapeRange.Count - 1
         '選択中シェイプの保持（接続元）
         Set startShape = Selection.ShapeRange.Item(i)
         '選択中シェイプの保持（接続先）
@@ -284,6 +285,7 @@ Sub F_シェイプを選択順にコネクタで繋ぐ()
 End Sub
 'コネクタの種類を直線とエルボーで切り替える
 Sub G_コネクタ種類切り替え()
+Attribute G_コネクタ種類切り替え.VB_ProcData.VB_Invoke_Func = "i\n14"
 
     If connectorErrorCheck Then
        Exit Sub
@@ -299,6 +301,7 @@ Sub G_コネクタ種類切り替え()
 End Sub
 '選択したコネクタの始点側のシェイプとの接続位置を変更する
 Sub H_コネクタ始点変更()
+Attribute H_コネクタ始点変更.VB_ProcData.VB_Invoke_Func = "o\n14"
 
     If connectorErrorCheck Then
        Exit Sub
@@ -324,6 +327,7 @@ Sub H_コネクタ始点変更()
 End Sub
 '選択したコネクタの終点側のシェイプとの接続位置を変更する
 Sub I_コネクタ終点変更()
+Attribute I_コネクタ終点変更.VB_ProcData.VB_Invoke_Func = "p\n14"
     If connectorErrorCheck Then
        Exit Sub
     End If
@@ -442,11 +446,11 @@ Sub O_目次シートを作成する()
     
     Dim loopWs As Worksheet
     
-    For i = 2 To Worksheets.count
+    For i = 2 To Worksheets.Count
         Set loopWs = Worksheets(i)
         ws.Cells(i, 1) = i - 1
         ws.Cells(i, 2) = loopWs.Name
-        ws.Cells(i, 4) = loopWs.Shapes.count
+        ws.Cells(i, 4) = loopWs.Shapes.Count
         ws.Cells(i, 5) = loopWs.UsedRange.Address
     Next
     ws.Columns("A:H").AutoFit
@@ -464,7 +468,7 @@ Function isExistCheckToSheet(wb As Workbook, checkSheet As Variant)
     
     If IsNumeric(checkSheet) Then
         '指定値が数値の場合、全シート数より小さい数字かどうかが存在チェックとなる
-        isExistCheckToSheet = checkSheet <= wb.Worksheets.count
+        isExistCheckToSheet = checkSheet <= wb.Worksheets.Count
     End If
 End Function
 '#アクティブシートの内容に従いシートを生成し、リンクを付与する。ソートも行う
@@ -518,7 +522,7 @@ Function existsSheet(ByVal sheetName As String)
 End Function
 'シェイプのうち選択中セルのleftプロパティに一致しないものを選択セル位置から並べる
 Sub Q_シェイプ追加整列()
-Attribute Q_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = "m\n14"
+Attribute Q_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = " \n14"
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
     
@@ -570,7 +574,7 @@ Sub S_シェイプ間にマニュアル向けの矢印を置く()
         End If
     Next
     
-    For i = 1 To Selection.ShapeRange.count - 1
+    For i = 1 To Selection.ShapeRange.Count - 1
         '選択中シェイプの保持（接続元）
         Set startShape = Selection.ShapeRange.Item(i)
         '選択中シェイプの保持（接続先）
