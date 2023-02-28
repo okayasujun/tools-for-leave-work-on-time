@@ -1,6 +1,8 @@
 Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
+    ActiveWindow.Zoom = 70
+    ActiveSheet.Name = "ファイル仕分け"
     Cells(1, 1) = "02_ファイル仕分け"
     Cells(1, 1).Font.Size = 18
     Cells(1, 1).Font.Name = "メイリオ"
@@ -1920,6 +1922,10 @@ Function revival19()
     onShape.Name = "Button 7"
     onShape.Visible = -1
     onShape.Placement = 1
+    onShape.Characters.Text = ""
+    Set onShape = ActiveSheet.Buttons.Add(0,0,54,30)
+    onShape.Name = "Drop Down 8"
+    onShape.Visible = 0
     onShape.Characters.Text = ""
 End Function
 sub revival()

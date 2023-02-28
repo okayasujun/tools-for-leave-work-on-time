@@ -1,6 +1,8 @@
 Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
+    ActiveWindow.Zoom = 70
+    ActiveSheet.Name = "Excel情報集約"
     Cells(1, 1) = "01_Excel情報集約"
     Cells(1, 1).Font.Size = 18
     Cells(1, 1).Font.Name = "メイリオ"
@@ -849,6 +851,7 @@ Function revival9()
     Cells(18, 3).Borders(xlEdgeRight).LineStyle = 1
     Cells(18, 3).Borders(xlEdgeRight).color = 0
     Cells(18, 3).Borders(xlEdgeRight).weight = 2
+    Cells(18, 4) = "する"
     Cells(18, 4).Font.Name = "メイリオ"
     Cells(18, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(18, 4).Borders(xlEdgeTop).color = 0
