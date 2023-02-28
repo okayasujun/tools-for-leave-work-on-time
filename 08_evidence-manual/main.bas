@@ -558,34 +558,42 @@ End Sub
 Sub R_2か3カラムの並び()
     'また今度実装する
 End Sub
-Sub S_シェイプ間にマニュアル向けの矢印を置く()
-    Dim startShape As shape
-    Dim endShape As shape
-    Dim connectShape As shape
-    
-    If TypeName(Selection) = "Range" Then
-        MsgBox "シェイプが選択されていません。2つ以上選択してください。"
-        Exit Sub
-    End If
-    For Each shp In Selection.ShapeRange
-        If shp.Type = msoGroup Or shp.Connector Then
-            MsgBox "選択シェイプにグループかコネクタが含まれています。解除してください。"
-            Exit Sub
-        End If
-    Next
-    
-    For i = 1 To Selection.ShapeRange.Count - 1
-        '選択中シェイプの保持（接続元）
-        Set startShape = Selection.ShapeRange.Item(i)
-        '選択中シェイプの保持（接続先）
-        Set endShape = Selection.ShapeRange.Item(i + 1)
-        '//TODO:ここで2つのシェイプの位置関係を把握し、間にシェイプを置く
-    Next
-
+Sub U_セルからセルに伸びるコネクタ()
+    'また今度実装する
 End Sub
-Function getConnect()
-    getConnect = shap
-End Function
-Sub T_連続貼付と整列()
-    '無理っぽい
+'たたき台的クオリティ。過不足は後日修正
+Sub V_最初のシェイプをスキャンコピー()
+    '複数シェイプ選択時、2つ目以降は1つ目のスタイルを適用する。ループ処理
+    Dim baseShp As shape
+    Dim shp As shape
+    Set baseShp = Selection.ShapeRange.Item(1)
+    For i = 2 To Selection.ShapeRange.Count
+        '選択中シェイプの保持（接続元）
+        Set shp = Selection.ShapeRange.Item(i)
+        shp.Line.ForeColor.RGB = baseShp.Line.ForeColor.RGB
+        'shp.ForeColor.RGB = baseShp.ForeColor.RGB
+        '↓ワードアートフォーマットが指定できないシェイプを選ぶときはコメントアウトして
+        shp.TextFrame2.WordArtformat = baseShp.TextFrame2.WordArtformat
+        shp.Fill.Transparency = baseShp.Fill.Transparency
+        'テキストまで変えたくないときはコメントアウト
+        'shp.TextFrame.Characters.Text = baseShp.TextFrame.Characters.Text
+        shp.Fill.ForeColor.RGB = baseShp.Fill.ForeColor.RGB
+        shp.TextFrame2.TextRange.Font.Size = baseShp.TextFrame2.TextRange.Font.Size
+        shp.TextFrame2.WordWrap = baseShp.TextFrame2.WordWrap
+        shp.TextFrame.Characters.Font.Color = baseShp.TextFrame.Characters.Font.Color
+        shp.TextFrame.Characters.Font.Name = baseShp.TextFrame.Characters.Font.Name
+        shp.TextFrame2.VerticalAnchor = baseShp.TextFrame2.VerticalAnchor
+        shp.TextFrame2.TextRange.ParagraphFormat.Alignment = baseShp.TextFrame2.TextRange.ParagraphFormat.Alignment
+        shp.Placement = baseShp.Placement
+        shp.LockAspectRatio = baseShp.LockAspectRatio
+        shp.TextFrame2.AutoSize = baseShp.TextFrame2.AutoSize
+        shp.TextFrame2.MarginLeft = baseShp.TextFrame2.MarginLeft
+        shp.TextFrame2.MarginRight = baseShp.TextFrame2.MarginRight
+        shp.TextFrame2.MarginTop = baseShp.TextFrame2.MarginTop
+        shp.TextFrame2.MarginBottom = baseShp.TextFrame2.MarginBottom
+        shp.TextFrame2.WordWrap = baseShp.TextFrame2.WordWrap
+        shp.TextFrame2.VerticalAnchor = baseShp.TextFrame2.VerticalAnchor
+        shp.TextFrame2.HorizontalAnchor = baseShp.TextFrame2.HorizontalAnchor
+        shp.TextFrame2.Orientation = baseShp.TextFrame2.Orientation
+    Next
 End Sub

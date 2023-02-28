@@ -176,9 +176,67 @@ Function isExistArray(targetArray As Variant, checkValue As String)
     Next
 End Function
 '============================================================================================================================
+'作りかけ20230228。ブラッシュアップの余地あり
+Sub S_シェイプ間にマニュアル向けの矢印を置く()
+    Dim startShape As shape
+    Dim endShape As shape
+    Dim connectShape As shape
+    
+    Dim x1 As Double
+    Dim x2 As Double
+    Dim y1 As Double
+    Dim y2 As Double
+    Dim degree As Double
+    Dim adjustDegree As Integer
+    Dim onShape As shape
+    Dim setLeft As Double
+    Dim setTop As Double
+    
+    If TypeName(Selection) = "Range" Then
+        MsgBox "シェイプが選択されていません。2つ以上選択してください。"
+        Exit Sub
+    End If
+    For Each shp In Selection.ShapeRange
+        If shp.Type = msoGroup Or shp.Connector Then
+            MsgBox "選択シェイプにグループかコネクタが含まれています。解除してください。"
+            Exit Sub
+        End If
+    Next
+    
+    For i = 1 To Selection.ShapeRange.Count - 1
+        '選択中シェイプの保持（接続元）
+        Set startShape = Selection.ShapeRange.Item(i)
+        '選択中シェイプの保持（接続先）
+        Set endShape = Selection.ShapeRange.Item(i + 1)
+        '各ポイントを取得
+        x1 = startShape.left + startShape.width - (startShape.width / 2)
+        x2 = endShape.left + endShape.width - (endShape.width / 2)
+        y1 = startShape.top + startShape.height - (startShape.height / 2)
+        y2 = endShape.top + endShape.height - (endShape.height / 2)
+    
+        If startShape.left < endShape.left Then
+            adjustDegree = 180
+            setLeft = startShape.left + (endShape.left - startShape.left) / 2
+            setTop = startShape.top + (endShape.top - startShape.top) / 2
+        Else
+            setLeft = endShape.left + (startShape.left - endShape.left) / 2
+            setTop = endShape.top + (startShape.top - endShape.top) / 2
+        
+        End If
+        
+        degree = Atn((y2 - y1) / (x2 - x1)) * 180 / 3.14
+        
+        Set onShape = ActiveSheet.Shapes.AddShape(msoShapeLeftArrow, setLeft, setTop, 200, 100)
+        onShape.Rotation = degree + adjustDegree
+        adjustDegree = 0
+    Next
+    '状況：やりたいことのイメージはOK
+    'あとは矢印のスタイル、大きさ、位置の微調整
+End Sub
+'============================================================================================================================
 '謝意：https://www.ka-net.org/blog/?p=4944 参考
 'できたけど動作不安定（クリップボードの表示エリア中可視範囲のものしか対象にできない）
-Sub T_連続貼付_試行編()
+Sub T_連続貼付()
     'TODO:実行前後でbeforeセル選ばせる処理入れてもいいかも。今、最後の貼付シェイプを選んだ状態になる
     'Officeクリップボードにあるアイテム列挙
     Dim aryListItems As UIAutomationClient.IUIAutomationElementArray

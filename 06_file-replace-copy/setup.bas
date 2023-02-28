@@ -1,6 +1,8 @@
 Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
+    ActiveWindow.Zoom = 70
+    ActiveSheet.Name = "テキストファイル置換コピー"
     Cells(1, 1) = "04_テキストファイル置換コピー"
     Cells(1, 1).Font.Size = 18
     Cells(1, 1).Font.Name = "メイリオ"
