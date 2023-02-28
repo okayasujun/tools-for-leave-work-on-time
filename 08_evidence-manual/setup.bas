@@ -1,6 +1,8 @@
 Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
+    ActiveWindow.Zoom = 70
+    ActiveSheet.Name = "説明書"
     Cells(1, 1) = "■シェイプ操作　プロシージャ一覧"
     Cells(1, 1).Font.Size = 16
     Cells(1, 1).Font.Name = "Meiryo UI"
@@ -1702,7 +1704,7 @@ Function revival3()
     Cells(21, 6).Borders(xlEdgeRight).LineStyle = 1
     Cells(21, 6).Borders(xlEdgeRight).color = 0
     Cells(21, 6).Borders(xlEdgeRight).weight = 1
-    Cells(22, 1) = "20"
+    Cells(22, 1) = "21"
     Cells(22, 1).Font.Name = "Meiryo UI"
     Cells(22, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(22, 1).Borders(xlEdgeTop).color = 0
@@ -1716,7 +1718,7 @@ Function revival3()
     Cells(22, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 1).Borders(xlEdgeRight).color = 0
     Cells(22, 1).Borders(xlEdgeRight).weight = 1
-    Cells(22, 2) = "T_連続貼付と整列"
+    Cells(22, 2) = "T_連続貼付"
     Cells(22, 2).Font.Name = "Meiryo UI"
     Cells(22, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(22, 2).Borders(xlEdgeTop).color = 0
@@ -1730,7 +1732,7 @@ Function revival3()
     Cells(22, 2).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 2).Borders(xlEdgeRight).color = 0
     Cells(22, 2).Borders(xlEdgeRight).weight = 1
-    Cells(22, 3) = "main"
+    Cells(22, 3) = "try"
     Cells(22, 3).Font.Name = "Meiryo UI"
     Cells(22, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(22, 3).Borders(xlEdgeTop).color = 0
@@ -1771,8 +1773,9 @@ Function revival3()
     Cells(22, 5).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 5).Borders(xlEdgeRight).color = 0
     Cells(22, 5).Borders(xlEdgeRight).weight = 1
-    Cells(22, 6) = "未実装"
+    Cells(22, 6) = "参照設定がいる"
     Cells(22, 6).Font.Name = "Meiryo UI"
+    Cells(22, 6).Font.Bold = True
     Cells(22, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(22, 6).Borders(xlEdgeTop).color = 0
     Cells(22, 6).Borders(xlEdgeTop).weight = 1
@@ -1785,7 +1788,7 @@ Function revival3()
     Cells(22, 6).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 6).Borders(xlEdgeRight).color = 0
     Cells(22, 6).Borders(xlEdgeRight).weight = 1
-    Cells(23, 1) = "21"
+    Cells(23, 1) = "22"
     Cells(23, 1).Font.Name = "Meiryo UI"
     Cells(23, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(23, 1).Borders(xlEdgeTop).color = 0
@@ -1799,7 +1802,7 @@ Function revival3()
     Cells(23, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(23, 1).Borders(xlEdgeRight).color = 0
     Cells(23, 1).Borders(xlEdgeRight).weight = 1
-    Cells(23, 2) = "T_連続貼付_試行編"
+    Cells(23, 2) = "U_クリップボードすべてクリア"
     Cells(23, 2).Font.Name = "Meiryo UI"
     Cells(23, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(23, 2).Borders(xlEdgeTop).color = 0
@@ -1840,7 +1843,7 @@ Function revival3()
     Cells(23, 4).Borders(xlEdgeRight).LineStyle = 1
     Cells(23, 4).Borders(xlEdgeRight).color = 0
     Cells(23, 4).Borders(xlEdgeRight).weight = 1
-    Cells(23, 5) = "また今度かくわ"
+    Cells(23, 5) = "クリップボードをすべてクリアする"
     Cells(23, 5).Font.Name = "Meiryo UI"
     Cells(23, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(23, 5).Borders(xlEdgeTop).color = 0
@@ -1881,7 +1884,7 @@ Function revival3()
     Cells(24, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(24, 1).Borders(xlEdgeRight).color = 0
     Cells(24, 1).Borders(xlEdgeRight).weight = 1
-    Cells(24, 2) = "U_クリップボードすべてクリア"
+    Cells(24, 2) = "V_最初のシェイプをスキャンコピー"
     Cells(24, 2).Font.Name = "Meiryo UI"
     Cells(24, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(24, 2).Borders(xlEdgeTop).color = 0
@@ -1895,7 +1898,7 @@ Function revival3()
     Cells(24, 2).Borders(xlEdgeRight).LineStyle = 1
     Cells(24, 2).Borders(xlEdgeRight).color = 0
     Cells(24, 2).Borders(xlEdgeRight).weight = 1
-    Cells(24, 3) = "try"
+    Cells(24, 3) = "main"
     Cells(24, 3).Font.Name = "Meiryo UI"
     Cells(24, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(24, 3).Borders(xlEdgeTop).color = 0
@@ -1922,7 +1925,7 @@ Function revival3()
     Cells(24, 4).Borders(xlEdgeRight).LineStyle = 1
     Cells(24, 4).Borders(xlEdgeRight).color = 0
     Cells(24, 4).Borders(xlEdgeRight).weight = 1
-    Cells(24, 5) = "クリップボードをすべてクリアする"
+    Cells(24, 5) = "複数シェイプ選択時、2つ目以降のシェイプに1つ目のシェイプのスタイルを適用させる"
     Cells(24, 5).Font.Name = "Meiryo UI"
     Cells(24, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(24, 5).Borders(xlEdgeTop).color = 0
@@ -1936,6 +1939,7 @@ Function revival3()
     Cells(24, 5).Borders(xlEdgeRight).LineStyle = 1
     Cells(24, 5).Borders(xlEdgeRight).color = 0
     Cells(24, 5).Borders(xlEdgeRight).weight = 1
+    Cells(24, 6) = "選択するシェイプによって若干動作が不安定"
     Cells(24, 6).Font.Name = "Meiryo UI"
     Cells(24, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(24, 6).Borders(xlEdgeTop).color = 0
