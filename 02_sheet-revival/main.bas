@@ -76,6 +76,9 @@ Function writeFromExcelToText()
         .WriteText "Attribute VB_Name = ""setup""", 1
         .WriteText "Function revival0()", 1
         .WriteText "    ActiveWindow.DisplayGridlines = " & ActiveWindow.DisplayGridlines, 1
+        .WriteText "    ActiveWindow.Zoom = " & ActiveWindow.Zoom, 1
+        .WriteText "    ActiveSheet.Name = """ & ActiveSheet.Name & """", 1
+        
 
         For i = fromRow To toRow
             For j = fromColumn To toColumn
@@ -100,12 +103,12 @@ Function writeFromExcelToText()
                     .WriteText "    Cells(" & i & ", " & j & ").Font.Name = """ & ws.Cells(i, j).Font.Name & """", 1
                 End If
                 '背景色
-                If ws.Cells(i, j).Interior.Color <> NO_COLOR Then
-                    .WriteText "    Cells(" & i & ", " & j & ").Interior.Color = " & ws.Cells(i, j).Interior.Color, 1
+                If ws.Cells(i, j).Interior.color <> NO_COLOR Then
+                    .WriteText "    Cells(" & i & ", " & j & ").Interior.Color = " & ws.Cells(i, j).Interior.color, 1
                 End If
                 '文字色
-                If ws.Cells(i, j).Font.Color <> INIT_TEXT_COLOR Then
-                    .WriteText "    Cells(" & i & ", " & j & ").Font.Color = " & ws.Cells(i, j).Font.Color, 1
+                If ws.Cells(i, j).Font.color <> INIT_TEXT_COLOR Then
+                    .WriteText "    Cells(" & i & ", " & j & ").Font.Color = " & ws.Cells(i, j).Font.color, 1
                 End If
                 '太字
                 If ws.Cells(i, j).Font.Bold Then
@@ -138,26 +141,26 @@ Function writeFromExcelToText()
                 '罫線（上）
                 If ws.Cells(i, j).Borders(xlEdgeTop).LineStyle <> xlLineStyleNone Then
                     .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeTop).LineStyle = " & ws.Cells(i, j).Borders(xlEdgeTop).LineStyle, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeTop).color = " & ws.Cells(i, j).Borders(xlEdgeTop).Color, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeTop).weight = " & ws.Cells(i, j).Borders(xlEdgeTop).Weight, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeTop).color = " & ws.Cells(i, j).Borders(xlEdgeTop).color, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeTop).weight = " & ws.Cells(i, j).Borders(xlEdgeTop).weight, 1
                 End If
                 '罫線（下）
                 If ws.Cells(i, j).Borders(xlEdgeBottom).LineStyle <> xlLineStyleNone Then
                     .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeBottom).LineStyle = " & ws.Cells(i, j).Borders(xlEdgeBottom).LineStyle, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeBottom).color = " & ws.Cells(i, j).Borders(xlEdgeBottom).Color, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeBottom).weight = " & ws.Cells(i, j).Borders(xlEdgeBottom).Weight, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeBottom).color = " & ws.Cells(i, j).Borders(xlEdgeBottom).color, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeBottom).weight = " & ws.Cells(i, j).Borders(xlEdgeBottom).weight, 1
                 End If
                 '罫線（左）
                 If ws.Cells(i, j).Borders(xlEdgeLeft).LineStyle <> xlLineStyleNone Then
                     .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeLeft).LineStyle = " & ws.Cells(i, j).Borders(xlEdgeLeft).LineStyle, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeLeft).color = " & ws.Cells(i, j).Borders(xlEdgeLeft).Color, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeLeft).weight = " & ws.Cells(i, j).Borders(xlEdgeLeft).Weight, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeLeft).color = " & ws.Cells(i, j).Borders(xlEdgeLeft).color, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeLeft).weight = " & ws.Cells(i, j).Borders(xlEdgeLeft).weight, 1
                 End If
                 '罫線（右）
                 If ws.Cells(i, j).Borders(xlEdgeRight).LineStyle <> xlLineStyleNone Then
                     .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeRight).LineStyle = " & ws.Cells(i, j).Borders(xlEdgeRight).LineStyle, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeRight).color = " & ws.Cells(i, j).Borders(xlEdgeRight).Color, 1
-                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeRight).weight = " & ws.Cells(i, j).Borders(xlEdgeRight).Weight, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeRight).color = " & ws.Cells(i, j).Borders(xlEdgeRight).color, 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Borders(xlEdgeRight).weight = " & ws.Cells(i, j).Borders(xlEdgeRight).weight, 1
                 End If
                 '入力規則（リスト）
                 On Error Resume Next '非設定時のエラー回避
@@ -203,7 +206,7 @@ Function writeFromExcelToText()
                 .WriteText "    onShape.Fill.ForeColor.RGB = " & shp.Fill.ForeColor.RGB, 1
                 .WriteText "    onShape.TextFrame2.TextRange.Font.Size = " & shp.TextFrame2.TextRange.Font.Size, 1
                 .WriteText "    onShape.TextFrame2.WordWrap = " & shp.TextFrame2.WordWrap, 1
-                .WriteText "    onShape.TextFrame.Characters.Font.Color = " & shp.TextFrame.Characters.Font.Color, 1
+                .WriteText "    onShape.TextFrame.Characters.Font.Color = " & shp.TextFrame.Characters.Font.color, 1
                 .WriteText "    onShape.TextFrame.Characters.Font.Name = """ & shp.TextFrame.Characters.Font.Name & """", 1
                 .WriteText "    onShape.TextFrame2.VerticalAnchor = " & shp.TextFrame2.VerticalAnchor, 1
                 .WriteText "    onShape.TextFrame2.TextRange.ParagraphFormat.Alignment = " & shp.TextFrame2.TextRange.ParagraphFormat.Alignment, 1
@@ -232,7 +235,7 @@ Function writeFromExcelToText()
                 .WriteText "    onShape.height = " & shp.Height, 1
                 .WriteText "    onShape.Line.BeginArrowheadStyle = " & shp.Line.BeginArrowheadStyle, 1
                 .WriteText "    onShape.Line.EndArrowheadStyle = " & shp.Line.EndArrowheadStyle, 1
-                .WriteText "    onShape.Line.Weight = " & shp.Line.Weight, 1
+                .WriteText "    onShape.Line.Weight = " & shp.Line.weight, 1
 
             ElseIf shp.Type = msoFormControl Then
                 .WriteText "    Set onShape = ActiveSheet.Buttons.Add(" & shp.Left & "," & shp.Top & "," & shp.Width & "," & shp.Height & ")", 1
