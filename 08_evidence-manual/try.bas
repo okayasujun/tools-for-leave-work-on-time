@@ -1,8 +1,8 @@
 Attribute VB_Name = "try"
 '#シェイプを整列させる（Y座標の昇順）
 '※既知の問題：同じ高さの画像があるとエラーを出す。
-Sub E_高さ順に整列させる() 'TODO:これに関してはシンプルにリファクタリングをすべし。共通部分とか、きれいにしよう。
-Attribute E_高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
+Sub E_シェイプを高さ順に整列させる() 'TODO:これに関してはシンプルにリファクタリングをすべし。共通部分とか、きれいにしよう。
+Attribute E_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
 
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
@@ -20,23 +20,23 @@ Attribute E_高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
     Dim shapeDic As Dictionary
     Set shapeDic = CreateObject("Scripting.Dictionary")
     
-    Dim Count As Integer: Count = 0
+    Dim count As Integer: count = 0
     Dim shapeYArray() As Double
     
     'マップに情報を設定、座標ソート用に座標情報の配列格納
     For Each moveShape In ActiveSheet.Shapes
         If moveShape.Type = msoPicture Or moveShape.Type = msoGroup Then
         
-            If Count = 0 Then
-                ReDim shapeYArray(Count)
-                shapeYArray(Count) = moveShape.top
+            If count = 0 Then
+                ReDim shapeYArray(count)
+                shapeYArray(count) = moveShape.top
             Else
-                ReDim Preserve shapeYArray(Count)
-                shapeYArray(Count) = moveShape.top
+                ReDim Preserve shapeYArray(count)
+                shapeYArray(count) = moveShape.top
             End If
             
             shapeDic.Add moveShape.Name, moveShape.top
-            Count = Count + 1
+            count = count + 1
         End If
     Next
     
@@ -203,7 +203,7 @@ Sub S_シェイプ間にマニュアル向けの矢印を置く()
         End If
     Next
     
-    For i = 1 To Selection.ShapeRange.Count - 1
+    For i = 1 To Selection.ShapeRange.count - 1
         '選択中シェイプの保持（接続元）
         Set startShape = Selection.ShapeRange.Item(i)
         '選択中シェイプの保持（接続先）
@@ -254,9 +254,9 @@ Sub T_連続貼付()
     'ここでクリップボードの表示をfalseに戻してはだめ
 End Sub
 '
-Sub U_クリップボードすべてクリア()
-    DoActionOfficeClipboard "すべてクリア"
-End Sub
+'Sub W_クリップボードすべてクリア()
+'    DoActionOfficeClipboard "すべてクリア"
+'End Sub
 'ボタン操作を実行する（「すべてクリア」でのみ使用する）
 Private Sub DoActionOfficeClipboard(ByVal ButtonName As String)
 'Officeクリップボードコマンド実行
