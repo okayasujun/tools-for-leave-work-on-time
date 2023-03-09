@@ -390,7 +390,7 @@ Function revival0()
     Cells(6, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(6, 1).Borders(xlEdgeRight).color = 0
     Cells(6, 1).Borders(xlEdgeRight).weight = 1
-    Cells(6, 2) = "D_貼付順に整列させる"
+    Cells(6, 2) = "D_シェイプを貼付順に整列させる"
     Cells(6, 2).Font.Name = "Meiryo UI"
     Cells(6, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(6, 2).Borders(xlEdgeTop).color = 0
@@ -473,7 +473,7 @@ Function revival0()
     Cells(7, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(7, 1).Borders(xlEdgeRight).color = 0
     Cells(7, 1).Borders(xlEdgeRight).weight = 1
-    Cells(7, 2) = "E_高さ順に整列させる"
+    Cells(7, 2) = "E_シェイプを高さ順に整列させる"
     Cells(7, 2).Font.Name = "Meiryo UI"
     Cells(7, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(7, 2).Borders(xlEdgeTop).color = 0
@@ -1550,7 +1550,7 @@ Function revival2()
     Cells(20, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(20, 1).Borders(xlEdgeRight).color = 0
     Cells(20, 1).Borders(xlEdgeRight).weight = 1
-    Cells(20, 2) = "R_2か3カラムの並び"
+    Cells(20, 2) = "R_シェイプを2カラムで並べる"
     Cells(20, 2).Font.Name = "Meiryo UI"
     Cells(20, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(20, 2).Borders(xlEdgeTop).color = 0
@@ -1591,7 +1591,7 @@ Function revival2()
     Cells(20, 4).Borders(xlEdgeRight).LineStyle = 1
     Cells(20, 4).Borders(xlEdgeRight).color = 0
     Cells(20, 4).Borders(xlEdgeRight).weight = 1
-    Cells(20, 5) = "シート上のシェイプを2列ごとに並べる（3列もソースから指定可能）"
+    Cells(20, 5) = "シート上のシェイプを2列ごとに並べる"
     Cells(20, 5).Font.Name = "Meiryo UI"
     Cells(20, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(20, 5).Borders(xlEdgeTop).color = 0
@@ -1773,7 +1773,7 @@ Function revival3()
     Cells(22, 5).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 5).Borders(xlEdgeRight).color = 0
     Cells(22, 5).Borders(xlEdgeRight).weight = 1
-    Cells(22, 6) = "参照設定がいる"
+    Cells(22, 6) = "参照設定がいる。実用性が低い。"
     Cells(22, 6).Font.Name = "Meiryo UI"
     Cells(22, 6).Font.Bold = True
     Cells(22, 6).Borders(xlEdgeTop).LineStyle = 1
