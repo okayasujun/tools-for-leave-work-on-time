@@ -19,6 +19,8 @@ Const WIDTH_MARGIN = 130
 Const SHAPE_WIDTH = 130
 'シェイプの高さ
 Const SHAPE_HEIGHT = 33
+'アニメーションフラグ
+Const ANIMATION_FLAG = False
 '最終フローNo（定数扱いなので大文字定義にする）
 Dim LAST_FLOW_NO As String
 '中央座標
@@ -38,6 +40,7 @@ Dim movedShapeNos As String
 '標準シェイプ
 'Dim baseShape As Shape
 Sub A_フロー作成()
+Attribute A_フロー作成.VB_ProcData.VB_Invoke_Func = "q\n14"
 
     '■1.初期設定
     Call init
@@ -69,8 +72,8 @@ Function init()
         For i = 2 To lastShapeLine
             For Each shp In .Shapes
                 If .Cells(i, 6).Left < shp.Left _
-                    And .Cells(i, 6).top < shp.top _
-                    And .Cells(i, 6).top + .Cells(i, 6).Height > shp.top + shp.Height Then
+                    And .Cells(i, 6).Top < shp.Top _
+                    And .Cells(i, 6).Top + .Cells(i, 6).Height > shp.Top + shp.Height Then
 
                     .Cells(i, 3) = shp.AutoShapeType
 
@@ -94,7 +97,7 @@ Function init()
         flowList = .Range(.Cells(2, 1), .Cells(lastFlowLine, 5))
     
     End With
-    yPoint = Selection.top
+    yPoint = Selection.Top
 End Function
 
 '■2.シェイプ作成
@@ -104,7 +107,7 @@ Function createFlowParts()
         'シェイプ種別取得
         shapeType = vlookup(shapeList, flowList(i, TYPE_COL), 2, 3)
         'シェイプを生成
-        Set onShape = ActiveSheet.Shapes.AddShape(shapeType, 400, 100, 100, 30)
+        Set onShape = ActiveSheet.Shapes.AddShape(shapeType, 40, 10, 100, 30)
         'テキストの設定
         onShape.TextFrame.Characters.text = flowList(i, PROCESS_NO_COL) & "." & flowList(i, SHAPE_TEXT_COL)
         '名前の設定（フローNo）
@@ -153,6 +156,7 @@ Function moveFlowParts()
             '遷移元が1つのみかつ､それがSwitch要素
             Dim currentNo As Integer: currentNo = isSwitchShape(srcShapes, moveShape)
             If currentNo = 1 Then
+                '走査シェイプが最初の要素のときのみトップを設定
                 yPoint = yPoint + moveShape.Height + HEIGHT_MARGIN
             End If
             Dim branchCount As Integer: branchCount = getSwitchBranchCount(srcShapes) + 1
@@ -160,61 +164,108 @@ Function moveFlowParts()
             Dim weight As Integer
             If branchCount Mod 2 = 0 Then
                 '偶数
-                If branchCount / 2 >= currentNo Then
-                    '前半
-                    weight = branchCount / 2 - currentNo + 1
-                    moveShape.Left = CENTER_POINT - moveShape.Width / 2 - (140 * weight) + 70
-                Else
-                    '後半
-                    weight = currentNo - branchCount / 2
-                    moveShape.Left = CENTER_POINT - moveShape.Width / 2 + (140 * weight) - 70
-                End If
+                Call switchEvenChildlenMove(moveShape, branchCount, currentNo)
             Else
                 '奇数
-                If branchCount / 2 + 0.5 >= currentNo Then
-                    '前半+中央
-                    weight = branchCount / 2 + 0.5 - currentNo
-                    moveShape.Left = CENTER_POINT - moveShape.Width / 2 - (140 * weight)
-                Else
-                    '後半
-                    weight = currentNo - (branchCount / 2 + 0.5)
-                    moveShape.Left = CENTER_POINT - moveShape.Width / 2 + (140 * weight)
-                End If
-                Debug.Print weight
+                Call switchOddChildlenMove(moveShape, branchCount, currentNo)
             End If
             
-            moveShape.top = yPoint
+'            moveShape.top = yPoint
+            Call animationTop(moveShape, yPoint)
             
         ElseIf UBound(srcShapes) = 0 And isBranchShape(srcShapes, moveShape) Then
             '遷移元が１つのみかつ、かつ遷移元が分岐でその第一分岐先が検証中シェイプ（左移動する）
             'yPoint = yPoint + moveShape.Height + HEIGHT_MARGIN 'どっちでもいいが、コネクタ処理にかかわる
-            moveShape.top = yPoint
+'            moveShape.top = yPoint
+            Call animationTop(moveShape, yPoint)
             Dim srtShapePoint As Integer: srtShapePoint = getCenterPoint(ActiveSheet.Shapes(srcShapes(0)))
-            moveShape.Left = srtShapePoint - moveShape.Width / 2 - 170 '遷移元シェイプとの差を指定する
+'            moveShape.Left = srtShapePoint - moveShape.Width / 2 - 170 '遷移元シェイプとの差を指定する
+            Call animationLeft(moveShape, srtShapePoint - moveShape.Width / 2 - 170)
         
         ElseIf UBound(srcShapes) = 0 And Not isCenterShape(srcShapes) Then
             '遷移元が１つのみかつ、それが中央ではない
             yPoint = yPoint + moveShape.Height + HEIGHT_MARGIN
-            moveShape.top = yPoint
-            moveShape.Left = CENTER_POINT - moveShape.Width / 2 - 170
+'            moveShape.top = yPoint
+'            moveShape.Left = CENTER_POINT - moveShape.Width / 2 - 170
+            Call animationTop(moveShape, yPoint)
+            Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2 - 170)
             
         ElseIf UBound(srcShapes) = 0 And isCenterShape(srcShapes) Then
             '遷移元が１つのみかつ、それが中央
             yPoint = yPoint + moveShape.Height + HEIGHT_MARGIN
-            moveShape.top = yPoint
-            moveShape.Left = CENTER_POINT - moveShape.Width / 2
+            
+            Call animationTop(moveShape, yPoint)
+            Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2)
             
         ElseIf UBound(srcShapes) > 0 Then  'And isCenterShape(srcShapes)
             '遷移元が2つ以上あり、その中にメイン座標のものがある（後ろの条件未実装）
             yPoint = yPoint + moveShape.Height + HEIGHT_MARGIN
-            moveShape.top = yPoint
-            moveShape.Left = CENTER_POINT - moveShape.Width / 2
+'            moveShape.top = yPoint
+'            moveShape.Left = CENTER_POINT - moveShape.Width / 2
+            Call animationTop(moveShape, yPoint)
+            Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2)
         Else
         End If
     Next
     
     '終了要素の移動
     Call moveStartEnd(ActiveSheet.Shapes(LAST_FLOW_NO))
+End Function
+Function switchEvenChildlenMove(moveShape As shape, branchCount As Integer, currentNo As Integer)
+    Dim weight As Integer
+    If branchCount / 2 >= currentNo Then
+        '前半
+        weight = branchCount / 2 - currentNo + 1
+'       moveShape.Left = CENTER_POINT - moveShape.Width / 2 - (140 * weight) + 70
+        Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2 - (140 * weight) + 70)
+    Else
+        '後半
+        weight = currentNo - branchCount / 2
+'       moveShape.Left = CENTER_POINT - moveShape.Width / 2 + (140 * weight) - 70
+        Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2 + (140 * weight) - 70)
+    End If
+End Function
+Function switchOddChildlenMove(moveShape As shape, branchCount As Integer, currentNo As Integer)
+    If branchCount / 2 + 0.5 >= currentNo Then
+        '前半+中央
+        weight = branchCount / 2 + 0.5 - currentNo
+'       moveShape.Left = CENTER_POINT - moveShape.Width / 2 - (140 * weight)
+        Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2 - (140 * weight))
+    Else
+        '後半
+        weight = currentNo - (branchCount / 2 + 0.5)
+'       moveShape.Left = CENTER_POINT - moveShape.Width / 2 + (140 * weight)
+        Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2 + (140 * weight))
+    End If
+
+End Function
+Function animationTop(moveShape As shape, goalPoint As Integer)
+    If ANIMATION_FLAG Then
+        While Not isApproximate(moveShape.Top, goalPoint, 2)
+            If isApproximate(moveShape.Top, goalPoint, 10) Then
+                moveShape.Top = moveShape.Top + 1
+            Else
+                moveShape.Top = moveShape.Top + 9
+            End If
+            Application.wait [Now() + "0:00:00.0005"]
+        Wend
+    Else
+        moveShape.Top = goalPoint
+    End If
+End Function
+Function animationLeft(moveShape As shape, goalPoint As Integer)
+    If ANIMATION_FLAG Then
+        While moveShape.Left <> goalPoint
+            If isApproximate(moveShape.Left, goalPoint, 10) Then
+                moveShape.Left = moveShape.Left + 1
+            Else
+                moveShape.Left = moveShape.Left + 9
+            End If
+            Application.wait [Now() + "0:00:00.0005"]
+        Wend
+    Else
+        moveShape.Left = goalPoint
+    End If
 End Function
 Function isCenterShape(srcShapes As Variant)
     For Each no In srcShapes
@@ -317,10 +368,18 @@ End Function
 '開始、終了要素に対するシェイプ移動を施す
 Function moveStartEnd(moveShape As shape)
     moveShape.Width = 75
-    moveShape.Left = CENTER_POINT - moveShape.Width / 2
+'    moveShape.Left = CENTER_POINT - moveShape.Width / 2
+            Call animationLeft(moveShape, CENTER_POINT - moveShape.Width / 2)
     yPoint = yPoint + moveShape.Height + HEIGHT_MARGIN
-    moveShape.top = yPoint
+'    moveShape.top = yPoint
+            Call animationTop(moveShape, yPoint)
     movedShapeNos = movedShapeNos & moveShape.Name & ","
+End Function
+'
+Function wait(waitTime As String)
+    If ANIMATION_FLAG Then
+        Application.wait [Now() + waitTime]
+    End If
 End Function
 '■4.コネクタ付与
 Function addConnector()
@@ -341,6 +400,10 @@ Function addConnector()
             For j = LBound(distArray) To UBound(distArray)
                 Set connectShape = baseConnect(connectShape)
                 connectShape.ConnectorFormat.BeginConnect srcShape, startPoint
+                
+            If ANIMATION_FLAG Then
+                Application.wait [Now() + "0:00:00.1"]
+            End If
 
                 Set distShape = ActiveSheet.Shapes(Split(CStr(distArray(j)), ":")(1))
                 endPoint = vlookup(shapeList, distShape.AutoShapeType, 3, 5)
@@ -350,7 +413,7 @@ Function addConnector()
                 If Not isApproximate(srcShape.Left + srcShape.Width / 2, distShape.Left + distShape.Width / 2) Then
                     connectShape.ConnectorFormat.Type = msoConnectorElbow
                 End If
-                If isApproximate(srcShape.top + srcShape.Height / 2, distShape.top + distShape.Height / 2) Then
+                If isApproximate(srcShape.Top + srcShape.Height / 2, distShape.Top + distShape.Height / 2) Then
                     connectShape.ConnectorFormat.Type = msoConnectorStraight
                 End If
                 
@@ -369,12 +432,15 @@ Function addConnector()
                 If UBound(distArray) = 1 Then
                     '分岐
                     hjShape.Left = connectShape.Left + 2
-                    hjShape.top = connectShape.top + 2
+                    hjShape.Top = connectShape.Top + 2
                 Else
                     'Switch
                     hjShape.Left = distShape.Left + 63
-                    hjShape.top = distShape.top - 16
+                    hjShape.Top = distShape.Top - 16
                 End If
+            If ANIMATION_FLAG Then
+                Application.wait [Now() + "0:00:00.1"]
+            End If
             Next
         Else
             '遷移先単数
@@ -382,6 +448,9 @@ Function addConnector()
             Set connectShape = baseConnect(connectShape)
             
             connectShape.ConnectorFormat.BeginConnect srcShape, startPoint
+            If ANIMATION_FLAG Then
+                Application.wait [Now() + "0:00:00.1"]
+            End If
             endPoint = vlookup(shapeList, distShape.AutoShapeType, 3, 5)
             connectShape.ConnectorFormat.EndConnect distShape, endPoint
             connectShape.Name = srcShape.Name & "-" & distShape.Name
@@ -393,7 +462,7 @@ Function addConnector()
             
             '遷移先が「終了」フローだったら始点終点を変える (Not isApproximate(srcShape.Left + srcShape.Width / 2, distShape.Left + distShape.Width / 2)) And
             If distShape.Name = LAST_FLOW_NO Then
-                If distShape.top - srcShape.top < 100 Then
+                If distShape.Top - srcShape.Top < 100 Then
                     connectShape.ConnectorFormat.BeginConnect srcShape, srcShape.ConnectionSiteCount - 1
                     connectShape.ConnectorFormat.EndConnect distShape, 1
                 Else
@@ -401,6 +470,9 @@ Function addConnector()
                     connectShape.ConnectorFormat.BeginConnect srcShape, srcShape.ConnectionSiteCount - 2
                     connectShape.ConnectorFormat.EndConnect distShape, 2
                 End If
+            End If
+            If ANIMATION_FLAG Then
+                Application.wait [Now() + "0:00:00.1"]
             End If
         End If
     Next
@@ -425,11 +497,11 @@ Function adjust()
 '    Next
 End Function
 '近似値かどうか
-Function isApproximate(int1 As Integer, int2 As Integer)
+Function isApproximate(int1 As Integer, int2 As Integer, Optional diff As Integer = 1)
     If int1 < int2 Then
-        isApproximate = int2 - int1 < 1
+        isApproximate = int2 - int1 <= diff
     Else
-        isApproximate = int1 - int2 < 1
+        isApproximate = int1 - int2 <= diff
     End If
 End Function
 'シェイプ最適化
@@ -566,9 +638,9 @@ Attribute C_X座標合わせ.VB_ProcData.VB_Invoke_Func = "e\n14"
 End Sub
 Sub D_Y座標合わせ()
 Attribute D_Y座標合わせ.VB_ProcData.VB_Invoke_Func = "d\n14"
-    Dim baseXCenterPoint As Integer: baseXCenterPoint = Selection.ShapeRange.Item(1).top + Selection.ShapeRange.Item(1).Height / 2
+    Dim baseXCenterPoint As Integer: baseXCenterPoint = Selection.ShapeRange.Item(1).Top + Selection.ShapeRange.Item(1).Height / 2
     For Each sp In Selection.ShapeRange
-        sp.top = baseXCenterPoint - sp.Height / 2
+        sp.Top = baseXCenterPoint - sp.Height / 2
     Next
 End Sub
 '選択したコネクタの始点側のシェイプとの接続位置を変更する
