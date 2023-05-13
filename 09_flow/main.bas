@@ -86,7 +86,7 @@ Function init()
         shapeList = .Range(.Cells(2, 1), .Cells(lastShapeLine, 5))
     End With
     
-    With Sheets("Ú×")
+    With ActiveSheet 'Sheets("Ú×")
 
         Dim lastFlowLine As Integer: lastFlowLine = .Cells(1, 2).End(xlDown).Row
 
