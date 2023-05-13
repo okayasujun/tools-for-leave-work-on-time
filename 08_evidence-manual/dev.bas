@@ -1,6 +1,6 @@
 Attribute VB_Name = "dev"
 '#作業用のシェイプ整列（開発中にのみ使用する）
-'Sub ZZ_開発用_シェイプを1か所に整列させる()
+'Sub ZA_シェイプを1か所に整列させる()
 '    Dim top As Integer: top = Selection.top
 '    Dim left As Integer: left = Selection.left
 '
@@ -14,7 +14,7 @@ Attribute VB_Name = "dev"
 '=================================================================================================================
 '#セットアップで使用する
 '使用中の線の色を調べるプロシージャ。矢印やシェイプを一つだけ選択した状態で実行し、イミディエイトウィンドウを参照
-'Sub ZZ_色を調べる()
+'Sub ZB_色を調べる()
 '    Dim currentColorCode As Long: currentColorCode = Selection.ShapeRange.Item(1).Line.ForeColor.RGB
 '    Dim Red As Integer: Red = currentColorCode Mod 256
 '    Dim Green As Integer: Green = Int(currentColorCode / 256) Mod 256
@@ -33,7 +33,7 @@ Attribute VB_Name = "dev"
 'セルの文字色を調べたい場合は､上記ソースの2行目を以下に変更するとOK｡
 '    Dim currentColorCode As Long: currentColorCode = Selection.Font.Color
 '=================================================================================================================
-'Sub ZZ_開発用_すべてのコネクタシェイプを削除する()
+'Sub ZC_すべてのコネクタシェイプを削除する()
 '    For Each shp In ActiveSheet.Shapes
 '        If shp.Connector Then
 '            shp.Delete
@@ -41,7 +41,7 @@ Attribute VB_Name = "dev"
 '    Next
 ''End Sub
 '=================================================================================================================
-'Sub ZZ_選択中シェイプを再現するソースを生成する()
+'Sub ZD_選択中シェイプを再現するソースを生成する()
 '
 '    Dim shp As shape
 '    Set shp = Selection.ShapeRange.Item(1)
@@ -104,6 +104,6 @@ Attribute VB_Name = "dev"
 'End Sub
 '=================================================================================================================
 ''出力したソースを貼付して動作確認する用
-'Sub ZZ_出力確認()
+'Sub ZE_出力確認()
 '
 'End Sub
