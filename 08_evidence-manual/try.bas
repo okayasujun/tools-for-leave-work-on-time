@@ -1,8 +1,8 @@
 Attribute VB_Name = "try"
 '#シェイプを整列させる（Y座標の昇順）
 '※既知の問題：同じ高さの画像があるとエラーを出す。
-Sub E_シェイプを高さ順に整列させる() 'TODO:これに関してはシンプルにリファクタリングをすべし。共通部分とか、きれいにしよう。
-Attribute E_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
+Sub AE_シェイプを高さ順に整列させる() 'TODO:これに関してはシンプルにリファクタリングをすべし。共通部分とか、きれいにしよう。
+Attribute AE_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
 
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
@@ -62,7 +62,7 @@ Attribute E_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
     '============================== 以降の処理はlineUpShapesOrderOfPasted()と同じ =================================
 
     '移動位置を取得するためのダミーシェイプ
-    Dim dummyShape As shape
+    Dim dummyShape As Shape
     '貼付座標を格納する（topは都度書き換え、leftは初期値を使いまわす）
     Dim top As Integer: top = Selection.top + 5
     Dim left As Integer: left = Selection.left
@@ -90,7 +90,7 @@ Attribute E_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
         'Call setCaption(captionRange)
         
         '今対象にしたシェイプの上部座標 + 今対象にしたシェイプの高さ + 画像間の間隔 = 次のシェイプの移動先上部座標
-        top = top + moveShape.height + MARGIN_BOTTOM
+        top = top + moveShape.Height + MARGIN_BOTTOM
     Next
     Exit Sub
     
@@ -115,23 +115,23 @@ End Function
 '============================================================================================================================
 '#TODO:必要性・使い勝手の観点で要見直し。グループ化対象範囲をシェイプ内とするか選択セル範囲内とするか。
 '#選択中の大枠内にあるシェイプをグループ化する。グループ完了時、囲みシェイプは削除する
-Sub M_選択中枠内のシェイプ群をグループ化する()
+Sub YA_選択中枠内のシェイプ群をグループ化する()
     'グループ化シェイプ名をカンマ区切りで保持する用
     Dim targetShapeName As String
     'カンマ区切りで保持したものを配列状態で保持するよう
     Dim targetShapeArray As Variant
     
-    For Each shape In ActiveSheet.Shapes
+    For Each Shape In ActiveSheet.Shapes
         '条件参考：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
 
-        If shape.Type = msoAutoShape Or shape.Type = msoGroup Or shape.Type = msoPicture Then
+        If Shape.Type = msoAutoShape Or Shape.Type = msoGroup Or Shape.Type = msoPicture Then
             '上辺、左辺、右辺、下辺が大枠内にあるシェイプのみを対象とする
-            If Selection.left < shape.left _
-                And Selection.top < shape.top _
-                And shape.left + shape.width < Selection.left + Selection.width _
-                And shape.top + shape.height < Selection.top + Selection.height Then
+            If Selection.left < Shape.left _
+                And Selection.top < Shape.top _
+                And Shape.left + Shape.WIDTH < Selection.left + Selection.WIDTH _
+                And Shape.top + Shape.Height < Selection.top + Selection.Height Then
                 'グループ対象シェイプの記録（後続処理でグループ化）
-                targetShapeName = targetShapeName & shape.Name & ","
+                targetShapeName = targetShapeName & Shape.Name & ","
             End If
         End If
         
@@ -141,10 +141,10 @@ Sub M_選択中枠内のシェイプ群をグループ化する()
     'グループ対象シェイプ名を配列化
     targetShapeArray = Split(targetShapeName, ",")
     
-    For Each shape In ActiveSheet.Shapes
+    For Each Shape In ActiveSheet.Shapes
         '全シェイプの中からグループ対象のものだけ選択状態にする
-        If isExistArray(targetShapeArray, shape.Name) Then
-            shape.Select Replace:=False
+        If isExistArray(targetShapeArray, Shape.Name) Then
+            Shape.Select Replace:=False
         End If
     Next
     
@@ -175,68 +175,11 @@ Function isExistArray(targetArray As Variant, checkValue As String)
         End If
     Next
 End Function
-'============================================================================================================================
-'作りかけ20230228。ブラッシュアップの余地あり
-Sub S_シェイプ間にマニュアル向けの矢印を置く()
-    Dim startShape As shape
-    Dim endShape As shape
-    Dim connectShape As shape
-    
-    Dim x1 As Double
-    Dim x2 As Double
-    Dim y1 As Double
-    Dim y2 As Double
-    Dim degree As Double
-    Dim adjustDegree As Integer
-    Dim onShape As shape
-    Dim setLeft As Double
-    Dim setTop As Double
-    
-    If TypeName(Selection) = "Range" Then
-        MsgBox "シェイプが選択されていません。2つ以上選択してください。"
-        Exit Sub
-    End If
-    For Each shp In Selection.ShapeRange
-        If shp.Type = msoGroup Or shp.Connector Then
-            MsgBox "選択シェイプにグループかコネクタが含まれています。解除してください。"
-            Exit Sub
-        End If
-    Next
-    
-    For i = 1 To Selection.ShapeRange.count - 1
-        '選択中シェイプの保持（接続元）
-        Set startShape = Selection.ShapeRange.Item(i)
-        '選択中シェイプの保持（接続先）
-        Set endShape = Selection.ShapeRange.Item(i + 1)
-        '各ポイントを取得
-        x1 = startShape.left + startShape.width - (startShape.width / 2)
-        x2 = endShape.left + endShape.width - (endShape.width / 2)
-        y1 = startShape.top + startShape.height - (startShape.height / 2)
-        y2 = endShape.top + endShape.height - (endShape.height / 2)
-    
-        If startShape.left < endShape.left Then
-            adjustDegree = 180
-            setLeft = startShape.left + (endShape.left - startShape.left) / 2
-            setTop = startShape.top + (endShape.top - startShape.top) / 2
-        Else
-            setLeft = endShape.left + (startShape.left - endShape.left) / 2
-            setTop = endShape.top + (startShape.top - endShape.top) / 2
-        
-        End If
-        
-        degree = Atn((y2 - y1) / (x2 - x1)) * 180 / 3.14
-        
-        Set onShape = ActiveSheet.Shapes.AddShape(msoShapeLeftArrow, setLeft, setTop, 200, 100)
-        onShape.Rotation = degree + adjustDegree
-        adjustDegree = 0
-    Next
-    '状況：やりたいことのイメージはOK
-    'あとは矢印のスタイル、大きさ、位置の微調整
-End Sub
+
 '============================================================================================================================
 '謝意：https://www.ka-net.org/blog/?p=4944 参考
 'できたけど動作不安定（クリップボードの表示エリア中可視範囲のものしか対象にできない）
-Sub T_連続貼付()
+Sub YB_連続貼付()
     'TODO:実行前後でbeforeセル選ばせる処理入れてもいいかも。今、最後の貼付シェイプを選んだ状態になる
     'Officeクリップボードにあるアイテム列挙
     Dim aryListItems As UIAutomationClient.IUIAutomationElementArray
@@ -254,7 +197,7 @@ Sub T_連続貼付()
     'ここでクリップボードの表示をfalseに戻してはだめ
 End Sub
 '
-'Sub W_クリップボードすべてクリア()
+'Sub YC_クリップボードすべてクリア()
 '    DoActionOfficeClipboard "すべてクリア"
 'End Sub
 'ボタン操作を実行する（「すべてクリア」でのみ使用する）

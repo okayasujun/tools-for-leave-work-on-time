@@ -3,8 +3,8 @@ Attribute VB_Name = "main"
 '機能名：エビデンス・マニュアル作成支援ツール v2.0
 'Author：okayasu jun
 '作成日：2022/10/19
-'更新日：2023/02/25
-'COMMENT：
+'更新日：2023/05/13
+'COMMENT：各コメントの「■」は変更可能を示す。用途や好みに合わせて変えてみて。
 '###############################
 'ポインタAPI。マウスカーソル位置からセル位置を取得するために使用する
 Private Type POINTAPI
@@ -12,16 +12,19 @@ Private Type POINTAPI
     y As Long
 End Type
 Declare PtrSafe Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
-'■画像タイトルに補記をする場合の行数（タイトルと画像の間の空行数）
+'■画像キャプションに補記をする場合の行数（画像とキャプションの間の空行数）
 Const REMARK_LINE = 0
+Const CAPTION_TEXT_TOP_FLAG = True
 '#選択セル範囲の大きさの赤枠をマウス位置に出現させる
-Sub A_赤枠を出現させる()
-Attribute A_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
+Sub AA_赤枠を出現させる()
+Attribute AA_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
 
-    Dim onShape As shape
+    '赤枠シェイプを格納する変数
+    Dim onShape As Shape
+    '処理開始時に選択しているセル情報
     Dim beforeRange As Range
     
- On Error GoTo ErrHndl
+    On Error GoTo ErrHndl
     '処理前後で選択セル位置を保持するため
     Set beforeRange = Selection
     
@@ -31,8 +34,8 @@ Attribute A_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
     Set onShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, _
                                             Selection.left, _
                                             Selection.top, _
-                                            Selection.width, _
-                                            Selection.height)
+                                            Selection.WIDTH, _
+                                            Selection.Height)
     '■塗りつぶし（msoTrue:あり、msoFalse:なし）
     onShape.Fill.Visible = msoFalse
     '■線の太さ。お好みでどうぞ
@@ -42,6 +45,8 @@ Attribute A_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
     '■塗りつぶし色指定
     'onShape.Fill.ForeColor.RGB = RGB(255, 255, 255)
     
+    '■選択セル位置に表示するだけでいい場合はここで処理を終了する
+    'Exit Sub
     '画像の上にカーソルがある状態では後続処理ができないため、一時非表示にする
     'この段階でどのシェイプ上にカーソルがあるか不明なので全シェイプを対象とする
     For Each shp In ActiveSheet.Shapes
@@ -58,7 +63,7 @@ Attribute A_赤枠を出現させる.VB_ProcData.VB_Invoke_Func = "q\n14"
     'カーソル位置を取得
     GetCursorPos p
 
-    'マウスカーソルの位置からセルを取得（カーソルの状態次第では失敗する）
+    'マウスカーソルの位置からセルを取得
     Set Getcell = ActiveWindow.RangeFromPoint(p.x, p.y)
 
     'シェイプ位置をマウスカーソルの直近セルの左上に合わせる
@@ -80,15 +85,15 @@ ErrHndl:
 End Sub
 '#コネクタ系以外のシェイプ及び画像に影をつける（塗りつぶしなしのオートシェイプは対象外）
 'グループはその構成シェイプすべてに影がついてしまうから条件にしない
-Sub B_影を付ける()
-Attribute B_影を付ける.VB_ProcData.VB_Invoke_Func = "w\n14"
+Sub AB_影を付ける()
+Attribute AB_影を付ける.VB_ProcData.VB_Invoke_Func = "w\n14"
 
-    Dim shp As shape
+    Dim shp As Shape
 
     If TypeName(Selection) = "Range" Then
         'シェイプ未選択状態。全シェイプを対象にする
         For Each shp In ActiveSheet.Shapes
-            '条件変更時参考：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
+            '条件変更したいときはこちらを参考に：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
             If shp.Type = msoPicture Or (shp.Type = msoAutoShape And shp.Fill.Visible) Then
                 Call castShadow(shp)
             End If
@@ -103,7 +108,7 @@ Attribute B_影を付ける.VB_ProcData.VB_Invoke_Func = "w\n14"
     End If
 End Sub
 '指定されたシェイプに影を付与します。
-Function castShadow(shp As shape)
+Function castShadow(shp As Shape)
     With shp.Shadow
         '■影の種類：https://learn.microsoft.com/ja-jp/dotnet/api/microsoft.office.core.msoshadowtype?view=office-pia
         .Type = msoShadow26
@@ -127,9 +132,9 @@ Function castShadow(shp As shape)
     End With
 End Function
 '#画像の効果をリセットする
-Sub C_効果をリセットする()
-Attribute C_効果をリセットする.VB_ProcData.VB_Invoke_Func = "r\n14"
-    Dim shp As shape
+Sub AC_効果をリセットする()
+Attribute AC_効果をリセットする.VB_ProcData.VB_Invoke_Func = "r\n14"
+    Dim shp As Shape
     If TypeName(Selection) = "Range" Then
         'シェイプ未選択状態。全シェイプを対象にする
         For Each shp In ActiveSheet.Shapes
@@ -144,21 +149,21 @@ Attribute C_効果をリセットする.VB_ProcData.VB_Invoke_Func = "r\n14"
 End Sub
 '指定されたシェイプ及び画像の効果を初期化します。
 'コネクタ系以外のシェイプ及び画像をリセットする（塗りつぶしなしのオートシェイプは対象外）
-Function shapeReset(shp As shape)
+Function shapeReset(shp As Shape)
     If shp.Type = msoPicture Or (shp.Type = msoAutoShape And shp.Fill.Visible) Then
         With Application.CommandBars
             '「図のリセット」が可能なときのみ
             If .GetEnabledMso("PictureReset") Then
                 .ExecuteMso "PictureReset"
             End If
-            'オートシェイプの場合は以下で外す（■ケースに応じて初期化処理を追加すること）
+            'オートシェイプの場合は以下で外す（■やりたいことに応じて処理内容を追加すること）
             shp.Shadow.Visible = msoFalse
         End With
     End If
 End Function
 '#シェイプを整列させる（貼付順）
-Sub D_シェイプを貼付順に整列させる()
-Attribute D_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
+Sub AD_シェイプを貼付順に整列させる()
+Attribute AD_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
     
@@ -167,7 +172,7 @@ Attribute D_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
     
     'キャプションを記載する用のセル
     Dim captionRange As Range
-    Dim moveShape As shape
+    Dim moveShape As Shape
     
     'エラーチェック
     If Selection.Row - REMARK_LINE - 1 < 1 Then
@@ -177,8 +182,12 @@ Attribute D_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
     
     'キャプションタイトル
     Dim captionText As String
-    '■ダイアログを使う場合は以下のコメントアウト分を使用する
-    captionText = "▼" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▼ここに画像の説明を書く")
+    '■ダイアログを使う場合は以下のコメントアウト部分を使用する
+    If CAPTION_TEXT_TOP_FLAG Then
+        captionText = "▼" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▼ここに画像の説明を書く")
+    Else
+        captionText = "▲" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▲ここに画像の説明を書く")
+    End If
     
     If StrPtr(answer) = 0 Then
         'キャンセル時
@@ -186,11 +195,11 @@ Attribute D_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
     End If
     
     For Each moveShape In ActiveSheet.Shapes
-        '次に該当しないものは対象外：画像、グループ、塗りつぶしのないオートシェイプ
+        '次に該当するものが対象：画像、グループ、塗りつぶしのないオートシェイプ
         '条件変更時参考：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
         If moveShape.Type <> msoPicture _
             And moveShape.Type <> msoGroup _
-            And (moveShape.Type = msoAutoShape And Not moveShape.Fill.Visible) Then
+            And (moveShape.Type = msoAutoShape) Then 'And Not moveShape.Fill.Visible
             GoTo CONTINUE:
         End If
         
@@ -201,20 +210,20 @@ Attribute D_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
         Call setCaption(captionRange, captionText)
         
         '今対象にしたシェイプの上部座標 + 今対象にしたシェイプの高さ + 画像間の間隔 + キャプションセル行の高さ = 次のシェイプの移動先上部座標
-        top = top + moveShape.height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).height
+        top = top + moveShape.Height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).Height
 CONTINUE:
     Next
     
     'END処理
     Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, top, 1, 1)
-    Call setCaption(dummyShape.TopLeftCell, "END")
+    Call setCaption(dummyShape.TopLeftCell, "- END -")
     dummyShape.Delete
     
 End Sub
-'
-Function move(moveShape As shape, top As Integer)
+'指定されたシェイプを第二引数の位置に移動させる
+Function move(moveShape As Shape, top As Integer)
     '移動位置を取得するためのダミーシェイプ
-    Dim dummyShape As shape
+    Dim dummyShape As Shape
     Dim left As Integer: left = Selection.left
     
     '左上隅のセルを取得するためのダミーシェイプ
@@ -223,10 +232,18 @@ Function move(moveShape As shape, top As Integer)
     'シェイプを移動する
     moveShape.top = dummyShape.TopLeftCell.Offset(0, 0).top
     moveShape.left = Selection.left
-        
-    'キャプション入力用セルを取得する（-1はタイトル分）
-    Set move = dummyShape.TopLeftCell.Offset(-1 - REMARK_LINE, 0)
-        
+    '作業記録の意味合いで画像名に時間を設定する。一意にするためミリ秒も末尾に付与
+    moveShape.Name = "image-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
+    
+    If CAPTION_TEXT_TOP_FLAG Then
+        'キャプション入力用セルを取得する（-1はタイトル分）
+        Set move = dummyShape.TopLeftCell.Offset(-1 - REMARK_LINE, 0)
+    Else
+        dummyShape.top = moveShape.top + moveShape.Height
+        'キャプション入力用セルを取得する（-1はタイトル分）
+        Set move = dummyShape.TopLeftCell.Offset(1, 0)
+    End If
+    
     '用済みだから削除する
     dummyShape.Delete
 End Function
@@ -237,14 +254,24 @@ Function setCaption(captionRange As Range, captionText As String)
     '■適宜変えてよし
     captionRange.Value = captionText
     captionRange.Font.Bold = True
-    captionRange.Font.Color = RGB(0, 0, 0)
+    captionRange.Font.Color = RGB(20, 20, 20)
+    captionRange.Font.Size = 14
+    captionRange.Font.Name = "BIZ UDPゴシック" '"Meiryo UI"'
+End Function
+'ミリ秒を取得
+Function getMSec() As String
+    Dim dblTimer As Double
+    Dim s_return As String
+    dblTimer = CDbl(Timer)
+    s_return = Format(Fix((dblTimer - Fix(dblTimer)) * 1000), "000")
+    getMSec = s_return
 End Function
 '選択中のシェイプを選択順にコネクタで繋ぐ
-Sub F_シェイプを選択順にコネクタで繋ぐ()
-Attribute F_シェイプを選択順にコネクタで繋ぐ.VB_ProcData.VB_Invoke_Func = "l\n14"
-    Dim startShape As shape
-    Dim endShape As shape
-    Dim connectShape As shape
+Sub AF_シェイプを選択順にコネクタで繋ぐ()
+Attribute AF_シェイプを選択順にコネクタで繋ぐ.VB_ProcData.VB_Invoke_Func = "l\n14"
+    Dim startShape As Shape
+    Dim endShape As Shape
+    Dim connectShape As Shape
     
     If TypeName(Selection) = "Range" Then
         MsgBox "シェイプが選択されていません。2つ以上選択してください。"
@@ -270,24 +297,28 @@ Attribute F_シェイプを選択順にコネクタで繋ぐ.VB_ProcData.VB_Invoke_Func = "l\n14
         connectShape.ConnectorFormat.BeginConnect ActiveSheet.Shapes(startShape.Name), 3
         '■接続の終点位置指定（最後の引数は始点位置の指定と同様）
         connectShape.ConnectorFormat.EndConnect ActiveSheet.Shapes(endShape.Name), 2
+        'コネクタを加工する
         Call makeConnectAllow(connectShape)
     Next
 End Sub
-Function makeConnectAllow(connectShape As shape)
+'コネクタを加工する。各プロパティ好みに合わせて設定されたし
+Function makeConnectAllow(connectShape As Shape)
     '■終点コネクタを三角に。
     connectShape.Line.EndArrowheadStyle = msoArrowheadTriangle
     '■線の色
-    connectShape.Line.ForeColor.RGB = RGB(0, 0, 0)
+    connectShape.Line.ForeColor.RGB = RGB(10, 10, 10)
     '■線の太さ
     connectShape.Line.Weight = 1
     '■終点の長さ
     connectShape.Line.EndArrowheadLength = msoArrowheadLong
     '■終点の太さ
     connectShape.Line.EndArrowheadWidth = msoArrowheadWide
+    '名前
+    connectShape.Name = "connect-" & Format(Now(), "yyyymmddhhmmss")
 End Function
-'コネクタの種類を直線とエルボーで切り替える
-Sub G_コネクタ種類切り替え()
-Attribute G_コネクタ種類切り替え.VB_ProcData.VB_Invoke_Func = "i\n14"
+'コネクタの種類を直線、曲線、エルボーで切り替える
+Sub AG_コネクタ種類切り替え()
+Attribute AG_コネクタ種類切り替え.VB_ProcData.VB_Invoke_Func = "i\n14"
 
     If connectorErrorCheck Then
        Exit Sub
@@ -295,6 +326,8 @@ Attribute G_コネクタ種類切り替え.VB_ProcData.VB_Invoke_Func = "i\n14"
     
     With Selection.ShapeRange.ConnectorFormat
         If .Type = msoConnectorElbow Then
+            .Type = msoConnectorCurve
+        ElseIf .Type = msoConnectorCurve Then
             .Type = msoConnectorStraight
         Else
             .Type = msoConnectorElbow
@@ -302,15 +335,15 @@ Attribute G_コネクタ種類切り替え.VB_ProcData.VB_Invoke_Func = "i\n14"
     End With
 End Sub
 '選択したコネクタの始点側のシェイプとの接続位置を変更する
-Sub H_コネクタ始点変更()
-Attribute H_コネクタ始点変更.VB_ProcData.VB_Invoke_Func = "o\n14"
+Sub AH_コネクタ始点変更()
+Attribute AH_コネクタ始点変更.VB_ProcData.VB_Invoke_Func = "o\n14"
 
     If connectorErrorCheck Then
        Exit Sub
     End If
     
     Dim currentBeginConnectPoint As Integer
-    Dim targetShape As shape
+    Dim targetShape As Shape
     
     With Selection.ShapeRange.ConnectorFormat
         '現在の始点接続ポイント取得
@@ -328,14 +361,14 @@ Attribute H_コネクタ始点変更.VB_ProcData.VB_Invoke_Func = "o\n14"
     End With
 End Sub
 '選択したコネクタの終点側のシェイプとの接続位置を変更する
-Sub I_コネクタ終点変更()
-Attribute I_コネクタ終点変更.VB_ProcData.VB_Invoke_Func = "p\n14"
+Sub AI_コネクタ終点変更()
+Attribute AI_コネクタ終点変更.VB_ProcData.VB_Invoke_Func = "p\n14"
     If connectorErrorCheck Then
        Exit Sub
     End If
     
     Dim currentEndConnectPoint As Integer
-    Dim targetShape As shape
+    Dim targetShape As Shape
     
     With Selection.ShapeRange.ConnectorFormat
         '現在の始点接続ポイント取得
@@ -365,15 +398,15 @@ Function connectorErrorCheck()
     End If
 End Function
 '#選択中のシェイプをグループ化
-Sub J_選択中シェイプをグループ化()
+Sub AJ_選択中シェイプをグループ化()
     Selection.Group.Select
 End Sub
 '#選択中のシェイプをグループ解除
-Sub K_選択中シェイプをグループ解除()
+Sub AK_選択中シェイプをグループ解除()
     Selection.Ungroup
 End Sub
-'選択中のシェイプを最背面にする
-Sub L_選択中シェイプを最背面へ()
+'#選択中のシェイプを最背面にする
+Sub AL_選択中シェイプを最背面へ()
     If TypeName(Selection) = "Range" Then
         MsgBox "シェイプを一つ選んでから実行してね。"
         Exit Sub
@@ -383,23 +416,36 @@ Sub L_選択中シェイプを最背面へ()
         shp.ZOrder msoSendToBack
     Next
 End Sub
+'#選択中のシェイプを最背面にする
+Sub AM_選択中シェイプを最前面へ()
+    If TypeName(Selection) = "Range" Then
+        MsgBox "シェイプを一つ選んでから実行してね。"
+        Exit Sub
+    End If
+    
+    For Each shp In Selection.ShapeRange
+        shp.ZOrder msoBringToFront
+    Next
+End Sub
 '#シェイプの場所に値がなくなるように空行を挿入する
-Sub N_シェイプ貼付時､ブランク行挿入()
+Sub AN_シェイプ貼付時ブランク行挿入()
     '#クリップボードにデータがある時のみ
     If Application.ClipboardFormats(1) Then
-        '貼付。Ctrl + Vにあたるアクション（この時点でSelectionはシェイプになる模様）
+        '貼付。Ctrl + Vにあたるアクション（この時点でSelectionはシェイプになる）
         ActiveSheet.Paste
+        
         '移動位置を取得するためのダミーシェイプ
-        Dim dummyShape As shape
+        Dim dummyShape As Shape
+        
         '左下隅のセルを取得するためのダミーシェイプ
-        Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, Selection.top + Selection.height, 1, 1)
+        Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, Selection.top + Selection.Height, 1, 1)
     
         '「セルに合わせて移動やサイズ変更をしない」に設定
         'これやらないと行の挿入に合わせてシェイプも一緒に伸びてしまうから
         Selection.Placement = xlFreeFloating
         
         '貼付シェイプの下にあるセル分ループ
-        For i = Selection.TopLeftCell.Row To dummyShape.TopLeftCell.Row
+        For i = Selection.TopLeftCell.Row To dummyShape.TopLeftCell.Row + 1
             '列ループ（■j=Selection.TopLeftCell.Columnならシェイプ貼付位置から開始）
             For j = 1 To 100
                 '対象行のどこかに値があれば行を挿入する
@@ -415,11 +461,11 @@ Sub N_シェイプ貼付時､ブランク行挿入()
     End If
 End Sub
 '#先頭に目次のシートを作成する
-Sub O_目次シートを作成する()
+Sub AO_目次シートを作成する()
     Dim ws As Worksheet
     
     '関数は別途参照
-    If Not isExistCheckToSheet(ThisWorkbook, "目次") Then
+    If Not isExistCheckToSheet(ActiveWorkbook, "目次") Then
         Worksheets.Add before:=Sheets(1)
         Set ws = Sheets(1)
         ws.Name = "目次"
@@ -431,12 +477,14 @@ Sub O_目次シートを作成する()
         ws.Cells(1, 6) = "備考"
         ws.Cells(1, 7) = "作成者"
         ws.Cells(1, 8) = "作成日"
+        ws.Cells(1, 9) = "更新者"
+        ws.Cells(1, 10) = "更新日"
         'フォント色
-        Range("A1:H1").Font.Color = RGB(20, 10, 10)
+        Range("A1:J1").Font.Color = RGB(20, 10, 10)
         '背景色
-        Range("A1:H1").Interior.Color = RGB(255, 242, 204)
+        Range("A1:J1").Interior.Color = RGB(255, 242, 204)
         '太字
-        Range("A1:H1").Font.Bold = True
+        Range("A1:J1").Font.Bold = True
         Cells(2, 1).Select
         'ウィンドウ枠の固定
         ActiveWindow.FreezePanes = True
@@ -454,8 +502,20 @@ Sub O_目次シートを作成する()
         ws.Cells(i, 2) = loopWs.Name
         ws.Cells(i, 4) = loopWs.Shapes.count
         ws.Cells(i, 5) = loopWs.UsedRange.Address
+        'シートではなくブック単位の情報なためコメントアウト
+'        ws.Cells(i, 7) = ActiveWorkbook.BuiltinDocumentProperties(3)
+'        ws.Cells(i, 8) = ActiveWorkbook.BuiltinDocumentProperties(11)
+'        ws.Cells(i, 8).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+'        ws.Cells(i, 9) = ActiveWorkbook.BuiltinDocumentProperties(7)
+'        ws.Cells(i, 10) = ActiveWorkbook.BuiltinDocumentProperties(12)
+'        ws.Cells(i, 10).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
     Next
     ws.Columns("A:H").AutoFit
+    '■必要があれば以下をコメントイン
+'    ws.Cells(i + 1, 1) = "必要に応じて下記の関数を追加する"
+'    ws.Cells(i + 2, 1) = "Sub 目次シートを選択"
+'    ws.Cells(i + 3, 1) = "    Sheets(1).Select"
+'    ws.Cells(i + 4, 1) = "End Sub"
 End Sub
 '指定されたブックに指定されたシートが存在するかどうかを返す。存在する:TRUE、存在しない:FALSE
 Function isExistCheckToSheet(wb As Workbook, checkSheet As Variant)
@@ -474,8 +534,8 @@ Function isExistCheckToSheet(wb As Workbook, checkSheet As Variant)
     End If
 End Function
 '#アクティブシートの内容に従いシートを生成し、リンクを付与する。ソートも行う
-Sub P_シート生成とリンク付与()
-    'TODO:目盛線削除、縮尺統一
+Sub AP_シート生成とリンク付与()
+
     Dim topSheet As Worksheet
     Set topSheet = ActiveSheet
     
@@ -494,11 +554,17 @@ Sub P_シート生成とリンク付与()
                 .Name = sheetName
                 topSheet.Hyperlinks.Add Anchor:=linkRange, Address:="", SubAddress:="'" & .Name & "'!A1"
                 .Select
+                '目盛線非表示
+                ActiveWindow.DisplayGridlines = False
+                ActiveWindow.Zoom = 75
             End With
         Else
-            '既にある場合
+            '既にシートがある場合
             topSheet.Hyperlinks.Add Anchor:=linkRange, Address:="", SubAddress:="'" & sheetName & "'!A1"
             Sheets(sheetName).Select
+            ActiveWindow.DisplayGridlines = False
+            ActiveWindow.Zoom = 75
+            Sheets(sheetName).Cells(1, 1).Select
             'シート順の並び変え
             If existsSheet(topSheet.Cells(i - 1, 2)) Then
                 'ここ、シート名の指定に「.value」が必要
@@ -523,8 +589,8 @@ Function existsSheet(ByVal sheetName As String)
     existsSheet = False
 End Function
 'シェイプのうち選択中セルのleftプロパティに一致しないものを選択セル位置から並べる
-Sub Q_シェイプ追加整列()
-Attribute Q_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = " \n14"
+Sub AQ_シェイプ追加整列()
+Attribute AQ_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = " \n14"
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
     
@@ -534,7 +600,7 @@ Attribute Q_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = " \n14"
     
     'キャプションを記載する用のセル
     Dim captionRange As Range
-    Dim moveShape As shape 'キャプションタイトル
+    Dim moveShape As Shape 'キャプションタイトル
     Dim captionText As String: captionText = "▼"
     For Each moveShape In ActiveSheet.Shapes
         '次に該当しないものは対象外：画像、グループ、塗りつぶしのないオートシェイプ、
@@ -553,12 +619,12 @@ Attribute Q_シェイプ追加整列.VB_ProcData.VB_Invoke_Func = " \n14"
         Call setCaption(captionRange, captionText)
         
         '今対象にしたシェイプの上部座標 + 今対象にしたシェイプの高さ + 画像間の間隔 + キャプションセル行の高さ = 次のシェイプの移動先上部座標
-        top = top + moveShape.height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).height
+        top = top + moveShape.Height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).Height
 CONTINUE:
     Next
 End Sub
 'シェイプ整列2カラム編（奇数が1列目、偶数は2列目）
-Sub R_シェイプを2カラムで並べる()
+Sub AR_シェイプを2カラムで並べる()
     '■画像間の間隔
     Const MARGIN_BOTTOM = 70
     
@@ -568,7 +634,7 @@ Sub R_シェイプを2カラムで並べる()
     
     'キャプションを記載する用のセル
     Dim captionRange As Range
-    Dim moveShape As shape
+    Dim moveShape As Shape
     
     'エラーチェック
     If Selection.Row - REMARK_LINE - 1 < 1 Then
@@ -579,7 +645,11 @@ Sub R_シェイプを2カラムで並べる()
     'キャプションタイトル
     Dim captionText As String
     '■ダイアログを使う場合は以下のコメントアウト分を使用する
-    captionText = "▼" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▼ここに画像の説明を書く")
+    If CAPTION_TEXT_TOP_FLAG Then
+        captionText = "▼変更前→変更後" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▼ここに画像の説明を書く")
+    Else
+        captionText = "▲変更前→変更後" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▲ここに画像の説明を書く")
+    End If
     
     If StrPtr(answer) = 0 Then
         'キャンセル時
@@ -591,12 +661,12 @@ Sub R_シェイプを2カラムで並べる()
         '条件変更時参考：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
         If moveShape.Type <> msoPicture _
             And moveShape.Type <> msoGroup _
-            And (moveShape.Type = msoAutoShape And Not moveShape.Fill.Visible) Then
+            And (moveShape.Type = msoAutoShape) Then  'And Not moveShape.Fill.Visible
             GoTo CONTINUE:
         End If
         
         '移動位置を取得するためのダミーシェイプ
-        Dim dummyShape As shape
+        Dim dummyShape As Shape
     
         '左上隅のセルを取得するためのダミーシェイプ
         Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, top, 1, 1)
@@ -610,6 +680,7 @@ Sub R_シェイプを2カラムで並べる()
             '左右に並ぶシェイプの右側
             moveShape.left = left
         End If
+        moveShape.Name = "image-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
         
         'キャプション入力用セルを取得する（-1はタイトル分）
         Set captionRange = dummyShape.TopLeftCell.Offset(-1 - REMARK_LINE, 0)
@@ -622,10 +693,12 @@ Sub R_シェイプを2カラムで並べる()
         
         If count Mod 2 = 1 Then
             'topに与える数値を変えない。次のシェイプに与えるleftプロパティ値を設定する
-            left = Selection.left + moveShape.width - 10
+            left = Selection.left + moveShape.WIDTH - 10
+            '変化を示す矢印
+            Set onShape = ActiveSheet.Shapes.AddShape(msoShapeRightArrow, left - 10, top + moveShape.Height / 2, 40, 50)
         ElseIf count Mod 2 = 0 Then
             '今対象にしたシェイプの上部座標 + 今対象にしたシェイプの高さ + 画像間の間隔 + キャプションセル行の高さ = 次のシェイプの移動先上部座標
-            top = top + moveShape.height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).height
+            top = top + moveShape.Height + MARGIN_BOTTOM + Range(captionRange, captionRange.Offset(REMARK_LINE, 0)).Height
         End If
         count = count + 1
 CONTINUE:
@@ -633,19 +706,83 @@ CONTINUE:
     
     'END処理
     Set dummyShape = ActiveSheet.Shapes.AddShape(msoShapeRectangle, Selection.left, top, 1, 1)
-    Call setCaption(dummyShape.TopLeftCell, "END")
+    Call setCaption(dummyShape.TopLeftCell, "- END -")
     dummyShape.Delete
     
 End Sub
-'セルからセルへ矢印をつける。1→2,3→4のようにつける
-Sub U_セルからセルに伸びるコネクタ()
+'図形の矢印を付与する
+Sub AS_シェイプ間に図形矢印を置く()
+Attribute AS_シェイプ間に図形矢印を置く.VB_ProcData.VB_Invoke_Func = "d\n14"
+    Dim startShape As Shape
+    Dim endShape As Shape
+    Dim connectShape As Shape
+    
+    Dim x1 As Double
+    Dim x2 As Double
+    Dim y1 As Double
+    Dim y2 As Double
+    Dim degree As Double
+    Dim adjustDegree As Integer
+    Dim onShape As Shape
+    Dim setLeft As Double
+    Dim setTop As Double
+    
+    If TypeName(Selection) = "Range" Then
+        MsgBox "シェイプが選択されていません。2つ以上選択してください。"
+        Exit Sub
+    End If
+    For Each shp In Selection.ShapeRange
+        If shp.Type = msoGroup Or shp.Connector Then
+            MsgBox "選択シェイプにグループかコネクタが含まれています。解除してください。"
+            Exit Sub
+        End If
+    Next
+    
+    For i = 1 To Selection.ShapeRange.count - 1
+        '選択中シェイプの保持（元）
+        Set startShape = Selection.ShapeRange.Item(i)
+        '選択中シェイプの保持（先）
+        Set endShape = Selection.ShapeRange.Item(i + 1)
+        '各ポイントを取得
+        x1 = startShape.left + startShape.WIDTH - (startShape.WIDTH / 2)
+        x2 = endShape.left + endShape.WIDTH - (endShape.WIDTH / 2)
+        y1 = startShape.top + startShape.Height - (startShape.Height / 2)
+        y2 = endShape.top + endShape.Height - (endShape.Height / 2)
+        
+        '左位置プロパティの調整
+        If startShape.left < endShape.left Then
+            adjustDegree = 180
+            setLeft = startShape.left + startShape.WIDTH + ((endShape.left - (startShape.left + startShape.WIDTH)) / 2) - 25
+        Else
+            setLeft = endShape.left + endShape.WIDTH + ((startShape.left - (endShape.left + endShape.WIDTH)) / 2) - 25
+            
+        End If
+        
+        '上位置プロパティの調整
+        If startShape.top < endShape.top Then
+            setTop = startShape.top + (startShape.Height / 2) + (((endShape.top + (endShape.Height / 2)) - (startShape.top + (startShape.Height / 2))) / 2) - 25
+        Else
+            setTop = endShape.top + (endShape.Height / 2) + (((startShape.top + (startShape.Height / 2)) - (endShape.top + (endShape.Height / 2))) / 2) - 25
+        End If
+        '矢印の向き調整
+        degree = Atn((y2 - y1) / (x2 - x1)) * 180 / 3.14
+        
+        Set onShape = ActiveSheet.Shapes.AddShape(msoShapeLeftArrow, setLeft, setTop, 50, 50)
+        moveShape.Name = "connect-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
+        onShape.Rotation = degree + adjustDegree
+        adjustDegree = 0
+    Next
+End Sub
+
+'セルからセルへ矢印をつける。1→2,3→4のようにつける TODO:これ、イメージと違う。セルに枠シェイプ作って、それに対してコネクトだ
+Sub AT_セルからセルに伸びるコネクタ()
     Dim count As Integer: count = 1
     '始点セル
     Dim startRange As Range
     '終点セル
     Dim endRange As Range
     '矢印シェイプ
-    Dim connectShape As shape
+    Dim connectShape As Shape
     For Each cell In Selection
         If count Mod 2 = 1 Then
             '奇数の時は始点セルを変数へ
@@ -654,26 +791,26 @@ Sub U_セルからセルに伸びるコネクタ()
             '偶数の時は終点セルの設定と矢印の挿入
             Set endRange = cell
             Set connectShape = ActiveSheet.Shapes.AddConnector(Type:=msoConnectorElbow, _
-                BeginX:=startRange.left + (startRange.width / 2), BeginY:=startRange.top + (startRange.height / 2), _
-                EndX:=endRange.left + (endRange.width / 2), EndY:=endRange.top + (endRange.height / 2))
+                BeginX:=startRange.left + (startRange.WIDTH / 2), BeginY:=startRange.top + (startRange.Height / 2), _
+                EndX:=endRange.left + (endRange.WIDTH / 2), EndY:=endRange.top + (endRange.Height / 2))
             Call makeConnectAllow(connectShape)
         End If
         count = count + 1
     Next
 End Sub
 'たたき台的クオリティ。過不足は後日修正
-Sub V_最初のシェイプをスキャンコピー()
+Sub AU_最初のシェイプをスキャンコピー()
     '複数シェイプ選択時、2つ目以降は1つ目のスタイルを適用する。ループ処理
-    Dim baseShp As shape
-    Dim shp As shape
+    Dim baseShp As Shape
+    Dim shp As Shape
     Set baseShp = Selection.ShapeRange.Item(1)
     For i = 2 To Selection.ShapeRange.count
         '選択中シェイプの保持（接続元）
         Set shp = Selection.ShapeRange.Item(i)
         shp.Line.ForeColor.RGB = baseShp.Line.ForeColor.RGB
         'shp.ForeColor.RGB = baseShp.ForeColor.RGB
-        '↓ワードアートフォーマットが指定できないシェイプを選ぶときはコメントアウトして
-        shp.TextFrame2.WordArtformat = baseShp.TextFrame2.WordArtformat
+        '■↓ワードアートフォーマットが指定できないシェイプを選ぶときはコメントアウトして
+        'shp.TextFrame2.WordArtformat = baseShp.TextFrame2.WordArtformat
         shp.Fill.Transparency = baseShp.Fill.Transparency
         'テキストまで変えたくないときはコメントアウト
         'shp.TextFrame.Characters.Text = baseShp.TextFrame.Characters.Text
@@ -696,4 +833,73 @@ Sub V_最初のシェイプをスキャンコピー()
         shp.TextFrame2.HorizontalAnchor = baseShp.TextFrame2.HorizontalAnchor
         shp.TextFrame2.Orientation = baseShp.TextFrame2.Orientation
     Next
+End Sub
+Sub AV_省略にょろにょろ出現()
+    Dim selectRange As Range
+    Set selectRange = Selection
+    Dim top As Integer: top = Selection.top
+    Dim left As Integer: left = Selection.left
+    Const WIDTH = 60
+    Dim blackTopShape As Shape
+    Dim whiteShape As Shape
+    Dim blackBottomShape As Shape
+
+    With ActiveSheet.Shapes.BuildFreeform(msoEditingAuto, left, top)
+    
+        For i = 0 To WIDTH
+            If i Mod 2 = 0 Then
+                top = top + 5
+            Else
+                top = top - 5
+            End If
+            left = left + 7
+            .AddNodes msoSegmentCurve, msoEditingAuto, left, top
+        Next
+        Set blackTopShape = .ConvertToShape
+    End With
+    blackTopShape.Line.ForeColor.RGB = RGB(0, 0, 0)
+    blackTopShape.Line.Weight = 3
+
+    top = top + 3
+    left = Selection.left
+    With ActiveSheet.Shapes.BuildFreeform(msoEditingAuto, left, top)
+    
+        For i = 0 To WIDTH
+            If i Mod 2 = 0 Then
+                top = top + 5
+            Else
+                top = top - 5
+            End If
+            left = left + 7
+            .AddNodes msoSegmentCurve, msoEditingAuto, left, top
+        Next
+        Set blackBottomShape = .ConvertToShape
+    End With
+    blackBottomShape.Line.ForeColor.RGB = RGB(0, 0, 0)
+    blackBottomShape.Line.Weight = 3
+    
+    
+    top = top - 9
+    left = Selection.left
+    With ActiveSheet.Shapes.BuildFreeform(msoEditingAuto, left, top)
+    
+        For i = 0 To WIDTH
+            If i Mod 2 = 0 Then
+                top = top + 5.2
+            Else
+                top = top - 5.2
+            End If
+            left = left + 7
+            .AddNodes msoSegmentCurve, msoEditingAuto, left, top
+        Next
+        Set whiteShape = .ConvertToShape
+    End With
+    whiteShape.Line.ForeColor.RGB = RGB(255, 255, 255)
+    whiteShape.Line.Weight = 3.8
+    
+    blackTopShape.Select Replace:=False
+    whiteShape.Select Replace:=False
+    blackBottomShape.Select Replace:=False
+    Selection.Group
+    selectRange.Select
 End Sub
