@@ -113,85 +113,85 @@ Function sort(ByRef targetArray() As Double)
     sort = targetArray
 End Function
 ''============================================================================================================================
-''#TODO:必要性・使い勝手の観点で要見直し。グループ化対象範囲をシェイプ内とするか選択セル範囲内とするか。
-''#選択中の大枠内にあるシェイプをグループ化する。グループ完了時、囲みシェイプは削除する
-'Sub YA_選択中枠内のシェイプ群をグループ化する()
-'    'グループ化シェイプ名をカンマ区切りで保持する用
-'    Dim targetShapeName As String
-'    'カンマ区切りで保持したものを配列状態で保持するよう
-'    Dim targetShapeArray As Variant
-'
-'    For Each Shape In ActiveSheet.Shapes
-'        '条件参考：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
-'
-'        If Shape.Type = msoAutoShape Or Shape.Type = msoGroup Or Shape.Type = msoPicture Then
-'            '上辺、左辺、右辺、下辺が大枠内にあるシェイプのみを対象とする
-'            If Selection.left < Shape.left _
-'                And Selection.top < Shape.top _
-'                And Shape.left + Shape.WIDTH < Selection.left + Selection.WIDTH _
-'                And Shape.top + Shape.Height < Selection.top + Selection.Height Then
-'                'グループ対象シェイプの記録（後続処理でグループ化）
-'                targetShapeName = targetShapeName & Shape.Name & ","
-'            End If
-'        End If
-'
-'    Next
-'    '対象シェイプを囲っていたシェイプを削除する
-'    Selection.Delete
-'    'グループ対象シェイプ名を配列化
-'    targetShapeArray = Split(targetShapeName, ",")
-'
-'    For Each Shape In ActiveSheet.Shapes
-'        '全シェイプの中からグループ対象のものだけ選択状態にする
-'        If isExistArray(targetShapeArray, Shape.Name) Then
-'            Shape.Select Replace:=False
-'        End If
-'    Next
-'
-'    On Error GoTo catch
-'
-'    If VarType(Selection) = vbObject Then
-'        '選択中シェイプをグループ化
-'        Selection.Group.Select
-'    End If
-'
-'    Exit Sub
-'catch:
-'End Sub
-''#配列内に存在するかどうか
-'Function isExistArray(targetArray As Variant, checkValue As String)
-'    isExistArray = False
-'
-'    If UBound(targetArray) = -1 Then
-'        'UBoundの戻り値：-1は要素数0を示す。この場合、すべて対象外とする
-'        isExistArray = False
-'        Exit Function
-'    End If
-'
-'    For i = LBound(targetArray) To UBound(targetArray)
-'        If targetArray(i) = checkValue Then
-'            isExistArray = True
-'            Exit For
-'        End If
-'    Next
-'End Function
-''指定された値が指定された配列内の何番目に存在するかを返す
-'Function isExistArrayReturnIndex(targetArray As Variant, checkValue As String)
-'    isExistArrayReturnIndex = -1
-'
-'    If UBound(targetArray) = -1 Then
-'        'UBoundの戻り値：-1は要素数0を示す。この場合、-1を返す
-'        isExistArrayReturnIndex = -1
-'        Exit Function
-'    End If
-'
-'    For i = LBound(targetArray) To UBound(targetArray)
-'        If targetArray(i) = checkValue Then
-'            isExistArrayReturnIndex = i
-'            Exit For
-'        End If
-'    Next
-'End Function
+'#TODO:必要性・使い勝手の観点で要見直し。グループ化対象範囲をシェイプ内とするか選択セル範囲内とするか。
+'#選択中の大枠内にあるシェイプをグループ化する。グループ完了時、囲みシェイプは削除する
+Sub YA_選択中枠内のシェイプ群をグループ化する()
+    'グループ化シェイプ名をカンマ区切りで保持する用
+    Dim targetShapeName As String
+    'カンマ区切りで保持したものを配列状態で保持するよう
+    Dim targetShapeArray As Variant
+
+    For Each Shape In ActiveSheet.Shapes
+        '条件参考：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
+
+        If Shape.Type = msoAutoShape Or Shape.Type = msoGroup Or Shape.Type = msoPicture Then
+            '上辺、左辺、右辺、下辺が大枠内にあるシェイプのみを対象とする
+            If Selection.left < Shape.left _
+                And Selection.top < Shape.top _
+                And Shape.left + Shape.WIDTH < Selection.left + Selection.WIDTH _
+                And Shape.top + Shape.Height < Selection.top + Selection.Height Then
+                'グループ対象シェイプの記録（後続処理でグループ化）
+                targetShapeName = targetShapeName & Shape.Name & ","
+            End If
+        End If
+
+    Next
+    '対象シェイプを囲っていたシェイプを削除する
+    Selection.Delete
+    'グループ対象シェイプ名を配列化
+    targetShapeArray = Split(targetShapeName, ",")
+
+    For Each Shape In ActiveSheet.Shapes
+        '全シェイプの中からグループ対象のものだけ選択状態にする
+        If isExistArray(targetShapeArray, Shape.Name) Then
+            Shape.Select Replace:=False
+        End If
+    Next
+
+    On Error GoTo catch
+
+    If VarType(Selection) = vbObject Then
+        '選択中シェイプをグループ化
+        Selection.Group.Select
+    End If
+
+    Exit Sub
+catch:
+End Sub
+'#配列内に存在するかどうか
+Function isExistArray(targetArray As Variant, checkValue As String)
+    isExistArray = False
+
+    If UBound(targetArray) = -1 Then
+        'UBoundの戻り値：-1は要素数0を示す。この場合、すべて対象外とする
+        isExistArray = False
+        Exit Function
+    End If
+
+    For i = LBound(targetArray) To UBound(targetArray)
+        If targetArray(i) = checkValue Then
+            isExistArray = True
+            Exit For
+        End If
+    Next
+End Function
+'指定された値が指定された配列内の何番目に存在するかを返す
+Function isExistArrayReturnIndex(targetArray As Variant, checkValue As String)
+    isExistArrayReturnIndex = -1
+
+    If UBound(targetArray) = -1 Then
+        'UBoundの戻り値：-1は要素数0を示す。この場合、-1を返す
+        isExistArrayReturnIndex = -1
+        Exit Function
+    End If
+
+    For i = LBound(targetArray) To UBound(targetArray)
+        If targetArray(i) = checkValue Then
+            isExistArrayReturnIndex = i
+            Exit For
+        End If
+    Next
+End Function
 ''============================================================================================================================
 ''謝意：https://www.ka-net.org/blog/?p=4944 参考
 ''できたけど動作不安定（クリップボードの表示エリア中可視範囲のものしか対象にできない）

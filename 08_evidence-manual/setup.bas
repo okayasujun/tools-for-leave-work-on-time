@@ -2868,6 +2868,7 @@ Function revival5()
     Cells(30, 7).Borders(xlEdgeRight).weight = 1
     Cells(31, 1) = "29"
     Cells(31, 1).Font.Name = "Meiryo UI"
+    Cells(31, 1).Interior.Color = 12566463
     Cells(31, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 1).Borders(xlEdgeTop).color = 0
     Cells(31, 1).Borders(xlEdgeTop).weight = 1
@@ -2884,6 +2885,7 @@ end Function
 Function revival6()
     Cells(31, 2) = "YB_連続貼付"
     Cells(31, 2).Font.Name = "Meiryo UI"
+    Cells(31, 2).Interior.Color = 12566463
     Cells(31, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 2).Borders(xlEdgeTop).color = 0
     Cells(31, 2).Borders(xlEdgeTop).weight = 1
@@ -2898,6 +2900,7 @@ Function revival6()
     Cells(31, 2).Borders(xlEdgeRight).weight = 1
     Cells(31, 3) = "try"
     Cells(31, 3).Font.Name = "Meiryo UI"
+    Cells(31, 3).Interior.Color = 12566463
     Cells(31, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 3).Borders(xlEdgeTop).color = 0
     Cells(31, 3).Borders(xlEdgeTop).weight = 1
@@ -2911,6 +2914,7 @@ Function revival6()
     Cells(31, 3).Borders(xlEdgeRight).color = 0
     Cells(31, 3).Borders(xlEdgeRight).weight = 1
     Cells(31, 4).Font.Name = "Meiryo UI"
+    Cells(31, 4).Interior.Color = 12566463
     Cells(31, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 4).Borders(xlEdgeTop).color = 0
     Cells(31, 4).Borders(xlEdgeTop).weight = 1
@@ -2925,6 +2929,7 @@ Function revival6()
     Cells(31, 4).Borders(xlEdgeRight).weight = 1
     Cells(31, 5) = "クリップボードに溜め込んだキャプチャを一気に貼付する。動作不安定。実用性低し。。うーん・・"
     Cells(31, 5).Font.Name = "Meiryo UI"
+    Cells(31, 5).Interior.Color = 12566463
     Cells(31, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 5).Borders(xlEdgeTop).color = 0
     Cells(31, 5).Borders(xlEdgeTop).weight = 1
@@ -2939,6 +2944,7 @@ Function revival6()
     Cells(31, 5).Borders(xlEdgeRight).weight = 1
     Cells(31, 6) = "★☆☆☆☆"
     Cells(31, 6).Font.Name = "Meiryo UI"
+    Cells(31, 6).Interior.Color = 12566463
     Cells(31, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 6).Borders(xlEdgeTop).color = 0
     Cells(31, 6).Borders(xlEdgeTop).weight = 1
@@ -2953,6 +2959,7 @@ Function revival6()
     Cells(31, 6).Borders(xlEdgeRight).weight = 1
     Cells(31, 7) = "試行中。参照設定がいる"
     Cells(31, 7).Font.Name = "Meiryo UI"
+    Cells(31, 7).Interior.Color = 12566463
     Cells(31, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(31, 7).Borders(xlEdgeTop).color = 0
     Cells(31, 7).Borders(xlEdgeTop).weight = 1
@@ -2967,6 +2974,7 @@ Function revival6()
     Cells(31, 7).Borders(xlEdgeRight).weight = 1
     Cells(32, 1) = "30"
     Cells(32, 1).Font.Name = "Meiryo UI"
+    Cells(32, 1).Interior.Color = 12566463
     Cells(32, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 1).Borders(xlEdgeTop).color = 0
     Cells(32, 1).Borders(xlEdgeTop).weight = 1
@@ -2981,6 +2989,7 @@ Function revival6()
     Cells(32, 1).Borders(xlEdgeRight).weight = 1
     Cells(32, 2) = "YC_クリップボードすべてクリア"
     Cells(32, 2).Font.Name = "Meiryo UI"
+    Cells(32, 2).Interior.Color = 12566463
     Cells(32, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 2).Borders(xlEdgeTop).color = 0
     Cells(32, 2).Borders(xlEdgeTop).weight = 1
@@ -2995,6 +3004,7 @@ Function revival6()
     Cells(32, 2).Borders(xlEdgeRight).weight = 1
     Cells(32, 3) = "try"
     Cells(32, 3).Font.Name = "Meiryo UI"
+    Cells(32, 3).Interior.Color = 12566463
     Cells(32, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 3).Borders(xlEdgeTop).color = 0
     Cells(32, 3).Borders(xlEdgeTop).weight = 1
@@ -3008,6 +3018,7 @@ Function revival6()
     Cells(32, 3).Borders(xlEdgeRight).color = 0
     Cells(32, 3).Borders(xlEdgeRight).weight = 1
     Cells(32, 4).Font.Name = "Meiryo UI"
+    Cells(32, 4).Interior.Color = 12566463
     Cells(32, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 4).Borders(xlEdgeTop).color = 0
     Cells(32, 4).Borders(xlEdgeTop).weight = 1
@@ -3022,6 +3033,7 @@ Function revival6()
     Cells(32, 4).Borders(xlEdgeRight).weight = 1
     Cells(32, 5) = "クリップボードをすべてクリアする"
     Cells(32, 5).Font.Name = "Meiryo UI"
+    Cells(32, 5).Interior.Color = 12566463
     Cells(32, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 5).Borders(xlEdgeTop).color = 0
     Cells(32, 5).Borders(xlEdgeTop).weight = 1
@@ -3036,6 +3048,7 @@ Function revival6()
     Cells(32, 5).Borders(xlEdgeRight).weight = 1
     Cells(32, 6) = "★☆☆☆☆"
     Cells(32, 6).Font.Name = "Meiryo UI"
+    Cells(32, 6).Interior.Color = 12566463
     Cells(32, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 6).Borders(xlEdgeTop).color = 0
     Cells(32, 6).Borders(xlEdgeTop).weight = 1
@@ -3050,6 +3063,7 @@ Function revival6()
     Cells(32, 6).Borders(xlEdgeRight).weight = 1
     Cells(32, 7) = "試行中。"
     Cells(32, 7).Font.Name = "Meiryo UI"
+    Cells(32, 7).Interior.Color = 12566463
     Cells(32, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(32, 7).Borders(xlEdgeTop).color = 0
     Cells(32, 7).Borders(xlEdgeTop).weight = 1
@@ -3064,6 +3078,7 @@ Function revival6()
     Cells(32, 7).Borders(xlEdgeRight).weight = 1
     Cells(33, 1) = "31"
     Cells(33, 1).Font.Name = "Meiryo UI"
+    Cells(33, 1).Interior.Color = 12566463
     Cells(33, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 1).Borders(xlEdgeTop).color = 0
     Cells(33, 1).Borders(xlEdgeTop).weight = 1
@@ -3078,6 +3093,7 @@ Function revival6()
     Cells(33, 1).Borders(xlEdgeRight).weight = 1
     Cells(33, 2) = "ZA_シェイプを1か所に整列させる"
     Cells(33, 2).Font.Name = "Meiryo UI"
+    Cells(33, 2).Interior.Color = 12566463
     Cells(33, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 2).Borders(xlEdgeTop).color = 0
     Cells(33, 2).Borders(xlEdgeTop).weight = 1
@@ -3092,6 +3108,7 @@ Function revival6()
     Cells(33, 2).Borders(xlEdgeRight).weight = 1
     Cells(33, 3) = "dev"
     Cells(33, 3).Font.Name = "Meiryo UI"
+    Cells(33, 3).Interior.Color = 12566463
     Cells(33, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 3).Borders(xlEdgeTop).color = 0
     Cells(33, 3).Borders(xlEdgeTop).weight = 1
@@ -3105,6 +3122,7 @@ Function revival6()
     Cells(33, 3).Borders(xlEdgeRight).color = 0
     Cells(33, 3).Borders(xlEdgeRight).weight = 1
     Cells(33, 4).Font.Name = "Meiryo UI"
+    Cells(33, 4).Interior.Color = 12566463
     Cells(33, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 4).Borders(xlEdgeTop).color = 0
     Cells(33, 4).Borders(xlEdgeTop).weight = 1
@@ -3119,6 +3137,7 @@ Function revival6()
     Cells(33, 4).Borders(xlEdgeRight).weight = 1
     Cells(33, 5) = "シェイプの操作の練習時に使ったりしてた。"
     Cells(33, 5).Font.Name = "Meiryo UI"
+    Cells(33, 5).Interior.Color = 12566463
     Cells(33, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 5).Borders(xlEdgeTop).color = 0
     Cells(33, 5).Borders(xlEdgeTop).weight = 1
@@ -3133,6 +3152,7 @@ Function revival6()
     Cells(33, 5).Borders(xlEdgeRight).weight = 1
     Cells(33, 6) = "-"
     Cells(33, 6).Font.Name = "Meiryo UI"
+    Cells(33, 6).Interior.Color = 12566463
     Cells(33, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 6).Borders(xlEdgeTop).color = 0
     Cells(33, 6).Borders(xlEdgeTop).weight = 1
@@ -3147,6 +3167,7 @@ Function revival6()
     Cells(33, 6).Borders(xlEdgeRight).weight = 1
     Cells(33, 7) = "開発時に使用"
     Cells(33, 7).Font.Name = "Meiryo UI"
+    Cells(33, 7).Interior.Color = 12566463
     Cells(33, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(33, 7).Borders(xlEdgeTop).color = 0
     Cells(33, 7).Borders(xlEdgeTop).weight = 1
@@ -3161,6 +3182,7 @@ Function revival6()
     Cells(33, 7).Borders(xlEdgeRight).weight = 1
     Cells(34, 1) = "32"
     Cells(34, 1).Font.Name = "Meiryo UI"
+    Cells(34, 1).Interior.Color = 12566463
     Cells(34, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 1).Borders(xlEdgeTop).color = 0
     Cells(34, 1).Borders(xlEdgeTop).weight = 1
@@ -3175,6 +3197,7 @@ Function revival6()
     Cells(34, 1).Borders(xlEdgeRight).weight = 1
     Cells(34, 2) = "ZB_未定"
     Cells(34, 2).Font.Name = "Meiryo UI"
+    Cells(34, 2).Interior.Color = 12566463
     Cells(34, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 2).Borders(xlEdgeTop).color = 0
     Cells(34, 2).Borders(xlEdgeTop).weight = 1
@@ -3189,6 +3212,7 @@ Function revival6()
     Cells(34, 2).Borders(xlEdgeRight).weight = 1
     Cells(34, 3) = "dev"
     Cells(34, 3).Font.Name = "Meiryo UI"
+    Cells(34, 3).Interior.Color = 12566463
     Cells(34, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 3).Borders(xlEdgeTop).color = 0
     Cells(34, 3).Borders(xlEdgeTop).weight = 1
@@ -3202,6 +3226,7 @@ Function revival6()
     Cells(34, 3).Borders(xlEdgeRight).color = 0
     Cells(34, 3).Borders(xlEdgeRight).weight = 1
     Cells(34, 4).Font.Name = "Meiryo UI"
+    Cells(34, 4).Interior.Color = 12566463
     Cells(34, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 4).Borders(xlEdgeTop).color = 0
     Cells(34, 4).Borders(xlEdgeTop).weight = 1
@@ -3216,6 +3241,7 @@ Function revival6()
     Cells(34, 4).Borders(xlEdgeRight).weight = 1
     Cells(34, 5) = "AW_に移動したから欠番。"
     Cells(34, 5).Font.Name = "Meiryo UI"
+    Cells(34, 5).Interior.Color = 12566463
     Cells(34, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 5).Borders(xlEdgeTop).color = 0
     Cells(34, 5).Borders(xlEdgeTop).weight = 1
@@ -3230,6 +3256,7 @@ Function revival6()
     Cells(34, 5).Borders(xlEdgeRight).weight = 1
     Cells(34, 6) = "-"
     Cells(34, 6).Font.Name = "Meiryo UI"
+    Cells(34, 6).Interior.Color = 12566463
     Cells(34, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 6).Borders(xlEdgeTop).color = 0
     Cells(34, 6).Borders(xlEdgeTop).weight = 1
@@ -3244,6 +3271,7 @@ Function revival6()
     Cells(34, 6).Borders(xlEdgeRight).weight = 1
     Cells(34, 7) = "開発時に使用"
     Cells(34, 7).Font.Name = "Meiryo UI"
+    Cells(34, 7).Interior.Color = 12566463
     Cells(34, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(34, 7).Borders(xlEdgeTop).color = 0
     Cells(34, 7).Borders(xlEdgeTop).weight = 1
@@ -3258,6 +3286,7 @@ Function revival6()
     Cells(34, 7).Borders(xlEdgeRight).weight = 1
     Cells(35, 1) = "33"
     Cells(35, 1).Font.Name = "Meiryo UI"
+    Cells(35, 1).Interior.Color = 12566463
     Cells(35, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 1).Borders(xlEdgeTop).color = 0
     Cells(35, 1).Borders(xlEdgeTop).weight = 1
@@ -3272,6 +3301,7 @@ Function revival6()
     Cells(35, 1).Borders(xlEdgeRight).weight = 1
     Cells(35, 2) = "ZC_すべてのコネクタシェイプを削除する"
     Cells(35, 2).Font.Name = "Meiryo UI"
+    Cells(35, 2).Interior.Color = 12566463
     Cells(35, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 2).Borders(xlEdgeTop).color = 0
     Cells(35, 2).Borders(xlEdgeTop).weight = 1
@@ -3286,6 +3316,7 @@ Function revival6()
     Cells(35, 2).Borders(xlEdgeRight).weight = 1
     Cells(35, 3) = "dev"
     Cells(35, 3).Font.Name = "Meiryo UI"
+    Cells(35, 3).Interior.Color = 12566463
     Cells(35, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 3).Borders(xlEdgeTop).color = 0
     Cells(35, 3).Borders(xlEdgeTop).weight = 1
@@ -3301,6 +3332,7 @@ Function revival6()
 end Function
 Function revival7()
     Cells(35, 4).Font.Name = "Meiryo UI"
+    Cells(35, 4).Interior.Color = 12566463
     Cells(35, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 4).Borders(xlEdgeTop).color = 0
     Cells(35, 4).Borders(xlEdgeTop).weight = 1
@@ -3315,6 +3347,7 @@ Function revival7()
     Cells(35, 4).Borders(xlEdgeRight).weight = 1
     Cells(35, 5) = "すべてのコネクタを削除する。練習時に活躍する"
     Cells(35, 5).Font.Name = "Meiryo UI"
+    Cells(35, 5).Interior.Color = 12566463
     Cells(35, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 5).Borders(xlEdgeTop).color = 0
     Cells(35, 5).Borders(xlEdgeTop).weight = 1
@@ -3329,6 +3362,7 @@ Function revival7()
     Cells(35, 5).Borders(xlEdgeRight).weight = 1
     Cells(35, 6) = "-"
     Cells(35, 6).Font.Name = "Meiryo UI"
+    Cells(35, 6).Interior.Color = 12566463
     Cells(35, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 6).Borders(xlEdgeTop).color = 0
     Cells(35, 6).Borders(xlEdgeTop).weight = 1
@@ -3343,6 +3377,7 @@ Function revival7()
     Cells(35, 6).Borders(xlEdgeRight).weight = 1
     Cells(35, 7) = "開発時に使用"
     Cells(35, 7).Font.Name = "Meiryo UI"
+    Cells(35, 7).Interior.Color = 12566463
     Cells(35, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(35, 7).Borders(xlEdgeTop).color = 0
     Cells(35, 7).Borders(xlEdgeTop).weight = 1
@@ -3357,6 +3392,7 @@ Function revival7()
     Cells(35, 7).Borders(xlEdgeRight).weight = 1
     Cells(36, 1) = "34"
     Cells(36, 1).Font.Name = "Meiryo UI"
+    Cells(36, 1).Interior.Color = 12566463
     Cells(36, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 1).Borders(xlEdgeTop).color = 0
     Cells(36, 1).Borders(xlEdgeTop).weight = 1
@@ -3371,6 +3407,7 @@ Function revival7()
     Cells(36, 1).Borders(xlEdgeRight).weight = 1
     Cells(36, 2) = "ZD_選択中シェイプを再現するソースを生成する"
     Cells(36, 2).Font.Name = "Meiryo UI"
+    Cells(36, 2).Interior.Color = 12566463
     Cells(36, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 2).Borders(xlEdgeTop).color = 0
     Cells(36, 2).Borders(xlEdgeTop).weight = 1
@@ -3385,6 +3422,7 @@ Function revival7()
     Cells(36, 2).Borders(xlEdgeRight).weight = 1
     Cells(36, 3) = "dev"
     Cells(36, 3).Font.Name = "Meiryo UI"
+    Cells(36, 3).Interior.Color = 12566463
     Cells(36, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 3).Borders(xlEdgeTop).color = 0
     Cells(36, 3).Borders(xlEdgeTop).weight = 1
@@ -3398,6 +3436,7 @@ Function revival7()
     Cells(36, 3).Borders(xlEdgeRight).color = 0
     Cells(36, 3).Borders(xlEdgeRight).weight = 1
     Cells(36, 4).Font.Name = "Meiryo UI"
+    Cells(36, 4).Interior.Color = 12566463
     Cells(36, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 4).Borders(xlEdgeTop).color = 0
     Cells(36, 4).Borders(xlEdgeTop).weight = 1
@@ -3412,6 +3451,7 @@ Function revival7()
     Cells(36, 4).Borders(xlEdgeRight).weight = 1
     Cells(36, 5) = "AS_のプロシージャに関連"
     Cells(36, 5).Font.Name = "Meiryo UI"
+    Cells(36, 5).Interior.Color = 12566463
     Cells(36, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 5).Borders(xlEdgeTop).color = 0
     Cells(36, 5).Borders(xlEdgeTop).weight = 1
@@ -3426,6 +3466,7 @@ Function revival7()
     Cells(36, 5).Borders(xlEdgeRight).weight = 1
     Cells(36, 6) = "-"
     Cells(36, 6).Font.Name = "Meiryo UI"
+    Cells(36, 6).Interior.Color = 12566463
     Cells(36, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 6).Borders(xlEdgeTop).color = 0
     Cells(36, 6).Borders(xlEdgeTop).weight = 1
@@ -3440,6 +3481,7 @@ Function revival7()
     Cells(36, 6).Borders(xlEdgeRight).weight = 1
     Cells(36, 7) = "開発時に使用"
     Cells(36, 7).Font.Name = "Meiryo UI"
+    Cells(36, 7).Interior.Color = 12566463
     Cells(36, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(36, 7).Borders(xlEdgeTop).color = 0
     Cells(36, 7).Borders(xlEdgeTop).weight = 1
@@ -3454,6 +3496,7 @@ Function revival7()
     Cells(36, 7).Borders(xlEdgeRight).weight = 1
     Cells(37, 1) = "35"
     Cells(37, 1).Font.Name = "Meiryo UI"
+    Cells(37, 1).Interior.Color = 12566463
     Cells(37, 1).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 1).Borders(xlEdgeTop).color = 0
     Cells(37, 1).Borders(xlEdgeTop).weight = 1
@@ -3468,6 +3511,7 @@ Function revival7()
     Cells(37, 1).Borders(xlEdgeRight).weight = 1
     Cells(37, 2) = "ZE_出力確認"
     Cells(37, 2).Font.Name = "Meiryo UI"
+    Cells(37, 2).Interior.Color = 12566463
     Cells(37, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 2).Borders(xlEdgeTop).color = 0
     Cells(37, 2).Borders(xlEdgeTop).weight = 1
@@ -3482,6 +3526,7 @@ Function revival7()
     Cells(37, 2).Borders(xlEdgeRight).weight = 1
     Cells(37, 3) = "dev"
     Cells(37, 3).Font.Name = "Meiryo UI"
+    Cells(37, 3).Interior.Color = 12566463
     Cells(37, 3).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 3).Borders(xlEdgeTop).color = 0
     Cells(37, 3).Borders(xlEdgeTop).weight = 1
@@ -3495,6 +3540,7 @@ Function revival7()
     Cells(37, 3).Borders(xlEdgeRight).color = 0
     Cells(37, 3).Borders(xlEdgeRight).weight = 1
     Cells(37, 4).Font.Name = "Meiryo UI"
+    Cells(37, 4).Interior.Color = 12566463
     Cells(37, 4).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 4).Borders(xlEdgeTop).color = 0
     Cells(37, 4).Borders(xlEdgeTop).weight = 1
@@ -3509,6 +3555,7 @@ Function revival7()
     Cells(37, 4).Borders(xlEdgeRight).weight = 1
     Cells(37, 5) = "再現ソース取得後に貼付してうまく再現できてるか確認するようにつかう。"
     Cells(37, 5).Font.Name = "Meiryo UI"
+    Cells(37, 5).Interior.Color = 12566463
     Cells(37, 5).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 5).Borders(xlEdgeTop).color = 0
     Cells(37, 5).Borders(xlEdgeTop).weight = 1
@@ -3523,6 +3570,7 @@ Function revival7()
     Cells(37, 5).Borders(xlEdgeRight).weight = 1
     Cells(37, 6) = "-"
     Cells(37, 6).Font.Name = "Meiryo UI"
+    Cells(37, 6).Interior.Color = 12566463
     Cells(37, 6).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 6).Borders(xlEdgeTop).color = 0
     Cells(37, 6).Borders(xlEdgeTop).weight = 1
@@ -3537,6 +3585,7 @@ Function revival7()
     Cells(37, 6).Borders(xlEdgeRight).weight = 1
     Cells(37, 7) = "開発時に使用"
     Cells(37, 7).Font.Name = "Meiryo UI"
+    Cells(37, 7).Interior.Color = 12566463
     Cells(37, 7).Borders(xlEdgeTop).LineStyle = 1
     Cells(37, 7).Borders(xlEdgeTop).color = 0
     Cells(37, 7).Borders(xlEdgeTop).weight = 1
