@@ -55,8 +55,16 @@ Sub createRevivalSource()
 End Sub
 '状態再生ソース生成
 Function writeFromExcelToText()
-
-    Dim filePath As String: filePath = ActiveWorkbook.Path & "\setup.bas"
+    Dim filePath As String ': filePath = ActiveWorkbook.Path & "\setup.bas"
+    Dim moduleName As String
+    moduleName = InputBox("ファイル名を入れて。拡張子はいらない。", "モジュールファイル名", "setupX")
+    filePath = ActiveWorkbook.Path & "\" & moduleName & ".bas"
+    
+    If StrPtr(moduleName) = 0 Then
+        'キャンセル時
+        Exit Function
+    End If
+    
     Const CHAR_SET = "SHIFT-JIS" 'UTF-8 / SHIFT-JIS
     
     Dim ws As Worksheet
@@ -73,7 +81,7 @@ Function writeFromExcelToText()
         .LineSeparator = 10
         .Open
         'ファイル書き出し
-        .WriteText "Attribute VB_Name = ""setup""", 1
+        .WriteText "Attribute VB_Name = """ & moduleName & """", 1
         .WriteText "Function revival0()", 1
         .WriteText "    ActiveWindow.DisplayGridlines = " & ActiveWindow.DisplayGridlines, 1
         .WriteText "    ActiveWindow.Zoom = " & ActiveWindow.Zoom, 1
@@ -200,7 +208,7 @@ Function writeFromExcelToText()
                 .WriteText "    onShape.Visible = " & shp.Visible, 1
                 .WriteText "    onShape.Line.ForeColor.RGB = " & shp.Line.ForeColor.RGB, 1
                 .WriteText "    onShape.ForeColor.RGB = " & shp.ForeColor.RGB, 1
-                .WriteText "    onShape.TextFrame2.WordArtformat = " & shp.TextFrame2.WordArtformat, 1
+                '.WriteText "    onShape.TextFrame2.WordArtformat = " & shp.TextFrame2.WordArtformat, 1
                 .WriteText "    onShape.Fill.Transparency = " & shp.Fill.Transparency, 1
                 .WriteText "    onShape.TextFrame.Characters.Text = """ & shp.TextFrame.Characters.Text & """", 1
                 .WriteText "    onShape.Fill.ForeColor.RGB = " & shp.Fill.ForeColor.RGB, 1
@@ -268,10 +276,19 @@ Function writeFromExcelToText()
         '最後の1行は改行なし
         .WriteText "End Function", 1
         
-        .WriteText "sub revival()", 1
+        .WriteText "Sub revival()", 1
+        If IsNumeric(Right(moduleName, 1)) Then
+            'モジュール名の最後が数値の場合、シート作成処理を追加する
+            .WriteText "    Worksheets.Add After:=Worksheets(Worksheets.Count)", 1
+        End If
+        
         For i = 0 To functionCount - 1
             .WriteText "    CALL revival" & i & "()", 1
         Next
+        
+        If IsNumeric(Right(moduleName, 1)) Then
+            .WriteText "    Worksheets(1).select", 1
+        End If
         .WriteText "end sub", 0
         
         If CHAR_SET = "UTF-8" Then
