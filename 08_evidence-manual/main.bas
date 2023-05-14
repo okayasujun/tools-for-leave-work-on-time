@@ -856,7 +856,7 @@ Sub AU_最初のシェイプをスキャンコピー()
         shp.Shadow.Size = baseShp.Shadow.Size
     Next
 End Sub
-'省略線をだす。手で長さや幅は調整してもらいたい
+'省略線をだす。黒、白、黒の3本のにょろにょろ線を作成し、最後にグループ化している
 Sub AV_省略にょろにょろ出現()
     Dim selectRange As Range
     Set selectRange = Selection
@@ -882,6 +882,7 @@ Sub AV_省略にょろにょろ出現()
     End With
     blackTopShape.Line.ForeColor.RGB = RGB(0, 0, 0)
     blackTopShape.Line.Weight = 3
+    blackTopShape.Name = "omit-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
 
     top = top + 3
     left = Selection.left
@@ -900,6 +901,7 @@ Sub AV_省略にょろにょろ出現()
     End With
     blackBottomShape.Line.ForeColor.RGB = RGB(0, 0, 0)
     blackBottomShape.Line.Weight = 3
+    blackBottomShape.Name = "omit-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
     
     
     top = top - 9
@@ -919,6 +921,7 @@ Sub AV_省略にょろにょろ出現()
     End With
     whiteShape.Line.ForeColor.RGB = RGB(255, 255, 255)
     whiteShape.Line.Weight = 5.8
+    whiteShape.Name = "omit-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
     
     blackTopShape.Select Replace:=False
     whiteShape.Select Replace:=False
@@ -991,7 +994,6 @@ Sub AY_Y座標合わせ()
         sp.top = baseXCenterPoint - sp.Height / 2
     Next
 End Sub
-
 'セルからセルへ矢印をつける。1→2,3→4のようにつける
 Sub AZ_セルからセルに伸びるコネクタ_枠なし()
     Dim count As Integer: count = 1
@@ -1009,7 +1011,7 @@ Sub AZ_セルからセルに伸びるコネクタ_枠なし()
             '偶数の時は終点セルの設定と矢印の挿入
             Set endRange = cell
             Set connectShape = ActiveSheet.Shapes.AddConnector(Type:=msoConnectorElbow, _
-                BeginX:=startRange.left + (startRange.WIDTH / 2), BeginY:=startRange.top + (startRange.Height / 2), _
+                BeginX:=startRange.left + (startRange.WIDTH), BeginY:=startRange.top + (startRange.Height / 2), _
                 EndX:=endRange.left + (endRange.WIDTH / 2), EndY:=endRange.top + (endRange.Height / 2))
             Call makeConnectAllow(connectShape)
         End If
@@ -1018,7 +1020,7 @@ Sub AZ_セルからセルに伸びるコネクタ_枠なし()
 End Sub
 '指定色内で色の切り替えを行う。必要に応じてコメントアウトの位置、色設定プロパティを調整して
 Sub BA_色切り替え()
-Attribute BA_色切り替え.VB_ProcData.VB_Invoke_Func = "d\n14"
+Attribute BA_色切り替え.VB_ProcData.VB_Invoke_Func = " \n14"
     'シェイプの塗りつぶし色
     'Dim colorCode As String: colorCode = Selection.ShapeRange.Item(1).Fill.ForeColor.RGB
     'シェイプの文字色
