@@ -1,7 +1,7 @@
 Attribute VB_Name = "try"
 '#シェイプを整列させる（Y座標の昇順）
 '※既知の問題：同じ高さの画像があるとエラーを出す。
-Sub AE_シェイプを高さ順に整列させる() 'TODO:これに関してはシンプルにリファクタリングをすべし。共通部分とか、きれいにしよう。
+Sub AE_シェイプを高さ順に整列させる() 'TODO:リファクタリングをすべし。共通部分とか、きれいにしよう。
 Attribute AE_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
 
     '■画像間の間隔
@@ -87,7 +87,7 @@ Attribute AE_シェイプを高さ順に整列させる.VB_ProcData.VB_Invoke_Func = "t\n14"
         dummyShape.Delete
         
         '■キャプション入力用
-        'Call setCaption(captionRange)
+        Call setCaption(captionRange, "")
         
         '今対象にしたシェイプの上部座標 + 今対象にしたシェイプの高さ + 画像間の間隔 = 次のシェイプの移動先上部座標
         top = top + moveShape.Height + MARGIN_BOTTOM
@@ -175,7 +175,23 @@ Function isExistArray(targetArray As Variant, checkValue As String)
         End If
     Next
 End Function
-
+'指定された値が指定された配列内の何番目に存在するかを返す
+Function isExistArrayReturnIndex(targetArray As Variant, checkValue As String)
+    isExistArrayReturnIndex = -1
+    
+    If UBound(targetArray) = -1 Then
+        'UBoundの戻り値：-1は要素数0を示す。この場合、-1を返す
+        isExistArrayReturnIndex = -1
+        Exit Function
+    End If
+    
+    For i = LBound(targetArray) To UBound(targetArray)
+        If targetArray(i) = checkValue Then
+            isExistArrayReturnIndex = i
+            Exit For
+        End If
+    Next
+End Function
 '============================================================================================================================
 '謝意：https://www.ka-net.org/blog/?p=4944 参考
 'できたけど動作不安定（クリップボードの表示エリア中可視範囲のものしか対象にできない）
@@ -188,7 +204,7 @@ Sub YB_連続貼付()
    
     Set aryListItems = GetOfficeClipboardListItems
     For i = 0 To aryListItems.Length - 1
-        Debug.Print i + 1, aryListItems.GetElement(i).CurrentName
+        'Debug.Print i + 1, aryListItems.GetElement(i).CurrentName
     
         '=============
         Set ptnAcc = aryListItems.GetElement(i).GetCurrentPattern(UIA_LegacyIAccessiblePatternId)
@@ -197,9 +213,9 @@ Sub YB_連続貼付()
     'ここでクリップボードの表示をfalseに戻してはだめ
 End Sub
 '
-'Sub YC_クリップボードすべてクリア()
-'    DoActionOfficeClipboard "すべてクリア"
-'End Sub
+Sub YC_クリップボードすべてクリア()
+    DoActionOfficeClipboard "すべてクリア"
+End Sub
 'ボタン操作を実行する（「すべてクリア」でのみ使用する）
 Private Sub DoActionOfficeClipboard(ByVal ButtonName As String)
 'Officeクリップボードコマンド実行
