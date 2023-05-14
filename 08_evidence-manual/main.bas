@@ -785,7 +785,7 @@ Attribute AS_シェイプ間に図形矢印を置く.VB_ProcData.VB_Invoke_Func = " \n14"
     Next
 End Sub
 'セルからセルへ枠シェイプを繋ぐ矢印を付与する
-Sub AT_セルからセルに伸びるコネクタ()
+Sub AT_セルからセルに伸びるコネクタ_枠あり()
     Dim onShape As Shape
     
     For Each rcell In Selection
@@ -993,7 +993,7 @@ Sub AY_Y座標合わせ()
 End Sub
 
 'セルからセルへ矢印をつける。1→2,3→4のようにつける
-Sub AZ_セルからセルに伸びるコネクタ()
+Sub AZ_セルからセルに伸びるコネクタ_枠なし()
     Dim count As Integer: count = 1
     '始点セル
     Dim startRange As Range

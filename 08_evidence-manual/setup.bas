@@ -2003,7 +2003,7 @@ Function revival3()
     Cells(22, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 1).Borders(xlEdgeRight).color = 0
     Cells(22, 1).Borders(xlEdgeRight).weight = 1
-    Cells(22, 2) = "AT_セルからセルに伸びるコネクタ（枠あり）"
+    Cells(22, 2) = "AT_セルからセルに伸びるコネクタ_枠あり"
     Cells(22, 2).Font.Name = "Meiryo UI"
     Cells(22, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(22, 2).Borders(xlEdgeTop).color = 0
@@ -2591,7 +2591,7 @@ Function revival5()
     Cells(28, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(28, 1).Borders(xlEdgeRight).color = 0
     Cells(28, 1).Borders(xlEdgeRight).weight = 1
-    Cells(28, 2) = "AZ_セルからセルに伸びるコネクタ（枠なし）"
+    Cells(28, 2) = "AZ_セルからセルに伸びるコネクタ_枠なし"
     Cells(28, 2).Font.Name = "Meiryo UI"
     Cells(28, 2).Borders(xlEdgeTop).LineStyle = 1
     Cells(28, 2).Borders(xlEdgeTop).color = 0
