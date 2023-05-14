@@ -22,6 +22,7 @@ Function revival0()
     Cells(1, 4).Borders(xlEdgeBottom).LineStyle = 1
     Cells(1, 4).Borders(xlEdgeBottom).color = 0
     Cells(1, 4).Borders(xlEdgeBottom).weight = 1
+    Cells(1, 5) = "最終更新：2023/5/14 17:06"
     Cells(1, 5).Font.Name = "Meiryo UI"
     Cells(1, 5).Borders(xlEdgeBottom).LineStyle = 1
     Cells(1, 5).Borders(xlEdgeBottom).color = 0
@@ -3644,7 +3645,7 @@ Function revival7()
     Columns(7).ColumnWidth = 58.88
     Dim onShape As Object
 End Function
-sub revival()
+Sub revival()
     CALL revival0()
     CALL revival1()
     CALL revival2()

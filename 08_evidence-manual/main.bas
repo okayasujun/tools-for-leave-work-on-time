@@ -194,7 +194,7 @@ Attribute AD_シェイプを貼付順に整列させる.VB_ProcData.VB_Invoke_Func = "e\n14"
         captionText = "▲" 'InputBox("キャプションの初期値を入れて。", "キャプションオプション", "▲ここに画像の説明を書く")
     End If
     
-    If StrPtr(answer) = 0 Then
+    If StrPtr(captionText) = 0 Then
         'キャンセル時
         Exit Sub
     End If
