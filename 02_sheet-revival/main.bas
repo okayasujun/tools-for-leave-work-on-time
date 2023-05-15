@@ -272,6 +272,14 @@ Function writeFromExcelToText()
 '                .WriteText "    onShape.TextFrame2.Orientation = " & shp.TextFrame2.Orientation, 1
             
             End If
+            '関数区切り（実行時に起きる「プロシージャが大きすぎます。」を回避するため）
+            If count > 30 And count Mod 30 = 0 Then
+                .WriteText "end Function", 1
+                .WriteText "Function revival" & functionCount & "()", 1
+                functionCount = functionCount + 1
+            End If
+            count = count + 1
+                
         Next
         '最後の1行は改行なし
         .WriteText "End Function", 1
