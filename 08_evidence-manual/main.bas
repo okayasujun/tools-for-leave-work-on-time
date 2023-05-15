@@ -298,9 +298,9 @@ Attribute AF_シェイプを選択順にコネクタで繋ぐ.VB_ProcData.VB_Invoke_Func = "l\n1
 
         '接続シェイプの誕生
         '■Type引数は右記を参照：https://learn.microsoft.com/ja-jp/office/vba/api/office.msoconnectortype
-        Set connectShape = ActiveSheet.Shapes.AddConnector(Type:=msoConnectorElbow, BeginX:=0, BeginY:=0, EndX:=0, EndY:=0)
+        Set connectShape = ActiveSheet.Shapes.AddConnector(Type:=msoConnectorStraight, BeginX:=0, BeginY:=0, EndX:=0, EndY:=0)
         '■接続の始点位置指定（最後の引数は1:上辺、2:左辺、3:下辺、4右辺）
-        connectShape.ConnectorFormat.BeginConnect ActiveSheet.Shapes(startShape.Name), 2
+        connectShape.ConnectorFormat.BeginConnect ActiveSheet.Shapes(startShape.Name), 4
         '■接続の終点位置指定（最後の引数は始点位置の指定と同様）
         connectShape.ConnectorFormat.EndConnect ActiveSheet.Shapes(endShape.Name), 2
         'コネクタを加工する
@@ -518,10 +518,10 @@ Sub AO_目次シートを作成する()
     Next
     ws.Columns("A:H").AutoFit
     '■必要があれば以下をコメントイン
-'    ws.Cells(i + 1, 1) = "必要に応じて下記の関数を追加する。目次シートへのショートカット関数"
-'    ws.Cells(i + 2, 1) = "Sub 目次シートを選択"
-'    ws.Cells(i + 3, 1) = "    Sheets(1).Select"
-'    ws.Cells(i + 4, 1) = "End Sub"
+    ws.Cells(i + 1, 1) = "必要に応じて下記の関数を追加する。目次シートへのショートカット関数"
+    ws.Cells(i + 2, 1) = "Sub 目次シートを選択"
+    ws.Cells(i + 3, 1) = "    Sheets(1).Select"
+    ws.Cells(i + 4, 1) = "End Sub"
 End Sub
 '指定されたブックに指定されたシートが存在するかどうかを返す。存在する:TRUE、存在しない:FALSE
 Function isExistCheckToSheet(wb As Workbook, checkSheet As Variant)
@@ -844,15 +844,18 @@ Sub AU_最初のシェイプをスキャンコピー()
         shp.TextFrame2.VerticalAnchor = baseShp.TextFrame2.VerticalAnchor
         shp.TextFrame2.HorizontalAnchor = baseShp.TextFrame2.HorizontalAnchor
         shp.TextFrame2.Orientation = baseShp.TextFrame2.Orientation
+        '■なぜか実行時にエラー
         'shp.Shadow.Type = baseShp.Shadow.Type
         shp.Shadow.Visible = baseShp.Shadow.Visible
-        shp.Shadow.Style = baseShp.Shadow.Style
+        '■なぜか実行時にエラー
+        'shp.Shadow.Style = baseShp.Shadow.Style
         shp.Shadow.Blur = baseShp.Shadow.Blur
         shp.Shadow.OffsetX = baseShp.Shadow.OffsetX
         shp.Shadow.OffsetY = baseShp.Shadow.OffsetY
         shp.Shadow.RotateWithShape = baseShp.Shadow.RotateWithShape
         shp.Shadow.ForeColor.RGB = baseShp.Shadow.ForeColor.RGB
-        shp.Shadow.Transparency = baseShp.Shadow.Transparency
+        '■なぜか実行時にエラー
+        'shp.Shadow.Transparency = baseShp.Shadow.Transparency
         shp.Shadow.Size = baseShp.Shadow.Size
     Next
 End Sub
