@@ -257,11 +257,11 @@ End Function
 Function setCaption(captionRange As Range, captionText As String)
     '画像間移動をCtrl+矢印で高速に行うため
     captionText = IIf(captionText = "", " ", captionText)
-    '■適宜変えてよし
+    '■適宜変えてよし。お好みで
     captionRange.Value = captionText
     captionRange.Font.Bold = True
-    captionRange.Font.Color = RGB(20, 20, 20)
-    captionRange.Font.Size = 14
+    captionRange.Font.Color = RGB(40, 40, 40)
+    captionRange.Font.Size = 18
     captionRange.Font.Name = "BIZ UDPゴシック" '"Meiryo UI"'
 End Function
 'ミリ秒を取得
@@ -776,7 +776,11 @@ Attribute AS_シェイプ間に図形矢印を置く.VB_ProcData.VB_Invoke_Func = " \n14"
             setTop = endShape.top + (endShape.Height / 2) + (((startShape.top + (startShape.Height / 2)) - (endShape.top + (endShape.Height / 2))) / 2) - 25
         End If
         '矢印の向き調整。最後に割ってるのは円周率
-        degree = Atn((y2 - y1) / (x2 - x1)) * 180 / 3.14
+        If x2 - x1 <> 0 Then
+            degree = Atn((y2 - y1) / (x2 - x1)) * 180 / 3.14
+        Else
+            degree = -90
+        End If
         
         Set onShape = ActiveSheet.Shapes.AddShape(msoShapeLeftArrow, setLeft, setTop, 50, 50)
         onShape.Name = "allow-" & Format(Now(), "yyyymmdd-hhmmss.") & getMSec()
