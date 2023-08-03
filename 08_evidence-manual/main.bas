@@ -263,6 +263,7 @@ Function setCaption(captionRange As Range, captionText As String)
     captionRange.Font.Color = RGB(40, 40, 40)
     captionRange.Font.Size = 18
     captionRange.Font.Name = "BIZ UDPゴシック" '"Meiryo UI"'
+    Rows(captionRange.Row).RowHeight = 24
 End Function
 'ミリ秒を取得
 Function getMSec() As String

@@ -1,2 +1,5 @@
 *.xlsm
 *.xlsx
+*.txt
+*objects/*
+*tabs/*
