@@ -46,33 +46,38 @@ Sub C_カスタム項目メタデータ作成()
         fileName = filePath & apiName & ".field-meta.xml"
         
         'BOM削除
-        With CreateObject("ADODB.Stream")
-            .Charset = "UTF-8"
-            .Open
+'        With CreateObject("ADODB.Stream")
+'            .Charset = "UTF-8"
+'            .Open
+    Dim st As Object
+    Set st = CreateObject("ADODB.Stream")
+    st.Charset = "UTF-8"
+    st.Open
             '書き出し処理開始
-            .writeText PRE, 0
-            .writeText getItemMetaData(i), 0
-            .writeText SUF, 0
+            st.writeText PRE, 0
+            st.writeText getItemMetaData(i), 0
+            st.writeText SUF, 0
             '書き出し処理終了
-            .Position = 0
-            .Type = 1
-            .Position = 3
-            bytetmp = .Read
-            .SaveToFile fileName, 2
-            'コピー先ファイルを閉じる
-            .Close
-        End With
-        'UTF-8でテキストファイルへ出力する
-        With CreateObject("ADODB.Stream")
-            .Charset = "UTF-8"
-            .LineSeparator = 10
-            .Type = 1
-            .Open
-            .write bytetmp
-            .SetEOS
-            .SaveToFile fileName, 2
-            .Close
-        End With
+    Call saveTextWithUTF8(st, fileName)
+'            .Position = 0
+'            .Type = 1
+'            .Position = 3
+'            bytetmp = .Read
+'            .SaveToFile fileName, 2
+'            'コピー先ファイルを閉じる
+'            .Close
+'        End With
+'        'UTF-8でテキストファイルへ出力する
+'        With CreateObject("ADODB.Stream")
+'            .Charset = "UTF-8"
+'            .LineSeparator = 10
+'            .Type = 1
+'            .Open
+'            .write bytetmp
+'            .SetEOS
+'            .SaveToFile fileName, 2
+'            .Close
+'        End With
 continue:
     Next
     
@@ -149,4 +154,5 @@ Function getItemMetaData(row As Variant)
         returnValue = returnValue & "    " & "</valueSet>" & vbCrLf
     End If
     getItemMetaData = returnValue
+        Debug.Print getItemMetaData
 End Function
