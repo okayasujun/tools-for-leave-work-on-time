@@ -12,10 +12,13 @@ Private condition As String
 Private logWriteLine As Integer
 Const NO_COLOR = 16777215
 Sub G_入力チェック()
-    '・API名のルール不履行ないか
+    '・API名のルール不履行がないか
     '・API名に重複はないか
     '・オブジェクトの設定と整合しているか
+    '・API名の頭文字は大文字であれ（これはいらんな）
+    '・オブジェクトの共有設定と主従関係項目の有無
     Call init
+    Call repaint
     
     For i = 5 To lastRow
         With itemSheet
@@ -48,6 +51,15 @@ Sub G_入力チェック()
                             .Cells(i, dataTypeColumn).Interior.Color = RGB(255, 255, 0)
                         End If
                     
+                    ElseIf condition = "等しい" Then
+                        If Not .Cells(i, dataTypeColumn).Value = errorSheet.Cells(j, 5).Value Then
+                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
+                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
+                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, dataTypeColumn).Value & ")"
+                            logWriteLine = logWriteLine + 1
+                            .Cells(i, dataTypeColumn).Interior.Color = RGB(255, 255, 0)
+                        End If
+                        
                     ElseIf condition = "必須" Then
                         If Not .Cells(i, dataTypeColumn).Value <> "" Then
                             '制約エラー
@@ -78,8 +90,12 @@ Sub G_入力チェック()
         End With
     Next
     
-    Call repaint
-    MsgBox "完了"
+    If logWriteLine = 2 Then
+        MsgBox "入力チェックが完了しました。" & vbCrLf & "入力不備はありません。"
+    Else
+        MsgBox "入力不備があります。[log]シートを確認してください。"
+    End If
+    
 End Sub
 Function init()
     Set itemSheet = Sheets(ITEM_SHEET)
