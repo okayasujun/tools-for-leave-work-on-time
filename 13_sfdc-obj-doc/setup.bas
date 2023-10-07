@@ -1,7 +1,7 @@
 Attribute VB_Name = "setup"
 Function revival0()
     ActiveWindow.DisplayGridlines = False
-    ActiveWindow.Zoom = 100
+    ActiveWindow.Zoom = 85
     ActiveSheet.Name = "実行機能一覧"
     Cells(5, 2) = "フォルダ作成"
     Cells(5, 2).Font.Name = "游ゴシック"
@@ -186,7 +186,6 @@ Function revival3()
     Cells(19, 8).Font.Name = "游ゴシック"
     Cells(19, 9).Font.Name = "游ゴシック"
     Cells(19, 10).Font.Name = "游ゴシック"
-    Cells(19, 11) = "次回、カスタム項目のところからやろう"
     Cells(19, 11).Font.Name = "游ゴシック"
     Cells(20, 2).Font.Name = "游ゴシック"
 end Function
@@ -399,140 +398,6 @@ Function revival9()
     Cells(36, 9).Font.Name = "游ゴシック"
     Cells(36, 10).Font.Name = "游ゴシック"
     Cells(36, 11).Font.Name = "游ゴシック"
-    Cells(37, 2).Font.Name = "游ゴシック"
-    Cells(37, 3).Font.Name = "游ゴシック"
-    Cells(37, 4).Font.Name = "游ゴシック"
-    Cells(37, 5).Font.Name = "游ゴシック"
-    Cells(37, 6).Font.Name = "游ゴシック"
-    Cells(37, 7).Font.Name = "游ゴシック"
-    Cells(37, 8).Font.Name = "游ゴシック"
-    Cells(37, 9).Font.Name = "游ゴシック"
-    Cells(37, 10).Font.Name = "游ゴシック"
-    Cells(37, 11).Font.Name = "游ゴシック"
-    Cells(38, 2).Font.Name = "游ゴシック"
-end Function
-Function revival10()
-    Cells(38, 3).Font.Name = "游ゴシック"
-    Cells(38, 4).Font.Name = "游ゴシック"
-    Cells(38, 5).Font.Name = "游ゴシック"
-    Cells(38, 6).Font.Name = "游ゴシック"
-    Cells(38, 7).Font.Name = "游ゴシック"
-    Cells(38, 8).Font.Name = "游ゴシック"
-    Cells(38, 9).Font.Name = "游ゴシック"
-    Cells(38, 10).Font.Name = "游ゴシック"
-    Cells(38, 11).Font.Name = "游ゴシック"
-    Cells(39, 2).Font.Name = "游ゴシック"
-    Cells(39, 3).Font.Name = "游ゴシック"
-    Cells(39, 4).Font.Name = "游ゴシック"
-    Cells(39, 5).Font.Name = "游ゴシック"
-    Cells(39, 6).Font.Name = "游ゴシック"
-    Cells(39, 7).Font.Name = "游ゴシック"
-    Cells(39, 8).Font.Name = "游ゴシック"
-    Cells(39, 9).Font.Name = "游ゴシック"
-    Cells(39, 10).Font.Name = "游ゴシック"
-    Cells(39, 11).Font.Name = "游ゴシック"
-    Cells(40, 2) = "でもここまでできたらいいだろって感じもするなあ。"
-    Cells(40, 2).Font.Name = "游ゴシック"
-    Cells(40, 3).Font.Name = "游ゴシック"
-    Cells(40, 4).Font.Name = "游ゴシック"
-    Cells(40, 5).Font.Name = "游ゴシック"
-    Cells(40, 6).Font.Name = "游ゴシック"
-    Cells(40, 7).Font.Name = "游ゴシック"
-    Cells(40, 8).Font.Name = "游ゴシック"
-    Cells(40, 9).Font.Name = "游ゴシック"
-    Cells(40, 10).Font.Name = "游ゴシック"
-    Cells(40, 11).Font.Name = "游ゴシック"
-    Cells(41, 2) = "とりあえず、自分用の開発を効率よく進めるための土台はできた感じがする。"
-    Cells(41, 2).Font.Name = "游ゴシック"
-end Function
-Function revival11()
-    Cells(41, 3).Font.Name = "游ゴシック"
-    Cells(41, 4).Font.Name = "游ゴシック"
-    Cells(41, 5).Font.Name = "游ゴシック"
-    Cells(41, 6).Font.Name = "游ゴシック"
-    Cells(41, 7).Font.Name = "游ゴシック"
-    Cells(41, 8).Font.Name = "游ゴシック"
-    Cells(41, 9).Font.Name = "游ゴシック"
-    Cells(41, 10).Font.Name = "游ゴシック"
-    Cells(41, 11).Font.Name = "游ゴシック"
-    Cells(42, 2) = "オブジェクトとか考えてやっていくかあ。"
-    Cells(42, 2).Font.Name = "游ゴシック"
-    Cells(42, 3).Font.Name = "游ゴシック"
-    Cells(42, 4).Font.Name = "游ゴシック"
-    Cells(42, 5).Font.Name = "游ゴシック"
-    Cells(42, 6).Font.Name = "游ゴシック"
-    Cells(42, 7).Font.Name = "游ゴシック"
-    Cells(42, 8).Font.Name = "游ゴシック"
-    Cells(42, 9).Font.Name = "游ゴシック"
-    Cells(42, 10).Font.Name = "游ゴシック"
-    Cells(42, 11).Font.Name = "游ゴシック"
-    Cells(43, 2).Font.Name = "游ゴシック"
-    Cells(43, 3).Font.Name = "游ゴシック"
-    Cells(43, 4).Font.Name = "游ゴシック"
-    Cells(43, 5).Font.Name = "游ゴシック"
-    Cells(43, 6).Font.Name = "游ゴシック"
-    Cells(43, 7).Font.Name = "游ゴシック"
-    Cells(43, 8).Font.Name = "游ゴシック"
-    Cells(43, 9).Font.Name = "游ゴシック"
-    Cells(43, 10).Font.Name = "游ゴシック"
-    Cells(43, 11).Font.Name = "游ゴシック"
-    Cells(44, 2).Font.Name = "游ゴシック"
-end Function
-Function revival12()
-    Cells(44, 3).Font.Name = "游ゴシック"
-    Cells(44, 4).Font.Name = "游ゴシック"
-    Cells(44, 5).Font.Name = "游ゴシック"
-    Cells(44, 6).Font.Name = "游ゴシック"
-    Cells(44, 7).Font.Name = "游ゴシック"
-    Cells(44, 8).Font.Name = "游ゴシック"
-    Cells(44, 9).Font.Name = "游ゴシック"
-    Cells(44, 10).Font.Name = "游ゴシック"
-    Cells(44, 11).Font.Name = "游ゴシック"
-    Cells(45, 2).Font.Name = "游ゴシック"
-    Cells(45, 3).Font.Name = "游ゴシック"
-    Cells(45, 4).Font.Name = "游ゴシック"
-    Cells(45, 5).Font.Name = "游ゴシック"
-    Cells(45, 6).Font.Name = "游ゴシック"
-    Cells(45, 7).Font.Name = "游ゴシック"
-    Cells(45, 8).Font.Name = "游ゴシック"
-    Cells(45, 9).Font.Name = "游ゴシック"
-    Cells(45, 10).Font.Name = "游ゴシック"
-    Cells(45, 11).Font.Name = "游ゴシック"
-    Cells(46, 2) = "テストで使うcsvファイル"
-    Cells(46, 2).Font.Name = "游ゴシック"
-    Cells(46, 3).Font.Name = "游ゴシック"
-    Cells(46, 4).Font.Name = "游ゴシック"
-    Cells(46, 5).Font.Name = "游ゴシック"
-    Cells(46, 6).Font.Name = "游ゴシック"
-    Cells(46, 7).Font.Name = "游ゴシック"
-    Cells(46, 8).Font.Name = "游ゴシック"
-    Cells(46, 9).Font.Name = "游ゴシック"
-    Cells(46, 10).Font.Name = "游ゴシック"
-    Cells(46, 11).Font.Name = "游ゴシック"
-    Cells(47, 2) = "api名じゃないとだめ。"
-    Cells(47, 2).Font.Name = "游ゴシック"
-end Function
-Function revival13()
-    Cells(47, 3).Font.Name = "游ゴシック"
-    Cells(47, 4).Font.Name = "游ゴシック"
-    Cells(47, 5).Font.Name = "游ゴシック"
-    Cells(47, 6).Font.Name = "游ゴシック"
-    Cells(47, 7).Font.Name = "游ゴシック"
-    Cells(47, 8).Font.Name = "游ゴシック"
-    Cells(47, 9).Font.Name = "游ゴシック"
-    Cells(47, 10).Font.Name = "游ゴシック"
-    Cells(47, 11).Font.Name = "游ゴシック"
-    Cells(48, 2) = "Idは設定してもいいけど、load時にinsertされるから関係ない。"
-    Cells(48, 2).Font.Name = "游ゴシック"
-    Cells(48, 3).Font.Name = "游ゴシック"
-    Cells(48, 4).Font.Name = "游ゴシック"
-    Cells(48, 5).Font.Name = "游ゴシック"
-    Cells(48, 6).Font.Name = "游ゴシック"
-    Cells(48, 7).Font.Name = "游ゴシック"
-    Cells(48, 8).Font.Name = "游ゴシック"
-    Cells(48, 9).Font.Name = "游ゴシック"
-    Cells(48, 10).Font.Name = "游ゴシック"
-    Cells(48, 11).Font.Name = "游ゴシック"
     Rows(5).RowHeight = 18.75
     Rows(6).RowHeight = 18.75
     Rows(7).RowHeight = 18.75
@@ -565,18 +430,6 @@ Function revival13()
     Rows(34).RowHeight = 18.75
     Rows(35).RowHeight = 18.75
     Rows(36).RowHeight = 18.75
-    Rows(37).RowHeight = 18.75
-    Rows(38).RowHeight = 18.75
-    Rows(39).RowHeight = 18.75
-    Rows(40).RowHeight = 18.75
-    Rows(41).RowHeight = 18.75
-    Rows(42).RowHeight = 18.75
-    Rows(43).RowHeight = 18.75
-    Rows(44).RowHeight = 18.75
-    Rows(45).RowHeight = 18.75
-    Rows(46).RowHeight = 18.75
-    Rows(47).RowHeight = 18.75
-    Rows(48).RowHeight = 18.75
     Columns(2).ColumnWidth = 8.38
     Columns(3).ColumnWidth = 8.38
     Columns(4).ColumnWidth = 8.38
@@ -606,32 +459,6 @@ Function revival13()
     onShape.Visible = -1
     onShape.Placement = 1
     onShape.Characters.Text = ""
-    Set onShape = ActiveSheet.Shapes.AddShape(106,266.25,151.5,191.25,75)
-    onShape.Name = "Rounded Rectangular Callout 1"
-    onShape.Visible = -1
-    onShape.Line.ForeColor.RGB = 9392687
-    onShape.Fill.Transparency = 0
-    onShape.TextFrame.Characters.Text = "ここは後で修正。
-トップがobjectsフォルダ
-と、tabsフォルダ"
-    onShape.Fill.ForeColor.RGB = 12874308
-    onShape.TextFrame2.TextRange.Font.Size = 11
-    onShape.TextFrame2.WordWrap = -1
-    onShape.TextFrame.Characters.Font.Color = 16777215
-    onShape.TextFrame.Characters.Font.Name = "Calibri"
-    onShape.TextFrame2.VerticalAnchor = 3
-    onShape.TextFrame2.TextRange.ParagraphFormat.Alignment = 1
-    onShape.Placement = 1
-    onShape.LockAspectRatio = 0
-    onShape.TextFrame2.AutoSize = 0
-    onShape.TextFrame2.MarginLeft = 7.2
-    onShape.TextFrame2.MarginRight = 7.2
-    onShape.TextFrame2.MarginTop = 3.6
-    onShape.TextFrame2.MarginBottom = 3.6
-    onShape.TextFrame2.WordWrap = -1
-    onShape.TextFrame2.VerticalAnchor = 3
-    onShape.TextFrame2.HorizontalAnchor = 1
-    onShape.TextFrame2.Orientation = 1
     Set onShape = ActiveSheet.Buttons.Add(461.25,486.75,45.75,24)
     onShape.OnAction = "createProfileMetaDataFile"
     onShape.Name = "Button 5"
@@ -662,8 +489,4 @@ Sub revival()
     CALL revival7()
     CALL revival8()
     CALL revival9()
-    CALL revival10()
-    CALL revival11()
-    CALL revival12()
-    CALL revival13()
 end sub

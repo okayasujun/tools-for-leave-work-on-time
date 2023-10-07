@@ -1,7 +1,6 @@
 Attribute VB_Name = "C_カスタム項目メタデータ作成"
 Dim itemSheet As Worksheet
 Dim itemMetaSheet As Worksheet
-
 Const PICK_LIST_PRE_TAG = "    " & "<valueSet>" & vbCrLf & _
                           "    " & "<restricted>true</restricted>" & vbCrLf & _
                           "    " & "<valueSetDefinition>" & vbCrLf & _
@@ -25,94 +24,92 @@ Sub C_カスタム項目メタデータ作成()
     Dim objApiName As String: objApiName = itemSheet.Cells(2, 4)
     Dim filePath As String: filePath = ThisWorkbook.Path & "\objects\" & objApiName & "\fields\"
     Dim fileName As String
-    
+    '最終行
     Dim lastRow As Integer: lastRow = itemSheet.Cells(4, 1).End(xlDown).row
+    'ラベル名、API名
+    Dim labelName As String
+    Dim apiName As String
     
-    Dim labelName As String, itemName As String, apiName As String
-    
+    Dim st As Object
     '###################################################
     '処理前にエラーチェックが必要
     '・API名の先頭が大文字があること
     '
     '###################################################
     
-    
+    Dim i As Integer
     For i = 5 To lastRow
-        If itemSheet.Cells(i, 2).Value = "×" Then
-            GoTo continue
-        End If
-        apiName = itemSheet.Cells(i, 5).Value
+        '有効項目のみ対象とする
+        If itemSheet.Cells(i, 2).Value = "〇" Then
+ 
+            apiName = itemSheet.Cells(i, 5).Value
         
-        fileName = filePath & apiName & ".field-meta.xml"
-        
-        'BOM削除
-'        With CreateObject("ADODB.Stream")
-'            .Charset = "UTF-8"
-'            .Open
-    Dim st As Object
-    Set st = CreateObject("ADODB.Stream")
-    st.Charset = "UTF-8"
-    st.Open
+            fileName = filePath & apiName & ".field-meta.xml"
+
+            Set st = CreateObject("ADODB.Stream")
+            st.Charset = "UTF-8"
+            st.Open
             '書き出し処理開始
             st.writeText PRE, 0
             st.writeText getItemMetaData(i), 0
             st.writeText SUF, 0
-            '書き出し処理終了
-    Call saveTextWithUTF8(st, fileName)
-'            .Position = 0
-'            .Type = 1
-'            .Position = 3
-'            bytetmp = .Read
-'            .SaveToFile fileName, 2
-'            'コピー先ファイルを閉じる
-'            .Close
-'        End With
-'        'UTF-8でテキストファイルへ出力する
-'        With CreateObject("ADODB.Stream")
-'            .Charset = "UTF-8"
-'            .LineSeparator = 10
-'            .Type = 1
-'            .Open
-'            .write bytetmp
-'            .SetEOS
-'            .SaveToFile fileName, 2
-'            .Close
-'        End With
-continue:
+            Call saveTextWithUTF8(st, fileName)
+        End If
     Next
     
     MsgBox "完了しました。"
 End Sub
-Function getItemMetaData(row As Variant)
-    Dim Value As String, returnValue As String, typeColumn As Integer, valueColumn As Integer
-    Dim openTag As String, closeTag As String
-    Dim dataType As String: dataType = itemSheet.Cells(row, 7).Value
-    Dim valueType As String, listArray As Variant, listOneArray As Variant, listFlag As Boolean
+Function getItemMetaData(row As Integer)
+    Dim writeText As String
+    Dim returnValue As String
+    Dim dataTypeColumn As Integer
+    Dim valueColumn As Integer
+    Dim openTag As String
+    Dim closeTag As String
+    Dim dataType As String
+    dimdataType = itemSheet.Cells(row, 7).Value
+    Dim valueType As String
+    Dim listArray As Variant
+    Dim listOneArray As Variant
+    Dim listFlag As Boolean
+    'メタデータファイルに書き出すかどうかを「〇」の有無で取得する
     Dim writeTagFlag As Boolean: writeTagFlag = True
     
-    '[CustomItem]シートより処理対象データタイプの列番号を取得する
-    For i = 3 To 25
+    '■あかん。ちゃんと見直した方がいい。突貫工事的じゃなく
+    
+    dataType = itemSheet.Cells(row, 7).Value
+    dataType = IIf(itemSheet.Cells(row, 8).Value = "〇", "(数式)" & dataType, dataType)
+    
+    '走査中行のデータ型を定義シートから探す（右方向ループ）
+    For i = 4 To 31
         If dataType = itemMetaSheet.Cells(2, i).Value Then
-            typeColumn = i
+            dataTypeColumn = i
             Exit For
         End If
     Next
     '縦方向ループ
-    For i = 3 To 32
+    For i = 3 To 37
         valueColumn = itemMetaSheet.Cells(i, 2).Value
-        If itemMetaSheet.Cells(i, typeColumn).Value = "〇" Then
+        
+        If itemMetaSheet.Cells(i, dataTypeColumn).Value = "〇" And valueColumn > 0 Then
             valueType = itemMetaSheet.Cells(i, 3).Value
-            Value = itemSheet.Cells(row, valueColumn).Value
+            writeText = itemSheet.Cells(row, valueColumn).Value
             
             If valueType = "テキスト" Then
-            'TODO:デフォルト値の対応は必要
-                'value = "&quot;" & value & "&quot;" '文字列のときはいるなあ・・・
+            
+'                If itemMetaSheet.Cells(i, 1).Value = "<defaultValue>" And writeText <> "" Then
+'                    writeText = "&quot;" & writeText & "&quot;" '文字列のときはいるなあ・・・
+'                End If
+            'TODO:デフォルト値の対応は必要（やり方の検討からして）
+                '
             ElseIf valueType = "数値" Then
+                
             ElseIf valueType = "真偽" Then
-                Value = IIf(Value = "〇", "True", "False")
+                writeText = IIf(writeText = "〇", "True", "False")
+                
             ElseIf valueType = "リスト" Then
-                Debug.Print Value
-                listArray = Split(Value, vbLf)
+                Debug.Print writeText
+                listArray = Split(writeText, vbLf)
                 listFlag = True
                 writeTagFlag = False
             End If
@@ -120,25 +117,12 @@ Function getItemMetaData(row As Variant)
             If writeTagFlag Then
                 openTag = itemMetaSheet.Cells(i, 1).Value
                 closeTag = Replace(openTag, "<", "</")
-                returnValue = returnValue & "    " & openTag & Value & closeTag & vbCrLf
+                returnValue = returnValue & "    " & openTag & writeText & closeTag & vbCrLf
             End If
             writeTagFlag = True
-        ElseIf valueColumn = 15 Then
-            '数式タグ
-            If itemSheet.Cells(row, 8).Value = "〇" Then
-                Value = itemSheet.Cells(row, 15).Value
-                openTag = itemMetaSheet.Cells(i, 1).Value
-                closeTag = Replace(openTag, "<", "</")
-                returnValue = returnValue & "    " & openTag & Value & closeTag & vbCrLf
-                
-            End If
-        ElseIf valueColumn = 16 Then
-            '数式タグ
-            If itemSheet.Cells(row, 8).Value = "〇" Then
-                returnValue = returnValue & "    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>" & vbCrLf
-            End If
         End If
     Next
+    
     '選択リストのタグ設定
     If listFlag Then
         returnValue = returnValue & PICK_LIST_PRE_TAG
@@ -154,5 +138,4 @@ Function getItemMetaData(row As Variant)
         returnValue = returnValue & "    " & "</valueSet>" & vbCrLf
     End If
     getItemMetaData = returnValue
-        Debug.Print getItemMetaData
 End Function
