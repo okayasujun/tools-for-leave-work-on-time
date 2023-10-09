@@ -92,7 +92,10 @@ Function writeFromExcelToText()
             For j = fromColumn To toColumn
                 'íl
                 If ws.Cells(i, j).Value <> "" Then
-                    .WriteText "    Cells(" & i & ", " & j & ") = """ & Replace(ws.Cells(i, j), vbLf, """& vbLf & """) & """", 1
+                    temp = Replace(ws.Cells(i, j), vbLf, """& vbLf & """)
+                    temp = Replace(temp, """", """""")
+                    '.WriteText "    Cells(" & i & ", " & j & ") = """ & Replace(ws.Cells(i, j), vbLf, """& vbLf & """) & """", 1
+                    .WriteText "    Cells(" & i & ", " & j & ") = """ & temp & """", 1
                 End If
                 'èëéÆ
                 If ws.Cells(i, j).NumberFormatLocal <> BASE_FORMAT Then

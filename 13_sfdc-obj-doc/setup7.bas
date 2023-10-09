@@ -3,7 +3,7 @@ Function revival0()
     ActiveWindow.DisplayGridlines = True
     ActiveWindow.Zoom = 100
     ActiveSheet.Name = "CustomObject"
-    Cells(1, 1) = "<?xml version="1.0" encoding="UTF-8"?>"
+    Cells(1, 1) = "<?xml version=""1.0"" encoding=""UTF-8""?>"
     Cells(1, 1).Font.Size = 10
     Cells(1, 1).Font.Name = "Consolas"
     Cells(1, 1).Font.Color = 128
@@ -13,7 +13,7 @@ Function revival0()
     Cells(1, 5).Font.Name = "游ゴシック"
     Cells(1, 6).Font.Name = "游ゴシック"
     Cells(1, 7).Font.Name = "游ゴシック"
-    Cells(2, 1) = "<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">"
+    Cells(2, 1) = "<CustomObject xmlns=""http://soap.sforce.com/2006/04/metadata"">"
     Cells(2, 1).Font.Size = 10
     Cells(2, 1).Font.Name = "Consolas"
     Cells(2, 1).Font.Color = 128
