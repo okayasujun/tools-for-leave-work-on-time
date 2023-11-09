@@ -1,4 +1,4 @@
-Attribute VB_Name = "F_投入CSV様式作成"
+Attribute VB_Name = "X_投入CSV様式作成"
 Dim itemSheet As Worksheet
 Dim csvSheet As Worksheet
 Sub F_投入CSV様式作成()
@@ -42,9 +42,9 @@ Sub F_投入CSV様式作成()
     csvSheet.Cells.EntireColumn.AutoFit
     
     '保存
-    Dim objFso As Object
-    Set objFso = CreateObject("Scripting.FileSystemObject")
-    Dim saveDir As String: saveDir = ThisWorkbook.Path & "\" & csvSheet.Name & Format(Now, "yyyyddmm-hhmmss") & ".csv"
+    Dim objFSO As Object
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+    Dim saveDir As String: saveDir = ThisWorkbook.path & "\" & csvSheet.Name & Format(Now, "yyyyddmm-hhmmss") & ".csv"
     Sheets(csvSheet.Name).Copy
     ActiveWorkbook.SaveAs saveDir, FileFormat:=xlCSV, Local:=True
     ActiveWorkbook.Close

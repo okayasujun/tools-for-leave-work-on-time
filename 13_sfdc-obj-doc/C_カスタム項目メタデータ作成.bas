@@ -1,36 +1,26 @@
 Attribute VB_Name = "C_カスタム項目メタデータ作成"
-Dim itemSheet As Worksheet
-Dim itemMetaSheet As Worksheet
 Const PICK_LIST_PRE_TAG = "    " & "<valueSet>" & vbCrLf & _
                           "    " & "<restricted>true</restricted>" & vbCrLf & _
                           "    " & "<valueSetDefinition>" & vbCrLf & _
                           "    " & "    <sorted>false</sorted>" & vbCrLf
 Const PICK_LIST_SUF_TAG = "    " & "        </valueSetDefinition>" & vbCrLf & _
                           "    " & "</valueSet>" & vbCrLf
+Const PRE = "<?xml version=""1.0"" encoding=""UTF-8""?>" & vbCrLf & _
+            "<CustomField xmlns=""http://soap.sforce.com/2006/04/metadata"">" & vbCrLf
+Const SUF = "</CustomField>"
 '
 'カスタム項目ごとにメタデータファイルを作成する
 'データ型によって定義が必要なタグは[]シートに定義している
 '
-Sub C_カスタム項目メタデータ作成()
+Sub D_カスタム項目メタデータ作成()
+    Call initiarize
 
-    Const PRE = "<?xml version=""1.0"" encoding=""UTF-8""?>" & vbCrLf & _
-                "<CustomField xmlns=""http://soap.sforce.com/2006/04/metadata"">" & vbCrLf
-    Const SUF = "</CustomField>"
-
-    
-    Set itemSheet = Sheets(ITEM_SHEET)
-    Set itemMetaSheet = Sheets(ITEM_META_SHEET)
-    
-    Dim objApiName As String: objApiName = itemSheet.Cells(2, 4)
-    Dim filePath As String: filePath = ThisWorkbook.Path & "\objects\" & objApiName & "\fields\"
-    Dim fileName As String
     '最終行
     Dim lastRow As Integer: lastRow = itemSheet.Cells(4, 1).End(xlDown).row
     'ラベル名、API名
     Dim labelName As String
     Dim apiName As String
     
-    Dim st As Object
     '###################################################
     '処理前にエラーチェックが必要
     '・API名の先頭が大文字があること
@@ -43,22 +33,20 @@ Sub C_カスタム項目メタデータ作成()
         If itemSheet.Cells(i, 2).Value = "〇" Then
  
             apiName = itemSheet.Cells(i, 5).Value
-        
-            fileName = filePath & apiName & ".field-meta.xml"
+            fileName = fieldsDirPath & apiName & ".field-meta.xml"
 
-            Set st = CreateObject("ADODB.Stream")
-            st.Charset = "UTF-8"
-            st.Open
+            Call openStream
             '書き出し処理開始
-            st.writeText PRE, 0
-            st.writeText getItemMetaData(i), 0
-            st.writeText SUF, 0
-            Call saveTextWithUTF8(st, fileName)
+            stream.writeText PRE, 0
+            stream.writeText getItemMetaData(i), 0
+            stream.writeText SUF, 0
+            Call saveTextWithUTF8(stream, fileName)
         End If
     Next
     
     MsgBox "完了しました。"
 End Sub
+'メタデータのテキスト情報を返す
 Function getItemMetaData(row As Integer)
     Dim writeText As String
     Dim returnValue As String
@@ -66,16 +54,13 @@ Function getItemMetaData(row As Integer)
     Dim valueColumn As Integer
     Dim openTag As String
     Dim closeTag As String
-    Dim dataType As String
-    dimdataType = itemSheet.Cells(row, 7).Value
+    Dim dataType As String: dimdataType = itemSheet.Cells(row, 7).Value
     Dim valueType As String
     Dim listArray As Variant
     Dim listOneArray As Variant
     Dim listFlag As Boolean
     'メタデータファイルに書き出すかどうかを「〇」の有無で取得する
     Dim writeTagFlag As Boolean: writeTagFlag = True
-    
-    '■あかん。ちゃんと見直した方がいい。突貫工事的じゃなく
     
     dataType = itemSheet.Cells(row, 7).Value
     dataType = IIf(itemSheet.Cells(row, 8).Value = "〇", "(数式)" & dataType, dataType)
@@ -91,7 +76,7 @@ Function getItemMetaData(row As Integer)
     For i = 3 To 37
         valueColumn = itemMetaSheet.Cells(i, 2).Value
         
-        If itemMetaSheet.Cells(i, dataTypeColumn).Value = "〇" And valueColumn > 0 Then
+        If itemMetaSheet.Cells(i, dataTypeColumn).Value And valueColumn > 0 Then
             valueType = itemMetaSheet.Cells(i, 3).Value
             writeText = itemSheet.Cells(row, valueColumn).Value
             
@@ -100,8 +85,8 @@ Function getItemMetaData(row As Integer)
 '                If itemMetaSheet.Cells(i, 1).Value = "<defaultValue>" And writeText <> "" Then
 '                    writeText = "&quot;" & writeText & "&quot;" '文字列のときはいるなあ・・・
 '                End If
-            'TODO:デフォルト値の対応は必要（やり方の検討からして）
-                '
+'                TODO:デフォルト値の対応は必要（やり方の検討からして）
+
             ElseIf valueType = "数値" Then
                 
             ElseIf valueType = "真偽" Then
@@ -139,3 +124,4 @@ Function getItemMetaData(row As Integer)
     End If
     getItemMetaData = returnValue
 End Function
+

@@ -1,4 +1,4 @@
-Attribute VB_Name = "E_ページレイアウト作成"
+Attribute VB_Name = "X_ページレイアウト作成"
 Dim layoutSheet As Worksheet
 Sub E_ページレイアウト作成()
 
@@ -11,7 +11,7 @@ Sub E_ページレイアウト作成()
     Set layoutSheet = Sheets(LAYOUT_SHEET)
     
     Dim objApiName As String: objApiName = layoutSheet.Cells(2, 3)
-    Dim filePath As String: filePath = ThisWorkbook.Path & "\layouts\" & objApiName & "-レイアウト名" & ".layout-meta.xml"
+    Dim filePath As String: filePath = ThisWorkbook.path & "\layouts\" & objApiName & "-レイアウト名" & ".layout-meta.xml"
     Dim fileName As String: fileName = filePath '本来はここで、ファイル名設定する
     
     Dim lastRow As Integer: lastRow = layoutSheet.Cells(layoutSheet.Rows.Count, 1).End(xlUp).row
