@@ -255,8 +255,12 @@ Function writeFromExcelToText()
                 .WriteText "    onShape.Visible = " & shp.Visible, 1
                 .WriteText "    onShape.Placement = " & shp.Placement, 1
                 .WriteText "    onShape.Characters.Text = """"", 1
-                'コメントアウト分はなぜか出力されない
-                .WriteText "    onShape.Characters.Text = """ & shp.Characters.Text & """", 1
+                If shp.MsoControlType = msoControlButton Then
+                    .WriteText "    onShape.Characters.Text = """ & shp.AlternativeText & """", 1
+                    
+                End If
+'                コメントアウト分はなぜか出力されない
+'                .WriteText "    onShape.Characters.Text = """ & shp.Characters.Text & """", 1
 '                .WriteText "    onShape.Text = """ & shp.Text & """", 1
 '                .WriteText "    onShape.Caption = """ & shp.Caption & """", 1
 '                .WriteText "    onShape.TextFrame2.Characters.Text = """ & shp.TextFrame2.Characters.Text & """", 1
