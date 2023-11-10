@@ -91,11 +91,14 @@ Function writeFromExcelToText()
         For i = fromRow To toRow
             For j = fromColumn To toColumn
                 'íl
-                If ws.Cells(i, j).Value <> "" Then
+                If ws.Cells(i, j).HasFormula Then
+                    temp = Replace(ws.Cells(i, j).Formula, vbLf, """& vbLf & """)
+                    temp = Replace(temp, """", """""")
+                    .WriteText "    Cells(" & i & ", " & j & ").Formula = """ & temp & """", 1
+                Else
                     temp = Replace(ws.Cells(i, j), vbLf, """& vbLf & """)
                     temp = Replace(temp, """", """""")
-                    '.WriteText "    Cells(" & i & ", " & j & ") = """ & Replace(ws.Cells(i, j), vbLf, """& vbLf & """) & """", 1
-                    .WriteText "    Cells(" & i & ", " & j & ") = """ & temp & """", 1
+                    .WriteText "    Cells(" & i & ", " & j & ").Value = """ & temp & """", 1
                 End If
                 'èëéÆ
                 If ws.Cells(i, j).NumberFormatLocal <> BASE_FORMAT Then
