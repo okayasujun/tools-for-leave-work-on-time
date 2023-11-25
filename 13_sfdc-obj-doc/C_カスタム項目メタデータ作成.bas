@@ -12,7 +12,7 @@ Const SUF = "</CustomField>"
 'カスタム項目ごとにメタデータファイルを作成する
 'データ型によって定義が必要なタグは[]シートに定義している
 '
-Sub D_カスタム項目メタデータ作成()
+Sub C_カスタム項目メタデータ作成()
     Call initiarize
 
     '最終行
@@ -48,16 +48,27 @@ Sub D_カスタム項目メタデータ作成()
 End Sub
 'メタデータのテキスト情報を返す
 Function getItemMetaData(row As Integer)
+    '出力テキストのタグ以外の部分
     Dim writeText As String
+    'モドリッチ
     Dim returnValue As String
+    '[CustomItem]シートにおいて、対象のデータ型が記載してある列番号
     Dim dataTypeColumn As Integer
+    '[項目]シート上の設定列を保持する番号
     Dim valueColumn As Integer
+    '[CustomItem]シートの1列目の値を保持する
     Dim openTag As String
+    '閉じるタグをopenTagから作って格納する
     Dim closeTag As String
-    Dim dataType As String: dimdataType = itemSheet.Cells(row, 7).Value
+    'データ型（日本語）
+    Dim dataType As String: dataType = itemSheet.Cells(row, 7).Value
+    '各属性の設定値のデータ型
     Dim valueType As String
+    '選択リスト値リスト
     Dim listArray As Variant
+    '選択肢ひとつのAPI名、ラベルの配列
     Dim listOneArray As Variant
+    '選択リスト選択肢のメタ情報を書き出すぜフラグ
     Dim listFlag As Boolean
     'メタデータファイルに書き出すかどうかを「〇」の有無で取得する
     Dim writeTagFlag As Boolean: writeTagFlag = True
@@ -65,14 +76,15 @@ Function getItemMetaData(row As Integer)
     dataType = itemSheet.Cells(row, 7).Value
     dataType = IIf(itemSheet.Cells(row, 8).Value = "〇", "(数式)" & dataType, dataType)
     
-    '走査中行のデータ型を定義シートから探す（右方向ループ）
+    '走査中行のデータ型を[CustomItem]シートから探す
     For i = 4 To 31
         If dataType = itemMetaSheet.Cells(2, i).Value Then
             dataTypeColumn = i
             Exit For
         End If
     Next
-    '縦方向ループ
+    
+    'メタ情報の生成
     For i = 3 To 37
         valueColumn = itemMetaSheet.Cells(i, 2).Value
         
@@ -80,6 +92,7 @@ Function getItemMetaData(row As Integer)
             valueType = itemMetaSheet.Cells(i, 3).Value
             writeText = itemSheet.Cells(row, valueColumn).Value
             
+            '項目が確定している場合の補助処理
             If valueType = "テキスト" Then
             
 '                If itemMetaSheet.Cells(i, 1).Value = "<defaultValue>" And writeText <> "" Then
@@ -93,10 +106,15 @@ Function getItemMetaData(row As Integer)
                 writeText = IIf(writeText = "〇", "True", "False")
                 
             ElseIf valueType = "リスト" Then
-                Debug.Print writeText
+                'Debug.Print writeText
                 listArray = Split(writeText, vbLf)
                 listFlag = True
                 writeTagFlag = False
+                
+            ElseIf valueType = "BlankAsZero" Then
+                '「BlankAsZero」以外の場合
+                writeTagFlag = writeText = "BlankAsZero"
+                
             End If
             
             If writeTagFlag Then

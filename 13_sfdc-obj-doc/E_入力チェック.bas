@@ -5,11 +5,14 @@ Private lastRow As Integer
 Private lastColumn As Integer
 Private dataType As String
 Private errorCheckColumn As Integer
+Private errorMsgFormat As String
 Private errorLastRow As Integer
 Private condition As String
 Private logWriteLine As Integer
-Const NO_COLOR = 16777215
+Private i As Integer
+Private j As Integer
 Sub G_入力チェック()
+    '▼TODO
     '・API名のルール不履行がないか
     '・API名に重複はないか
     '・オブジェクトの設定と整合しているか
@@ -27,60 +30,43 @@ Sub G_入力チェック()
             For j = 2 To errorSheet.Cells(1, 1).End(xlDown).row
                 condition = errorSheet.Cells(j, 6).Value
                 errorCheckColumn = errorSheet.Cells(j, 4).Value
+                errorMsgFormat = errorSheet.Cells(j, 7).Value
             
                 '有効項目で、データ型が一致すればチェックにかける
                 If .Cells(i, 2).Value = ON_TRUE And errorSheet.Cells(j, 2).Value = dataType Then
                 
                     If condition = "以上" Then
                         If Not .Cells(i, errorCheckColumn).Value >= errorSheet.Cells(j, 5).Value Then
-                            '制約エラー
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
                         End If
                         
                     ElseIf condition = "以下" Then
                         If Not .Cells(i, errorCheckColumn).Value <= errorSheet.Cells(j, 5).Value Then
-                            '制約エラー
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
                         End If
                     
                     ElseIf condition = "等しい" Then
                         If Not .Cells(i, errorCheckColumn).Value = errorSheet.Cells(j, 5).Value Then
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
                         End If
                         
                     ElseIf condition = "必須" Then
                         If Not .Cells(i, errorCheckColumn).Value <> "" Then
-                            '制約エラー
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
                         End If
+                        
                     ElseIf condition = "正規表現に一致する" And dataType = "選択リスト" Then
                         Call setupRegexp(errorSheet.Cells(j, 5))
                         If Not UBound(Split(.Cells(i, errorCheckColumn).Value, vbLf)) + 1 = regexp.Execute(.Cells(i, errorCheckColumn).Value).Count Then
-                            '制約エラー
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logSheet.Cells(logWriteLine, 1).WrapText = False
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
+                            logSheet.Cells(logWriteLine - 1, 2).WrapText = False
                         End If
                         
+                    ElseIf condition = "と一致する" Then
+                        Dim targetArray() As String: targetArray = Split(errorSheet.Cells(j, 5).Value, ",")
+                        If Not isExistArray(targetArray, .Cells(i, errorCheckColumn).Value) Then
+                            Call setError(errorMsgFormat)
+                        End If
                     End If
                     
                 '[Error定義]上、データ型未指定のケース
@@ -89,34 +75,26 @@ Sub G_入力チェック()
                         If .Cells(i, errorCheckColumn).Value Like "*" & vbLf & "*" _
                             Or .Cells(i, errorCheckColumn).Value Like "*" & vbCrLf & "*" _
                             Or .Cells(i, errorCheckColumn).Value Like "*" & vbCr & "*" Then
-                            
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            
-                            logSheet.Cells(logWriteLine, 1).WrapText = False
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
+                            logSheet.Cells(logWriteLine - 1, 2).WrapText = False
                         End If
+                        
                     ElseIf condition = "必須" Then
                         If Not .Cells(i, errorCheckColumn).Value <> "" Then
-                            '制約エラー
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
                         End If
+                        
                     ElseIf condition = "字以下" Then
                         If Not Len(.Cells(i, errorCheckColumn).Value) <= errorSheet.Cells(j, 5).Value Then
-                            '制約エラー
-                            logSheet.Cells(logWriteLine, 1) = i & "行目の「" & .Cells(i, 3) & "」項目は「" _
-                                    & errorSheet.Cells(j, 3) & "」を" & errorSheet.Cells(j, 5) _
-                                    & errorSheet.Cells(j, 6) & "にしてください。(" & .Cells(i, errorCheckColumn).Value & ")"
-                            logWriteLine = logWriteLine + 1
-                            .Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+                            Call setError(errorMsgFormat)
                         End If
                     
+                    ElseIf condition = "と一致する" Then
+                        targetArray = Split(errorSheet.Cells(j, 5).Value, ",")
+                        If Not isExistArray(targetArray, .Cells(i, errorCheckColumn).Value) Then
+                            Call setError(errorMsgFormat)
+                        End If
+                        
                     End If
                 End If
             Next
@@ -127,15 +105,31 @@ Sub G_入力チェック()
         MsgBox "入力チェックが完了しました。" & vbCrLf & "入力不備はありません。"
     Else
         MsgBox "入力不備があります。[log]シートを確認してください。"
+        logSheet.Select
     End If
-    
 End Sub
+'エラー情報を設定する
+Private Function setError(format As String)
+    logSheet.Cells(logWriteLine, 1) = logWriteLine - 1
+    logSheet.Cells(logWriteLine, 2) = getMessage(format, _
+                                i, itemSheet.Cells(i, 3), errorSheet.Cells(j, 3), _
+                                errorSheet.Cells(j, 5), errorSheet.Cells(j, 6), _
+                                itemSheet.Cells(i, errorCheckColumn).Value)
+    logWriteLine = logWriteLine + 1
+    '対象セルハイライト
+    itemSheet.Cells(i, errorCheckColumn).Interior.Color = RGB(255, 255, 0)
+End Function
+'チェック処理用初期化処理
 Private Function init()
     Set errorSheet = Sheets("Error定義")
     Set logSheet = Sheets("log")
     lastRow = itemSheet.Cells(5, 1).End(xlDown).row
     lastColumn = itemSheet.Cells(4, 1).End(xlToRight).column
     logSheet.Cells.Clear
+    logSheet.Cells(1, 1) = "No."
+    logSheet.Cells(1, 1).Font.Bold = True
+    logSheet.Cells(1, 2) = "内容"
+    logSheet.Cells(1, 2).Font.Bold = True
     logWriteLine = 2
 End Function
 'セル塗色を適切な状態にする

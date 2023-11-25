@@ -20,6 +20,9 @@ Public Const LAYOUT_SHEET = "ページレイアウト"
 'Trueを示す文字
 Public Const ON_TRUE = "〇"
 
+'塗りつぶしなしを示す色コード
+Public Const NO_COLOR = 16777215
+
 'テキストファイル出力用
 Public stream As Object
 
@@ -119,4 +122,38 @@ End Function
 Public Function getDirPath(argFilePath As String)
     Dim dirs As Variant: dirs = Split(argFilePath, "\")
     getDirPath = Left(argFilePath, Len(argFilePath) - Len(dirs(UBound(dirs))) - 1) & "\"
+End Function
+'最後の文字切り取り
+Public Function deleteEndText(text As String, Optional deleteLength As Long = 1) As String
+    If Len(text) >= deleteLength Then
+        deleteEndText = Left(text, Len(text) - deleteLength)
+    Else
+        deleteEndText = text
+    End If
+End Function
+'指定された値が指定された配列内に存在するかどうかを返す（ある：true、ない：false）
+Public Function isExistArray(targetArray As Variant, checkValue As String)
+    isExistArray = False
+    
+    If UBound(targetArray) = -1 Then
+        'UBoundの戻り値：-1は要素数0を示す。この場合、すべて対象と判断する
+        isExistArray = True
+        Exit Function
+    End If
+    
+    For i = LBound(targetArray) To UBound(targetArray)
+        If targetArray(i) = checkValue Then
+            isExistArray = True
+            Exit For
+        End If
+    Next
+End Function
+'メッセージを返す
+Public Function getMessage(format As String, ParamArray param())
+    Dim returnValue As String: returnValue = format
+    
+    For i = LBound(param) To UBound(param)
+        returnValue = Replace(returnValue, "{" & i & "}", param(i))
+    Next
+    getMessage = returnValue
 End Function

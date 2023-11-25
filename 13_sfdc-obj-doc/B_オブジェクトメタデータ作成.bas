@@ -1,5 +1,4 @@
 Attribute VB_Name = "B_オブジェクトメタデータ作成"
-
 Sub A_オブジェクトメタデータ作成()
     Call initiarize
     fileName = ThisWorkbook.path & "\objects\" & objApiName & "\" & objApiName & ".object-meta.xml"
