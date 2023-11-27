@@ -188,10 +188,11 @@ Function writeFromExcelToText()
                 End If
                 Err.Clear
                 '関数区切り（実行時に起きる「プロシージャが大きすぎます。」を回避するため）
-                If count > 30 And count Mod 30 = 0 Then
+                If count > 20 Then
                     .WriteText "end Function", 1
                     .WriteText "Function revival" & functionCount & "()", 1
                     functionCount = functionCount + 1
+                    count = 0
                 End If
                 count = count + 1
             Next
@@ -283,10 +284,11 @@ Function writeFromExcelToText()
             
             End If
             '関数区切り（実行時に起きる「プロシージャが大きすぎます。」を回避するため）
-            If count > 30 And count Mod 30 = 0 Then
+            If count > 20 Then
                 .WriteText "end Function", 1
                 .WriteText "Function revival" & functionCount & "()", 1
                 functionCount = functionCount + 1
+                count = 0
             End If
             count = count + 1
                 
