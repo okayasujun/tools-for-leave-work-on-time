@@ -322,6 +322,8 @@ Function revival0()
     Cells(4, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(4, 1).Borders(xlEdgeRight).color = 0
     Cells(4, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival1()
     Cells(4, 2).Value = "数値"
     Cells(4, 2).Font.Name = "BIZ UDPゴシック"
     Cells(4, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -619,6 +621,8 @@ Function revival0()
     Cells(7, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(7, 1).Borders(xlEdgeRight).color = 0
     Cells(7, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival2()
     Cells(7, 2).Value = "通貨"
     Cells(7, 2).Font.Name = "BIZ UDPゴシック"
     Cells(7, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -873,8 +877,6 @@ Function revival0()
     Cells(9, 5).Borders(xlEdgeRight).LineStyle = 1
     Cells(9, 5).Borders(xlEdgeRight).color = 0
     Cells(9, 5).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival1()
     Cells(9, 6).Value = "以下"
     Cells(9, 6).Font.Name = "BIZ UDPゴシック"
     Cells(9, 6).Borders(xlEdgeTop).LineStyle = 1
@@ -918,6 +920,8 @@ Function revival1()
     Cells(10, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(10, 1).Borders(xlEdgeRight).color = 0
     Cells(10, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival3()
     Cells(10, 2).Value = "(数式)数値"
     Cells(10, 2).Font.Name = "BIZ UDPゴシック"
     Cells(10, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -1215,6 +1219,8 @@ Function revival1()
     Cells(13, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(13, 1).Borders(xlEdgeRight).color = 0
     Cells(13, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival4()
     Cells(13, 2).Value = "(数式)通貨"
     Cells(13, 2).Font.Name = "BIZ UDPゴシック"
     Cells(13, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -1299,8 +1305,6 @@ Function revival1()
     Cells(13, 7).Borders(xlEdgeRight).LineStyle = 1
     Cells(13, 7).Borders(xlEdgeRight).color = 0
     Cells(13, 7).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival2()
     Cells(14, 1).Value = "13"
     Cells(14, 1).NumberFormatLocal = "@"
     Cells(14, 1).Font.Name = "BIZ UDPゴシック"
@@ -1514,6 +1518,8 @@ Function revival2()
     Cells(16, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(16, 1).Borders(xlEdgeRight).color = 0
     Cells(16, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival5()
     Cells(16, 2).Value = "選択リスト (複数選択)"
     Cells(16, 2).Font.Name = "BIZ UDPゴシック"
     Cells(16, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -1726,8 +1732,6 @@ Function revival2()
     Cells(18, 2).Borders(xlEdgeRight).LineStyle = 1
     Cells(18, 2).Borders(xlEdgeRight).color = 0
     Cells(18, 2).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival3()
     Cells(18, 3).Value = "文字数"
     Cells(18, 3).Font.Name = "BIZ UDPゴシック"
     Cells(18, 3).Borders(xlEdgeTop).LineStyle = 1
@@ -1813,6 +1817,8 @@ Function revival3()
     Cells(19, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(19, 1).Borders(xlEdgeRight).color = 0
     Cells(19, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival6()
     Cells(19, 2).Value = "チェックボックス"
     Cells(19, 2).Font.Name = "BIZ UDPゴシック"
     Cells(19, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -2110,6 +2116,8 @@ Function revival3()
     Cells(22, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 1).Borders(xlEdgeRight).color = 0
     Cells(22, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival7()
     Cells(22, 2).Value = "(数式)数値"
     Cells(22, 2).Font.Name = "BIZ UDPゴシック"
     Cells(22, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -2152,8 +2160,6 @@ Function revival3()
     Cells(22, 4).Borders(xlEdgeRight).LineStyle = 1
     Cells(22, 4).Borders(xlEdgeRight).color = 0
     Cells(22, 4).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival4()
     Cells(22, 5).Value = "18"
     Cells(22, 5).Font.Name = "BIZ UDPゴシック"
     Cells(22, 5).Borders(xlEdgeTop).LineStyle = 1
@@ -2409,6 +2415,8 @@ Function revival4()
     Cells(25, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(25, 1).Borders(xlEdgeRight).color = 0
     Cells(25, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival8()
     Cells(25, 2).Value = "-"
     Cells(25, 2).Font.Name = "BIZ UDPゴシック"
     Cells(25, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -2578,8 +2586,6 @@ Function revival4()
     Cells(26, 6).Borders(xlEdgeRight).LineStyle = 1
     Cells(26, 6).Borders(xlEdgeRight).color = 0
     Cells(26, 6).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival5()
     Cells(26, 7).Value = "{0}行目の「{1}」項目は「{2}」列を{4}にしてください。（{5}）"
     Cells(26, 7).Font.Name = "BIZ UDPゴシック"
     Cells(26, 7).Borders(xlEdgeTop).LineStyle = 1
@@ -2708,6 +2714,8 @@ Function revival5()
     Cells(28, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(28, 1).Borders(xlEdgeRight).color = 0
     Cells(28, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival9()
     Cells(28, 2).Value = "-"
     Cells(28, 2).Font.Name = "BIZ UDPゴシック"
     Cells(28, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -3006,7 +3014,7 @@ Function revival5()
     Cells(31, 1).Borders(xlEdgeRight).color = 0
     Cells(31, 1).Borders(xlEdgeRight).weight = 2
 end Function
-Function revival6()
+Function revival10()
     Cells(31, 2).Value = "(数式)通貨"
     Cells(31, 2).Font.Name = "BIZ UDPゴシック"
     Cells(31, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -3304,6 +3312,8 @@ Function revival6()
     Cells(34, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(34, 1).Borders(xlEdgeRight).color = 0
     Cells(34, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival11()
     Cells(34, 2).Value = "(数式)数値"
     Cells(34, 2).Font.Name = "BIZ UDPゴシック"
     Cells(34, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -3431,8 +3441,6 @@ Function revival6()
     Cells(35, 3).Borders(xlEdgeRight).LineStyle = 1
     Cells(35, 3).Borders(xlEdgeRight).color = 0
     Cells(35, 3).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival7()
     Cells(35, 4).Value = "16"
     Cells(35, 4).Font.Name = "BIZ UDPゴシック"
     Cells(35, 4).Borders(xlEdgeTop).LineStyle = 1
@@ -3603,6 +3611,8 @@ Function revival7()
     Cells(37, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(37, 1).Borders(xlEdgeRight).color = 0
     Cells(37, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival12()
     Cells(37, 2).Value = "(数式)チェックボックス"
     Cells(37, 2).Font.Name = "BIZ UDPゴシック"
     Cells(37, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -3857,8 +3867,6 @@ Function revival7()
     Cells(39, 5).Borders(xlEdgeRight).LineStyle = 1
     Cells(39, 5).Borders(xlEdgeRight).color = 0
     Cells(39, 5).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival8()
     Cells(39, 6).Value = "と一致する"
     Cells(39, 6).Font.Name = "BIZ UDPゴシック"
     Cells(39, 6).Borders(xlEdgeTop).LineStyle = 1
@@ -3902,6 +3910,8 @@ Function revival8()
     Cells(40, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(40, 1).Borders(xlEdgeRight).color = 0
     Cells(40, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival13()
     Cells(40, 2).Value = "(数式)日付/時間"
     Cells(40, 2).Font.Name = "BIZ UDPゴシック"
     Cells(40, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -4199,6 +4209,8 @@ Function revival8()
     Cells(43, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(43, 1).Borders(xlEdgeRight).color = 0
     Cells(43, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival14()
     Cells(43, 2).Value = "(数式)時間"
     Cells(43, 2).Font.Name = "BIZ UDPゴシック"
     Cells(43, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -4283,8 +4295,6 @@ Function revival8()
     Cells(43, 7).Borders(xlEdgeRight).LineStyle = 1
     Cells(43, 7).Borders(xlEdgeRight).color = 0
     Cells(43, 7).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival9()
     Cells(44, 1).Value = "44"
     Cells(44, 1).NumberFormatLocal = "@"
     Cells(44, 1).Font.Name = "BIZ UDPゴシック"
@@ -4498,6 +4508,8 @@ Function revival9()
     Cells(46, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(46, 1).Borders(xlEdgeRight).color = 0
     Cells(46, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival15()
     Cells(46, 2).Value = "テキストエリア (リッチ)"
     Cells(46, 2).Font.Name = "BIZ UDPゴシック"
     Cells(46, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -4710,8 +4722,6 @@ Function revival9()
     Cells(48, 2).Borders(xlEdgeRight).LineStyle = 1
     Cells(48, 2).Borders(xlEdgeRight).color = 0
     Cells(48, 2).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival10()
     Cells(48, 3).Value = "有効桁数"
     Cells(48, 3).Font.Name = "BIZ UDPゴシック"
     Cells(48, 3).Borders(xlEdgeTop).LineStyle = 1
@@ -4797,6 +4807,8 @@ Function revival10()
     Cells(49, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(49, 1).Borders(xlEdgeRight).color = 0
     Cells(49, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival16()
     Cells(49, 2).Value = "数値"
     Cells(49, 2).Font.Name = "BIZ UDPゴシック"
     Cells(49, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -5094,6 +5106,8 @@ Function revival10()
     Cells(52, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(52, 1).Borders(xlEdgeRight).color = 0
     Cells(52, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival17()
     Cells(52, 2).Value = "パーセント"
     Cells(52, 2).Font.Name = "BIZ UDPゴシック"
     Cells(52, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -5136,8 +5150,6 @@ Function revival10()
     Cells(52, 4).Borders(xlEdgeRight).LineStyle = 1
     Cells(52, 4).Borders(xlEdgeRight).color = 0
     Cells(52, 4).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival11()
     Cells(52, 5).Value = "-"
     Cells(52, 5).Font.Name = "BIZ UDPゴシック"
     Cells(52, 5).Borders(xlEdgeTop).LineStyle = 1
@@ -5393,6 +5405,8 @@ Function revival11()
     Cells(55, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(55, 1).Borders(xlEdgeRight).color = 0
     Cells(55, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival18()
     Cells(55, 2).Value = "(数式)通貨"
     Cells(55, 2).Font.Name = "BIZ UDPゴシック"
     Cells(55, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -5562,8 +5576,6 @@ Function revival11()
     Cells(56, 6).Borders(xlEdgeRight).LineStyle = 1
     Cells(56, 6).Borders(xlEdgeRight).color = 0
     Cells(56, 6).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival12()
     Cells(56, 7).Value = "{0}行目の「{1}」項目は「{2}」列を{4}にしてください。（{5}）"
     Cells(56, 7).Font.Name = "BIZ UDPゴシック"
     Cells(56, 7).Borders(xlEdgeTop).LineStyle = 1
@@ -5692,6 +5704,8 @@ Function revival12()
     Cells(58, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(58, 1).Borders(xlEdgeRight).color = 0
     Cells(58, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival19()
     Cells(58, 2).Value = "地理位置情報"
     Cells(58, 2).Font.Name = "BIZ UDPゴシック"
     Cells(58, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -5990,7 +6004,7 @@ Function revival12()
     Cells(61, 1).Borders(xlEdgeRight).color = 0
     Cells(61, 1).Borders(xlEdgeRight).weight = 2
 end Function
-Function revival13()
+Function revival20()
     Cells(61, 2).Value = "テキストエリア (リッチ)"
     Cells(61, 2).Font.Name = "BIZ UDPゴシック"
     Cells(61, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -6288,6 +6302,8 @@ Function revival13()
     Cells(64, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(64, 1).Borders(xlEdgeRight).color = 0
     Cells(64, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival21()
     Cells(64, 2).Value = "(数式)チェックボックス"
     Cells(64, 2).Font.Name = "BIZ UDPゴシック"
     Cells(64, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -6415,8 +6431,6 @@ Function revival13()
     Cells(65, 3).Borders(xlEdgeRight).LineStyle = 1
     Cells(65, 3).Borders(xlEdgeRight).color = 0
     Cells(65, 3).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival14()
     Cells(65, 4).Value = "15"
     Cells(65, 4).Font.Name = "BIZ UDPゴシック"
     Cells(65, 4).Borders(xlEdgeTop).LineStyle = 1
@@ -6587,6 +6601,8 @@ Function revival14()
     Cells(67, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(67, 1).Borders(xlEdgeRight).color = 0
     Cells(67, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival22()
     Cells(67, 2).Value = "(数式)日付/時間"
     Cells(67, 2).Font.Name = "BIZ UDPゴシック"
     Cells(67, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -6841,8 +6857,6 @@ Function revival14()
     Cells(69, 5).Borders(xlEdgeRight).LineStyle = 1
     Cells(69, 5).Borders(xlEdgeRight).color = 0
     Cells(69, 5).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival15()
     Cells(69, 6).Value = "必須"
     Cells(69, 6).Font.Name = "BIZ UDPゴシック"
     Cells(69, 6).Borders(xlEdgeTop).LineStyle = 1
@@ -6886,6 +6900,8 @@ Function revival15()
     Cells(70, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(70, 1).Borders(xlEdgeRight).color = 0
     Cells(70, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival23()
     Cells(70, 2).Value = "(数式)時間"
     Cells(70, 2).Font.Name = "BIZ UDPゴシック"
     Cells(70, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -7183,6 +7199,8 @@ Function revival15()
     Cells(73, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(73, 1).Borders(xlEdgeRight).color = 0
     Cells(73, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival24()
     Cells(73, 2).Value = "参照関係"
     Cells(73, 2).Font.Name = "BIZ UDPゴシック"
     Cells(73, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -7267,8 +7285,6 @@ Function revival15()
     Cells(73, 7).Borders(xlEdgeRight).LineStyle = 1
     Cells(73, 7).Borders(xlEdgeRight).color = 0
     Cells(73, 7).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival16()
     Cells(74, 1).Value = "74"
     Cells(74, 1).NumberFormatLocal = "@"
     Cells(74, 1).Font.Name = "BIZ UDPゴシック"
@@ -7482,6 +7498,8 @@ Function revival16()
     Cells(76, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(76, 1).Borders(xlEdgeRight).color = 0
     Cells(76, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival25()
     Cells(76, 2).Value = "参照関係"
     Cells(76, 2).Font.Name = "BIZ UDPゴシック"
     Cells(76, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -7694,8 +7712,6 @@ Function revival16()
     Cells(78, 2).Borders(xlEdgeRight).LineStyle = 1
     Cells(78, 2).Borders(xlEdgeRight).color = 0
     Cells(78, 2).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival17()
     Cells(78, 3).Value = "削除オプション"
     Cells(78, 3).Font.Name = "BIZ UDPゴシック"
     Cells(78, 3).Borders(xlEdgeTop).LineStyle = 1
@@ -7781,6 +7797,8 @@ Function revival17()
     Cells(79, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(79, 1).Borders(xlEdgeRight).color = 0
     Cells(79, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival26()
     Cells(79, 2).Value = "-"
     Cells(79, 2).Font.Name = "BIZ UDPゴシック"
     Cells(79, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -8078,6 +8096,8 @@ Function revival17()
     Cells(82, 1).Borders(xlEdgeRight).LineStyle = 1
     Cells(82, 1).Borders(xlEdgeRight).color = 0
     Cells(82, 1).Borders(xlEdgeRight).weight = 2
+end Function
+Function revival27()
     Cells(82, 2).Value = "-"
     Cells(82, 2).Font.Name = "BIZ UDPゴシック"
     Cells(82, 2).Borders(xlEdgeTop).LineStyle = 1
@@ -8120,8 +8140,6 @@ Function revival17()
     Cells(82, 4).Borders(xlEdgeRight).LineStyle = 1
     Cells(82, 4).Borders(xlEdgeRight).color = 0
     Cells(82, 4).Borders(xlEdgeRight).weight = 2
-end Function
-Function revival18()
     Cells(82, 5).Value = "〇,"
     Cells(82, 5).Font.Name = "BIZ UDPゴシック"
     Cells(82, 5).Borders(xlEdgeTop).LineStyle = 1
@@ -8476,5 +8494,14 @@ Sub revival()
     CALL revival16()
     CALL revival17()
     CALL revival18()
+    CALL revival19()
+    CALL revival20()
+    CALL revival21()
+    CALL revival22()
+    CALL revival23()
+    CALL revival24()
+    CALL revival25()
+    CALL revival26()
+    CALL revival27()
     Worksheets(1).select
 end sub
